@@ -10,4 +10,4 @@ Member List:
   5. Saksham Varshney
   6. Shubham Khandelwal
   7. Raunak
-  8. Shambhavi
+  8. Shambhavi Sahay
