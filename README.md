@@ -9,5 +9,5 @@ Member List:
   4. Sneha Aggarwal
   5. Saksham Varshney
   6. Shubham Khandelwal
-  7. Raunak
+  7. Raunak Bhandari
   8. Shambhavi Sahay
