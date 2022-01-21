@@ -5,6 +5,8 @@ package com.crs.flipkart.application;
 
 import java.util.Scanner;
 
+import com.crs.flipkart.business.AdminService;
+
 /**
  * @author LENOVO
  *
@@ -18,6 +20,13 @@ public class CRSAdminMenu {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unused")
 		Scanner sc = new Scanner(System.in);
+		AdminService adminService = new AdminService();
+		int id = sc.nextInt();
+		if(adminService.approveStudentRegistration(id)) {
+			System.out.println("Student Registration is successful.");
+		} else {
+			System.out.println("Student Registration is failed.");
+		}
 	}
 
 }
