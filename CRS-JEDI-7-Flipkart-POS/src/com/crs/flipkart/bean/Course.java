@@ -9,7 +9,7 @@ package com.crs.flipkart.bean;
  */
 public class Course {
 
-	private int courseId;
+	private String courseId;
 	private String courseName;
 	private String courseDescription;
 	private double courseFee;
@@ -31,7 +31,7 @@ public class Course {
 	 * @param courseSeats
 	 * @param professorId
 	 */
-	public Course(int courseId, String courseName, String courseDescription, double courseFee, int courseSeats,
+	public Course(String courseId, String courseName, String courseDescription, double courseFee, int courseSeats,
 			int professorId) {
 		super();
 		this.courseId = courseId;
@@ -45,14 +45,14 @@ public class Course {
 	/**
 	 * @return the courseId
 	 */
-	public int getCourseId() {
+	public String getCourseId() {
 		return courseId;
 	}
 
 	/**
 	 * @param courseId the courseId to set
 	 */
-	public void setCourseId(int courseId) {
+	public void setCourseId(String courseId) {
 		this.courseId = courseId;
 	}
 
@@ -126,4 +126,5 @@ public class Course {
 		this.professorId = professorId;
 	}
 
+	
 }
