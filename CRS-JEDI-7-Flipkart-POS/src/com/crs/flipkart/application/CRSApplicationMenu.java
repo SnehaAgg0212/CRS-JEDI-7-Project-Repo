@@ -5,6 +5,10 @@ package com.crs.flipkart.application;
 
 import java.util.Scanner;
 
+import com.crs.flipkart.business.AdminService;
+import com.crs.flipkart.business.UserService;
+import com.crs.flipkart.utils.Utils.UserType;
+
 /**
  * @author devanshugarg
  *
@@ -66,17 +70,25 @@ public class CRSApplicationMenu {
 	public void userLogin() {
 		
 		Scanner sc = new Scanner(System.in);
+		UserService userService = new UserService();
 		
 		System.out.println("-----------------Login------------------");
 		
+		int userType; 
 		String userEmailId, userPassword;
 		
+		System.out.println("Enter UserType as 0->ADMIN, 1->PROFESSOR, 2->STUDENT: ");
+		userType = sc.nextInt();
+		sc.nextLine();
 		System.out.println("Enter Email ID: ");
-		userEmailId = sc.nextLine();
+		userEmailId = sc.next();
 		
 		System.out.println("Enter Password: ");
-		userPassword = sc.nextLine();
+		userPassword = sc.next();
 		
+		userService.userLogin(UserType.ADMIN, userEmailId, userPassword);
+
+		sc.close();
 	}
 	
 	/**
