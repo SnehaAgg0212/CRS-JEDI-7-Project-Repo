@@ -3,25 +3,26 @@
  */
 package com.crs.flipkart.business;
 
-import com.crs.flipkart.bean.GradeCard;
-import com.crs.flipkart.bean.Admin;
-
 import java.util.*;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.bean.GradeCard;
+import com.crs.flipkart.bean.Admin;
+import com.crs.flipkart.bean.Catalog;
+
 /**
  * @author LENOVO
  *
  */
 public class AdminService {
 	
-	GradeCard grades[] = new GradeCard[] {
+	public static final GradeCard grades[] = new GradeCard[] {
 			new GradeCard(414, "Software Engineering", 1, 9.8, 7),
 			new GradeCard(213, "Modern Algebra", 1, 8, 7),
 			new GradeCard(212, "Software Project Management", 1, 10, 7)
 	};
 	
-	Student student[] = new Student[] {new Student("ssahay", "shambhavi.sahay@flipkart.com", "ABCD", "student", 1,
+	public static final Student student[] = new Student[] {new Student("ssahay", "shambhavi.sahay@flipkart.com", "ABCD", "student", 1,
 			"1234567890", "female", "jaipur", "CS", 101, 123, false), new Student("heroku", "heroku@flipkart.com", "ABCD", "student", 1,
 					"1234567890", "female", "jaipur", "CS", 102, 123, false), new Student("mymyaway", "mymyaway@flipkart.com", "ABCD", "student", 1,
 							"1234567890", "female", "jaipur", "CS", 103, 123, false)};
@@ -34,10 +35,15 @@ public class AdminService {
 	Scanner sc = new Scanner(System.in);
     
     static int profId = 100;
+    static int courseId = 100;
     static int userId = 1000;
 
     private void profIdincrementor(){
         profId ++;
+    }
+    
+    private void courseIdincrementor(){
+        courseId ++;
     }
     
     private void userIdincrementor(){
@@ -45,6 +51,7 @@ public class AdminService {
     }
     
     Vector<Professor> ProfessorList = new Vector<Professor>();
+    Vector<Catalog> CourseList = new Vector<Catalog>();
 
     public void addProfessor() {
     	
@@ -149,6 +156,56 @@ public class AdminService {
 		
 		System.out.println("Overall GPA: " + overallGpa);
 		
+	}
+	
+	public void addCourse() {
+	    	
+		    int CourseId = courseId;
+		    
+		    System.out.println("-------------Course Catalog Generation-------------");
+		    
+		    System.out.print("Enter Course Name: ");
+		    String courseName = sc.nextLine();
+		    
+		    System.out.print("Enter Professor Name: ");
+		    String professorName = sc.nextLine();
+		    
+		    courseIdincrementor();
+		    userIdincrementor();
+		 
+		    Catalog crs = new Catalog(CourseId, courseName,professorName);
+		
+		    CourseList.add(crs);
+	    }
+
+	public void viewCourse(){
+		
+		System.out.println("-------------Course Display-------------");
+	
+	    for(int i = 0; i < CourseList.size(); i++){
+	    	
+	        	System.out.println(CourseList.get(i).getCourseId());
+	            System.out.println(CourseList.get(i).getCourseName());
+	            System.out.println(CourseList.get(i).getProfessorName());
+	    }
+	}
+	
+	public void deleteCourse(){
+		 
+		System.out.println("---------------Remove Course-------------");
+		
+	    System.out.println("Enter Course ID: ");
+	    int courseId = sc.nextInt();
+	
+	    for(int i = 0; i < CourseList.size(); i++){
+	    	
+	        if(CourseList.get(i) != null && courseId == CourseList.get(i).getCourseId()){
+	            
+	        	CourseList.removeElementAt(i);
+	        	System.out.println("Course Deleted successfully.");
+	            break;
+	        }
+	    }
 	}
 
 }
