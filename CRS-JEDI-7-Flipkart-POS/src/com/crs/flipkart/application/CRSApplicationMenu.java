@@ -79,7 +79,7 @@ public class CRSApplicationMenu {
 		
 		System.out.println("Enter UserType as 0->ADMIN, 1->PROFESSOR, 2->STUDENT: ");
 		userType = sc.nextInt();
-		sc.nextLine();
+		
 		System.out.println("Enter Email ID: ");
 		userEmailId = sc.next();
 		
