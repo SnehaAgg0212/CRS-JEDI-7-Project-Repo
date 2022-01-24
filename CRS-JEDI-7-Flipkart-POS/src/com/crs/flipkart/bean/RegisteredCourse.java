@@ -31,14 +31,14 @@ public class RegisteredCourse {
 		this.courseName = courseName;
 		this.studentId = studentId;
 	}
-
+	
 	/**
 	 * @return the courseId
 	 */
 	public int getCourseId() {
 		return courseId;
 	}
-
+	
 	/**
 	 * @param courseId the courseId to set
 	 */
