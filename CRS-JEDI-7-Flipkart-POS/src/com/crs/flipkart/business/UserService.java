@@ -46,4 +46,16 @@ public class UserService implements UserInterface {
 		
 		return null;
 	}
+	
+	/**
+	 * Method to verify User credentials
+	 * @param emailId
+	 * @param password
+	 * @return
+	 */
+	@Override
+	public boolean validateUser(String emailId, String password) {
+		
+		return false;
+	}
 }

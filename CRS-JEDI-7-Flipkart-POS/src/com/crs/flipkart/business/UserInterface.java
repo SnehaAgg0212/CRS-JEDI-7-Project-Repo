@@ -25,4 +25,11 @@ public interface UserInterface {
 	 */
 	String getRoleOfUser(String userId);
 
+	/**
+	 * @param emailId
+	 * @param password
+	 * @return
+	 */
+	boolean validateUser(String emailId, String password);
+	
 }
