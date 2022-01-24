@@ -3,17 +3,23 @@
  */
 package com.crs.flipkart.business;
 
+import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Admin;
 
 import java.util.*;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
-
 /**
  * @author LENOVO
  *
  */
 public class AdminService {
+	
+	GradeCard grades[] = new GradeCard[] {
+			new GradeCard(414, "Software Engineering", 1, 9.8, 7),
+			new GradeCard(213, "Modern Algebra", 1, 8, 7),
+			new GradeCard(212, "Software Project Management", 1, 10, 7)
+	};
 	
 	Student student[] = new Student[] {new Student("ssahay", "shambhavi.sahay@flipkart.com", "ABCD", "student", 1,
 			"1234567890", "female", "jaipur", "CS", 101, 123, false), new Student("heroku", "heroku@flipkart.com", "ABCD", "student", 1,
@@ -124,6 +130,25 @@ public class AdminService {
 			}
 		}
 		return true;
+	}
+	
+	public void GenerateGradeCard(int studentId, String studentName, int semesterId)
+	{
+		System.out.println("Semester: " + semesterId);
+		
+		System.out.println(" StudentId: " + studentId + " StudentName: " + studentName);
+		
+		double overallGpa = 0.0;
+
+		for(GradeCard course_grade:grades) {
+			System.out.println(course_grade.getCourseId() + " " + course_grade.getCourseName() + " " + course_grade.getGpa());
+			overallGpa += course_grade.getGpa();
+		}
+		
+		overallGpa /= (double)grades.length;
+		
+		System.out.println("Overall GPA: " + overallGpa);
+		
 	}
 
 }
