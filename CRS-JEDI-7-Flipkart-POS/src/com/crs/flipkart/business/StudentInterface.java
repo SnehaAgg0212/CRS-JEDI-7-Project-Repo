@@ -4,11 +4,11 @@
 package com.crs.flipkart.business;
 
 /**
- * @author devanshugarg, iamshambhavi
+ * @author iamshambhavi
  *
  */
-public class StudentService implements StudentInterface {
-	
+public interface StudentInterface {
+
 	/**
 	 * @param userName
 	 * @param userEmailId
@@ -22,39 +22,18 @@ public class StudentService implements StudentInterface {
 	 * @param batch
 	 */
 	public String register(String userName, String userEmailId, String userPassword, int userId, String phoneNo,
-			String gender, String address, String branchName, int batch) {
-		
-		String studentId ="";
-		
-		// Code
-		
-		return studentId;
-		
-	}
+			String gender, String address, String branchName, int batch);
 	
 	/**
      * @param userId
      * @return Student ID
      */
-    public String getStudentId(String userId) {
-    	String studentId ="";
-		
-		// Code
-		
-		return studentId;
-		
-    }
+    public String getStudentId(String userId);
     
     /**
-     * @param studentId
+     * @param userId
      * @return true/false indicating if student registration approved by admin
      */
-    public Boolean isApproved(String studentId) {
-		
-		// Code
-		
-		return true;
-		
-    }
-	
+    public Boolean isApproved(String studentId);
+    
 }

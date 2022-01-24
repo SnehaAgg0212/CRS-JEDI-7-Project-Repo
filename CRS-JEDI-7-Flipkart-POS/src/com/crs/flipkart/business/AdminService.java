@@ -22,10 +22,16 @@ public class AdminService {
 			new GradeCard(212, "Software Project Management", 1, 10, 7)
 	};
 	
-	public static final Student student[] = new Student[] {new Student("ssahay", "shambhavi.sahay@flipkart.com", "ABCD", "student", 1,
-			"1234567890", "female", "jaipur", "CS", 101, 123, false), new Student("heroku", "heroku@flipkart.com", "ABCD", "student", 1,
-					"1234567890", "female", "jaipur", "CS", 102, 123, false), new Student("mymyaway", "mymyaway@flipkart.com", "ABCD", "student", 1,
-							"1234567890", "female", "jaipur", "CS", 103, 123, false)};
+	List<Student> student = new ArrayList<Student>() {
+		{
+			add(new Student("username_1", "username_1@flipkart.com", "ABCD", "student", 1,
+				"1234567890", "female", "location", "CS", 101, 123, false));
+			add(new Student("username_2", "username_2@flipkart.com", "ABCD", "student", 1,
+					"1234567890", "female", "location", "CS", 102, 123, false));
+			add(new Student("username_3", "username_3@flipkart.com", "ABCD", "student", 1,
+					"1234567890", "female", "location", "CS", 103, 123, false));
+		}
+	}; 
 	
 	public static final Admin admin[] = new Admin[] {new Admin("userName",  "admin@gmail.com",  "admin",  "admin",  101,  "phoneNo", "Male",  "address",  "dateOfJoining"),
 			new Admin("userName",  "admin1@gmail.com",  "admin1",  "admin",  102,  "phoneNo", "Male",  "address",  "dateOfJoining"),
@@ -131,8 +137,8 @@ public class AdminService {
 	}
 	
 	public boolean approveStudentRegistration(int studentId) {
-		for(int i=0;i<student.length;i++) {
-			if(student[i].getStudentId() == studentId) {
+		for(int i=0;i<student.size();i++) {
+			if(student.get(i).getStudentId() == studentId) {
 				return false;
 			}
 		}
