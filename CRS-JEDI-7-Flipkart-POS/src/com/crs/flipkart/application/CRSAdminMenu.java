@@ -23,8 +23,6 @@ public class CRSAdminMenu {
 		Scanner sc = new Scanner(System.in);
 
 		CRSAdminMenu crsAdminMenu = new CRSAdminMenu();
-		AdminService adminServices = new AdminService();
-		Scanner sc = new Scanner(System.in);
 
 		while(true) {
 			

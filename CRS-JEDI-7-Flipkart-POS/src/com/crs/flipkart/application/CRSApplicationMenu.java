@@ -3,7 +3,7 @@
  */
 package com.crs.flipkart.application;
 
-import java.util.Scanner;
+import java.util.*;
 
 import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.UserService;
