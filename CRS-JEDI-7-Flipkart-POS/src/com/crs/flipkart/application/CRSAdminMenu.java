@@ -18,37 +18,48 @@ public class CRSAdminMenu {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 		AdminService adminServices = new AdminService();
-		@SuppressWarnings("unused")
 		Scanner sc = new Scanner(System.in);
 
 		while(true) {
-			System.out.print("Enter the number to perform the task:-\n1. AddProfessor()\n 2. Delete Professor\n3. View Professor\n exit");  
-			int a= sc.nextInt();  
 			
-			switch(a) {
-				case 1: 
-					adminServices.addProfessor();
-					break;
-
-				case 2: 
-					adminServices.deleteProfessor();
-					break;
-				
-				case 3: 
-					adminServices.viewProfessor();
-					break;
-
-				default:
-					break;
-			}
+			createAdminMenu();
 			
-			if(a > 3) {
+			int userInput = sc.nextInt();  
+			
+			switch(userInput) {
+			
+			case 1: 
+				adminServices.addProfessor();
 				break;
+			case 2: 
+				adminServices.viewProfessor();
+				break;
+			case 3: 
+				adminServices.deleteProfessor();
+				break;
+			default:
+				System.out.println("Invalid Input !");
 			}
 		}
-		sc.close();
 	}
 	
+	/**
+	 * Method to Create Main Menu
+	 */
+	public static void createAdminMenu()
+	{
+        System.out.println("#------------------------Welcome to Course Registration System------------------------#");
+        
+        System.out.println("*********************************************************************************");
+        System.out.println("********************************* Admin Menu ************************************");
+        System.out.println("*********************************************************************************");
+        
+        System.out.println("1. Add Professor");
+        System.out.println("2. View Professor");
+        System.out.println("3. Remove Professor");
+        System.out.println("4. Exit");
+        
+        System.out.print("Enter User Input: ");
+	}
 }
