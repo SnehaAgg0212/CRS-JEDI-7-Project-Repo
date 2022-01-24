@@ -11,9 +11,9 @@ import com.crs.flipkart.bean.GradeCard;
 public class AdminService {
 	
 	GradeCard grades[]=new GradeCard[] {
-			new GradeCard("IT414","Software Engineering",1,9.8,7),
-			new GradeCard("SC212","Modern Algebra",1,8,7),
-			new GradeCard("IT212","Software Project Management",1,10,7)
+			new GradeCard(414,"Software Engineering",1,9.8,7),
+			new GradeCard(213,"Modern Algebra",1,8,7),
+			new GradeCard(212,"Software Project Management",1,10,7)
 	};
 	
 	public void GenerateGradeCard(int studentId,int semesterId)
