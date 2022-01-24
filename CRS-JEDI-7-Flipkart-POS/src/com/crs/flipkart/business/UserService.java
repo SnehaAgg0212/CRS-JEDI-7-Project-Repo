@@ -11,25 +11,39 @@ import com.crs.flipkart.utils.Utils.UserType;
  *
  */
 
-public class UserService {
+public class UserService implements UserInterface {
 	
+	@Override
 	public boolean userLogin(UserType userType, String userId, String userPassword) {
 		
 		switch(userType) {
+		
 		case ADMIN:
 			Admin admin[] = AdminService.admin;
 			
-			for(int i=0; i<admin.length; i++) {
+			for(int i = 0; i < admin.length; i++) {
+				 
 				if(userId.equals(admin[i].getUserEmailId()) && userPassword.equals(admin[i].getUserPassword())) {
-					System.out.println("Successfully loggin");
+					
+					System.out.println("Successfully Logged In!");
 					return true;
 				}
 			}
-			
-
-			System.out.println("Unsuccessful");
+		default:
+			System.out.println("Login Unsuccessful!");
 			return false;
 		}
+	}
+	
+	@Override
+	public boolean updatePassword (String userId, String newPassword) {
+		
 		return false;
+	}
+	
+	@Override
+	public String getRoleOfUser (String userId) {
+		
+		return null;
 	}
 }

@@ -6,6 +6,7 @@ package com.crs.flipkart.application;
 import java.util.Scanner;
 
 import com.crs.flipkart.business.AdminService;
+import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.utils.Utils.UserType;
 
@@ -15,6 +16,8 @@ import com.crs.flipkart.utils.Utils.UserType;
  */
 public class CRSApplicationMenu {
 
+	CRSApplicationMenu crsApplicationMenu = new CRSApplicationMenu();
+	
 	/**
 	 * @param args
 	 */
@@ -22,7 +25,6 @@ public class CRSApplicationMenu {
 		// TODO Auto-generated method stub
 		
 		Scanner sc = new Scanner(System.in);
-		CRSApplicationMenu crsApplicationMenu = new CRSApplicationMenu();
 		
 		createMainMenu();
 		
@@ -32,16 +34,16 @@ public class CRSApplicationMenu {
 		switch(userInput) {
 		
 		case 1:
-			crsApplicationMenu.userLogin();
+			userLogin();
 			break;
 		case 2:
-			crsApplicationMenu.registerStudent();
+			registerStudent();
 			break;
 		case 3:	
-			crsApplicationMenu.updatePassword();
+			updatePassword();
 			break;
 		case 4:
-			crsApplicationMenu.exit();
+			exit();
 			break;
 		default:
 			System.out.println("Invalid Input !");
@@ -67,10 +69,10 @@ public class CRSApplicationMenu {
 	/**
 	 * User Login
 	 */
-	public void userLogin() {
+	private static void userLogin() {
 		
 		Scanner sc = new Scanner(System.in);
-		UserService userService = new UserService();
+		UserInterface userService = new UserService();
 		
 		System.out.println("-----------------Login------------------");
 		
@@ -94,7 +96,7 @@ public class CRSApplicationMenu {
 	/**
 	 * Student Registration
 	 */
-	public void registerStudent() {
+	private static void registerStudent() {
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -131,7 +133,7 @@ public class CRSApplicationMenu {
 	/**
 	 * Password Updation
 	 */
-	public void updatePassword() {
+	private static void updatePassword() {
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -153,7 +155,7 @@ public class CRSApplicationMenu {
 		
 	}
 	
-	public void exit() {
+	private static void exit() {
 		
 		System.out.println("Thanks for your visit !");
 	}
