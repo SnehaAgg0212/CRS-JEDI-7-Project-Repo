@@ -9,7 +9,7 @@ package com.crs.flipkart.bean;
  */
 public class Course {
 
-	private String courseId;
+	private int courseId;
 	private String courseName;
 	private String courseDescription;
 	private double courseFee;
@@ -31,7 +31,7 @@ public class Course {
 	 * @param courseSeats
 	 * @param professorId
 	 */
-	public Course(String courseId, String courseName, String courseDescription, double courseFee, int courseSeats,
+	public Course(int courseId, String courseName, String courseDescription, double courseFee, int courseSeats,
 			int professorId) {
 		super();
 		this.courseId = courseId;
