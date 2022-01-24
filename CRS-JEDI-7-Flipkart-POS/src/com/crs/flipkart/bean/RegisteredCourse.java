@@ -74,5 +74,4 @@ public class RegisteredCourse {
 		this.studentId = studentId;
 	}
 
-	
 }
