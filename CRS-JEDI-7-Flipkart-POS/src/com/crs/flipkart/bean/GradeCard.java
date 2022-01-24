@@ -107,7 +107,5 @@ public class GradeCard {
 	public void setSemesterId(int semesterId) {
 		this.semesterId = semesterId;
 	}
-
-	
 	
 }
