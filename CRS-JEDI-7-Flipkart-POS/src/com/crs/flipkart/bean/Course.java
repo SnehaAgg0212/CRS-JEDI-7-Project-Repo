@@ -45,14 +45,14 @@ public class Course {
 	/**
 	 * @return the courseId
 	 */
-	public String getCourseId() {
+	public int getCourseId() {
 		return courseId;
 	}
 
 	/**
 	 * @param courseId the courseId to set
 	 */
-	public void setCourseId(String courseId) {
+	public void setCourseId(int courseId) {
 		this.courseId = courseId;
 	}
 
