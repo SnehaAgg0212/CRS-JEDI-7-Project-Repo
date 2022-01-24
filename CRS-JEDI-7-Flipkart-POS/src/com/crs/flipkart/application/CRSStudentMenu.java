@@ -71,7 +71,7 @@ public class CRSStudentMenu {
 		System.out.println("3. Drop Course");
 		System.out.println("4. View Course");
 		System.out.println("5. View Registered Courses");
-		System.out.println("6. View grade card");
+		System.out.println("6. View Grade Card");
 		System.out.println("7. Make Payment");
 		System.out.println("8. Exit");
         
@@ -80,36 +80,64 @@ public class CRSStudentMenu {
         System.out.print("Enter User Input: ");
 	}
 
+	/**
+	 * Course Registration
+	 * @param studentId
+	 */
 	private static void registerCourses(int studentId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Add Course
+	 * @param studentId
+	 */
 	private static void addCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Drop Course
+	 * @param studentId
+	 */
 	private static void dropCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * View Course
+	 * @param studentId
+	 */
 	private static void viewCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * View Registered Courses
+	 * @param studentId
+	 */
 	private static void viewRegisteredCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * View Grade Card
+	 * @param studentId
+	 */
 	private static void viewGradeCard(int studentId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Make Payment
+	 * @param studentId
+	 */
 	private static void makePayment(int studentId) {
 		// TODO Auto-generated method stub
 		

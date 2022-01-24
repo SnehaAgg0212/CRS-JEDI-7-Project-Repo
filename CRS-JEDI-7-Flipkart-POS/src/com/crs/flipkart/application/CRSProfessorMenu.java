@@ -9,6 +9,10 @@ import java.util.Scanner;
  * @author devanshugarg
  *
  */
+/**
+ * @author devanshugarg
+ *
+ */
 public class CRSProfessorMenu {
 
 	static Scanner sc = new Scanner(System.in);
@@ -68,21 +72,37 @@ public class CRSProfessorMenu {
         System.out.print("Enter User Input: ");
 	}
 	
+	/**
+	 * Choose Courses
+	 * @param professorId
+	 */
 	private static void chooseCourses(int professorId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * View Enrolled Students
+	 * @param professorId
+	 */
 	private static void viewEnrolledStudents(int professorId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Add Grades
+	 * @param professorId
+	 */
 	private static void addGrade(int professorId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * View Courses
+	 * @param professorId
+	 */
 	private static void getCourses(int professorId) {
 		// TODO Auto-generated method stub
 		

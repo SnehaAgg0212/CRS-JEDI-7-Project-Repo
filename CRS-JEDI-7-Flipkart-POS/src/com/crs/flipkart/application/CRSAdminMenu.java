@@ -94,6 +94,9 @@ public class CRSAdminMenu {
         System.out.print("Enter User Input: ");
 	}
 	
+	/**
+	 * Approve Student
+	 */
 	private static void approveStudent() {
 		
 		System.out.println("---------------Student Approval Panel-------------");
@@ -108,6 +111,9 @@ public class CRSAdminMenu {
 		}
 	}
 	
+	/**
+	 * Add Professor
+	 */
 	private static void addProfessor() {
 		
 		Professor professor = new Professor();
@@ -151,6 +157,9 @@ public class CRSAdminMenu {
 	    adminServices.addProfessor(professor);
 	}
 	
+	/**
+	 * View Professor
+	 */
 	private static void viewProfessor() {
 		
 		System.out.println("---------------Professor Details Display Panel-------------");
@@ -169,6 +178,9 @@ public class CRSAdminMenu {
 	    }
 	}
 	
+	/**
+	 * Delete Professor
+	 */
 	private static void deleteProfessor() {
 		
 		System.out.println("---------------Professor Removal Panel-------------");
@@ -179,6 +191,9 @@ public class CRSAdminMenu {
 	    adminServices.deleteProfessor(professorId);
 	}
 	
+	/**
+	 * Add Course to Catalogue
+	 */
 	private static void addCourseToCatalog() {
 		
 		Course course = new Course();
@@ -208,6 +223,9 @@ public class CRSAdminMenu {
 	    adminServices.addCourse(course);
 	}
 	
+	/**
+	 * View Courses in Catalogue
+	 */
 	private static void viewCoursesInCatalog() {
 		
 		System.out.println("-------------Viewing Courses In Catalog-------------");
@@ -226,6 +244,9 @@ public class CRSAdminMenu {
 		}
 	}
 	
+	/**
+	 * Delete Course from Catalogue
+	 */
 	private static void deleteCourseFromCatalog() {
 		
 		System.out.println("-------------Delete Course From Catalog-------------");
@@ -236,6 +257,9 @@ public class CRSAdminMenu {
 	    adminServices.deleteCourse(courseId);
 	}
 	
+	/**
+	 * Assign Course to Professor
+	 */
 	private static void assignCourseToProfessor() {
 		
 		System.out.println("-------------Assign Courses to Professors-------------");

@@ -155,6 +155,9 @@ public class CRSApplicationMenu {
 		
 	}
 	
+	/**
+	 * Exiting from the System
+	 */
 	private static void exit() {
 		
 		System.out.println("Thanks for your visit !");
