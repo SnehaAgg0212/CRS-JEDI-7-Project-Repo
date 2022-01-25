@@ -12,6 +12,7 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
 
 /**
@@ -20,7 +21,7 @@ import com.crs.flipkart.dao.AdminDaoOperation;
  */
 public class AdminService implements AdminInterface {
 	
-	AdminDaoOperation adminDaoOperation = new AdminDaoOperation();
+	AdminDaoInterface adminDaoOperation = new AdminDaoOperation();
 
 	static Vector<GradeCard> stud1 = new Vector<GradeCard>() {{
 		add (new GradeCard(401, "SE",101, 9, 7)); 

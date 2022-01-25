@@ -21,7 +21,7 @@ import java.util.Vector;
 import com.crs.flipkart.utils.DBUtils;
 
 /**
- * @author devanshugarg, iamshambhavi
+ * @author devanshugarg, iamshambhavi, JainamSanghvi91
  *
  */
 public class AdminDaoOperation implements AdminDaoInterface {
@@ -57,6 +57,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setString(7, user.getGender());
 			statement.setString(8, user.getAddress());
 			int row = statement.executeUpdate();
+			System.out.println(row + " user added.");
 			if (row == 0) {
 				System.out.println("User with User Id " + user.getUserId() + " not added.");
 			} else {
@@ -86,8 +87,9 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setString(3, professor.getDepartment());
 			statement.setString(4, professor.getDesignation());
 			int row = statement.executeUpdate();
+			System.out.println(row + " professor added.");
 			if (row == 0) {
-				System.out.println("Professor with Professor Id " + professor.getProfessorId() + " not added.");
+				System.out.println("Professor with Professor Id " + professor.getProfessorId() + " already exists.");
 			} else {
 				System.out.println("Professor with Professor Id " + professor.getProfessorId() + " added.");
 			}
@@ -141,6 +143,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, professorId);
 			int row = statement.executeUpdate();
+			System.out.println(row + " professor deleted.");
 			if (row == 0) {
 				System.out.println("Professor with Professor Id " + professorId + " does not exists.");
 			} else {
@@ -165,6 +168,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, studentId);
 			int row = statement.executeUpdate();
+			System.out.println(row + "student approved.");
 			if (row == 0) {
 				System.out.println("Student with Student Id " + studentId + " does not exists.");
 			} else {
@@ -185,7 +189,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public Vector<RegisteredCourse> generateGradeCard(int studentId, int semesterId) {
 		
 		statement = null;
-		
 		return null;
 	}
 	
@@ -197,6 +200,25 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public void addCourse(Course course) {
 		
 		statement = null;
+		
+		try {
+			String sql = SQLQueriesConstant.ADD_COURSE_QUERY;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, course.getCourseId());
+ 			statement.setString(2, course.getCourseName());
+ 			statement.setString(3, course.getCourseDescription());
+ 			statement.setDouble(4, course.getCourseFee());
+ 			statement.setInt(5, course.getCourseSeats());
+			int row = statement.executeUpdate();
+			System.out.println(row + " course added.");
+			if (row == 0) {
+				System.out.println("Course with Course Code " + course.getCourseId() + " already exists.");
+			} else {
+				System.out.println("Course with Course Code " + course.getCourseId() + " added.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 	
 	/**
@@ -208,7 +230,26 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		
 		statement = null;
 		
-		return null;
+		Vector<Course> courseList = new Vector<>();
+		
+		try {
+			String sql = SQLQueriesConstant.VIEW_COURSE_QUERY;
+			statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Course course = new Course();
+				course.setCourseId(resultSet.getInt(1));
+ 				course.setCourseName(resultSet.getString(2));
+ 				course.setCourseDescription(resultSet.getString(3));
+ 				course.setCourseFee(resultSet.getDouble(4));
+ 				course.setCourseSeats(resultSet.getInt(5));
+				courseList.add(course);
+			}
+			System.out.println("Total Number of Courses: " + courseList.size());
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return courseList;
 	}
 	
 	/**
@@ -225,6 +266,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, courseId);
 			int row = statement.executeUpdate();
+			System.out.println(row + " course deleted.");
 			if (row == 0) {
 				System.out.println("Course with Course Id " + courseId + " does not exists.");
 			} else {
