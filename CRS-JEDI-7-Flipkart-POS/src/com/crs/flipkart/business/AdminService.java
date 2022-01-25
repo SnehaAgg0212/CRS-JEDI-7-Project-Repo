@@ -90,16 +90,9 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public boolean approveStudentRegistration(int studentId) {
+	public void approveStudentRegistration(int studentId) {
 
-		for (Student element : StudentList) {
-
-			if(element.getStudentId() == studentId) {
-
-				return false;
-			}
-		}
-		return true;
+		adminDaoOperation.approveStudentRegistration(studentId);
 	}
 
 	@Override
@@ -135,27 +128,19 @@ public class AdminService implements AdminInterface {
 	@Override
 	public void addCourse(Course course) {
 
-		    CourseList.add(course);
+		adminDaoOperation.addCourse(course);
 	}
 
 	@Override
 	public Vector<Course> viewCourse() {
 
-	    return CourseList;
+	    return adminDaoOperation.viewCourse();
 	}
 
 	@Override
 	public void deleteCourse(int courseId) {
 
-	    for(int i = 0; i < CourseList.size(); i++) {
-
-	        if(CourseList.get(i) != null && courseId == CourseList.get(i).getCourseId()) {
-
-	        	CourseList.removeElementAt(i);
-	        	System.out.println("Course Deleted successfully.");
-	            break;
-	        }
-	    }
+		adminDaoOperation.deleteCourse(courseId);
 	}
 
 //	@Override
