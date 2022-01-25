@@ -12,18 +12,20 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.RegisteredCourse;
 import com.crs.flipkart.bean.User;
+import com.crs.flipkart.constants.SQLQueriesConstant;
 
 import java.util.Vector;
 
 import com.crs.flipkart.utils.DBUtils;
 
 /**
- * @author devanshugarg
+ * @author devanshugarg, iamshambhavi
  *
  */
 public class AdminDaoOperation implements AdminDaoInterface {
 
 	Connection connection = DBUtils.getConnection();
+	private PreparedStatement statement = null;
 	
 	/**
 	 * 
@@ -60,6 +62,26 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	@Override
 	public void approveStudentRegistration(int studentId) {
 		
+		statement = null;
+		String sql = SQLQueriesConstant.APPROVE_STUDENT_QUERY;
+		
+		try {
+			
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, studentId);
+			int row = statement.executeUpdate();
+			
+			System.out.println(row + " student registration approved.");
+			
+			if(row == 0) {
+				System.out.println("Student with studentId: " + studentId + " not approved by admin.");
+			} else {
+				System.out.println("Student with studentId: " + studentId + " approved by admin.");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -108,6 +130,35 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void addUser(User user) {
+		
+		statement = null;
+		String sql = SQLQueriesConstant.ADD_USER_QUERY;
+		
+		try {
+			
+			statement = connection.prepareStatement(sql);
+			
+			statement.setInt(1, user.getUserId());
+			statement.setString(2, user.getUserName());
+			statement.setString(3, user.getUserEmailId());
+			statement.setString(4, user.getUserPassword());
+			statement.setString(5, user.getRole());
+			statement.setString(6, user.getPhoneNo());
+			statement.setString(7, user.getGender());
+			statement.setString(8, user.getAddress());
+			
+			int row = statement.executeUpdate();
+			System.out.println(row + " user added.");
+			
+			if(row == 0) {
+				System.out.println("User with userId: " + user.getUserId() + " not added.");
+			} else {
+				System.out.println("User with userId: " + user.getUserId() + " added.");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 }

@@ -20,7 +20,7 @@ public interface AdminInterface {
 	 * @param studentId
 	 * @return
 	 */
-	boolean approveStudentRegistration(int studentId);
+	void approveStudentRegistration(int studentId);
 
 	/**
 	 * @return

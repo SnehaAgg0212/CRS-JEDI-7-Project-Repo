@@ -12,6 +12,8 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.dao.AdminDaoInterface;
+import com.crs.flipkart.dao.AdminDaoOperation;
 
 /**
  * @author LENOVO
@@ -19,6 +21,8 @@ import com.crs.flipkart.bean.Student;
  */
 public class AdminService implements AdminInterface {
 
+	AdminDaoInterface adminDaoOperation = new AdminDaoOperation();
+	
 	static Vector<GradeCard> stud1 = new Vector<GradeCard>() {{
 		add (new GradeCard(401, "SE",101, 9, 7)); 
 		add (new GradeCard(402, "DSA",101, 8, 7)); 
@@ -95,16 +99,8 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public boolean approveStudentRegistration(int studentId) {
-
-		for (Student element : StudentList) {
-
-			if(element.getStudentId() == studentId) {
-
-				return false;
-			}
-		}
-		return true;
+	public void approveStudentRegistration(int studentId) {
+		adminDaoOperation.approveStudentRegistration(studentId);
 	}
 
 	@Override
