@@ -16,15 +16,30 @@ import java.util.Scanner;
 public class CRSProfessorMenu {
 
 	static Scanner sc = new Scanner(System.in);
+	
 	/**
-	 * @param args
+	 * Method to Create Main Menu
 	 */
-	public static void main(int professorId) {
-		// TODO Auto-generated method stub
+	public static void createProfessorMenu(int professorId)
+	{
 		
 		while(true) {
 			
-			createProfessorMenu();
+	        System.out.println("#------------------------Welcome to Course Registration System------------------------#");
+	        
+	        System.out.println("*************************************************************************************");
+	        System.out.println("********************************* Professor Menu ************************************");
+	        System.out.println("*************************************************************************************");
+	        
+	        System.out.println("1. View Courses");
+			System.out.println("2. Add Grades");
+			System.out.println("3. View Enrolled Students");
+			System.out.println("4. Choose Courses");
+			System.out.println("5. Exit");
+	        
+	        System.out.println("*********************************************************************************");
+	        
+	        System.out.print("Enter User Input: ");
 			
 			int choice = sc.nextInt();
 			
@@ -48,28 +63,6 @@ public class CRSProfessorMenu {
 				System.out.println("Invalid Input !");
 			}
 		}
-	}
-	
-	/**
-	 * Method to Create Main Menu
-	 */
-	public static void createProfessorMenu()
-	{
-        System.out.println("#------------------------Welcome to Course Registration System------------------------#");
-        
-        System.out.println("*************************************************************************************");
-        System.out.println("********************************* Professor Menu ************************************");
-        System.out.println("*************************************************************************************");
-        
-        System.out.println("1. View Courses");
-		System.out.println("2. Add Grades");
-		System.out.println("3. View Enrolled Students");
-		System.out.println("4. Choose Courses");
-		System.out.println("5. Exit");
-        
-        System.out.println("*********************************************************************************");
-        
-        System.out.print("Enter User Input: ");
 	}
 	
 	/**

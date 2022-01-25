@@ -1,16 +1,13 @@
 package com.crs.flipkart.business;
 
-import com.crs.flipkart.utils.Utils.UserType;
-
 public interface UserInterface {
 
 	/**
-	 * @param userType
 	 * @param userId
 	 * @param userPassword
 	 * @return
 	 */
-	boolean userLogin(UserType userType, String userId, String userPassword);
+	boolean userLogin(String userId, String userPassword);
 
 	/**
 	 * @param userId
@@ -31,5 +28,5 @@ public interface UserInterface {
 	 * @return
 	 */
 	boolean validateUser(String emailId, String password);
-	
+
 }

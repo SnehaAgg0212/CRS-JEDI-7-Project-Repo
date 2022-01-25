@@ -17,20 +17,35 @@ import com.crs.flipkart.business.AdminService;
  */
 public class CRSAdminMenu {
 	
-	CRSAdminMenu crsAdminMenu = new CRSAdminMenu();
 	static AdminInterface adminServices = new AdminService();
 	static Scanner sc = new Scanner(System.in);
 
 	/**
-	 * @param args
+	 * Method to Create Main Menu
 	 */
-	public static void main(String[] args) {
-		
-		// TODO Auto-generated method stub
-		
+	public static void createAdminMenu()
+	{
 		while(true) {
 			
-			createAdminMenu();
+	        System.out.println("#------------------------Welcome to Course Registration System------------------------#");
+	        
+	        System.out.println("*********************************************************************************");
+	        System.out.println("********************************* Admin Menu ************************************");
+	        System.out.println("*********************************************************************************");
+	        
+	        System.out.println("1. Add Professor");
+	        System.out.println("2. View Professor");
+	        System.out.println("3. Remove Professor");
+	        System.out.println("4. Approve Student");
+	        System.out.println("5. Add Course to Catalog");
+	        System.out.println("6. View Courses in Catalog");
+	        System.out.println("7. Delete Course from Catalog");
+	        System.out.println("8. Generate Grade Card");
+	        System.out.println("9. Exit");
+	        
+	        System.out.println("*********************************************************************************");
+	        
+	        System.out.print("Enter User Input: ");
 			
 			int userInput = sc.nextInt();  
 			
@@ -58,7 +73,7 @@ public class CRSAdminMenu {
 				deleteCourseFromCatalog();
 				break;
 			case 8:
-				assignCourseToProfessor();
+				generateGradeCard();
 				break;
 			case 9:
 				return;
@@ -66,32 +81,6 @@ public class CRSAdminMenu {
 				System.out.println("Invalid Input !");
 			}
 		}
-	}
-
-	/**
-	 * Method to Create Main Menu
-	 */
-	public static void createAdminMenu()
-	{
-        System.out.println("#------------------------Welcome to Course Registration System------------------------#");
-        
-        System.out.println("*********************************************************************************");
-        System.out.println("********************************* Admin Menu ************************************");
-        System.out.println("*********************************************************************************");
-        
-        System.out.println("1. Add Professor");
-        System.out.println("2. View Professor");
-        System.out.println("3. Remove Professor");
-        System.out.println("4. Approve Student");
-        System.out.println("5. Add Course to Catalog");
-        System.out.println("6. View Courses in Catalog");
-        System.out.println("7. Delete Course from Catalog");
-        System.out.println("8. Assign Course To Professor");
-        System.out.println("9. Exit");
-        
-        System.out.println("*********************************************************************************");
-        
-        System.out.print("Enter User Input: ");
 	}
 	
 	/**
@@ -258,45 +247,61 @@ public class CRSAdminMenu {
 	}
 	
 	/**
-	 * Assign Course to Professor
+	 * Generate Grade Card
 	 */
-	private static void assignCourseToProfessor() {
+	private static void generateGradeCard() {
 		
-		System.out.println("-------------Assign Courses to Professors-------------");
+		System.out.println("-------------Grade Card Generation-------------");
 		
-		Vector<Professor> ProfessorList = adminServices.viewProfessor();
-		Vector<Course> CourseCatalog = adminServices.viewCourse();
+		System.out.println("Enter the Student Id: ");
+		int studentId = sc.nextInt();
 		
-		System.out.println("---------------Professor Details Display Panel-------------");
+		System.out.println("Enter the Semester Id: ");
+		int semester = sc.nextInt();
 		
-		for(int i = 0; i < ProfessorList.size(); i++){
-	    	
-    		System.out.println("Professor " + i + ": ");
-        	System.out.println("Professor Id: " + ProfessorList.get(i).getProfessorId());
-        	System.out.println("Professor Name: " + ProfessorList.get(i).getUserName());
-            System.out.println("Department: " + ProfessorList.get(i).getDepartment());
-            System.out.println("Designation: " + ProfessorList.get(i).getDesignation()); 
-            System.out.println("*******************************************************************");
-            
-	    }
-		
-		System.out.println("-------------Viewing Courses In Catalog-------------");
-		
-		for(int i = 0; i < CourseCatalog.size(); i++){
-    		
-    		System.out.println("Course " + i + ": ");
-        	System.out.println("Course Code: " + CourseCatalog.get(i).getCourseId());
-            System.out.println("Course Name: " + CourseCatalog.get(i).getCourseName());
-            System.out.println("Course Description: " + CourseCatalog.get(i).getCourseDescription());
-            System.out.println("*******************************************************************");
-		}
-		
-		System.out.println("Enter Course Code: ");
-		int courseId = sc.nextInt();
-		
-		System.out.println("Enter Professor Id: ");
-		int professorId = sc.nextInt();
-		
-		adminServices.assignCourseToProfessor(courseId, professorId);
+		adminServices.generateGradeCard(studentId, semester);
 	}
+	
+//	/**
+//	 * Assign Course to Professor
+//	 */
+//	private static void assignCourseToProfessor() {
+//		
+//		System.out.println("-------------Assign Courses to Professors-------------");
+//		
+//		Vector<Professor> ProfessorList = adminServices.viewProfessor();
+//		Vector<Course> CourseCatalog = adminServices.viewCourse();
+//		
+//		System.out.println("---------------Professor Details Display Panel-------------");
+//		
+//		for(int i = 0; i < ProfessorList.size(); i++){
+//	    	
+//    		System.out.println("Professor " + i + ": ");
+//        	System.out.println("Professor Id: " + ProfessorList.get(i).getProfessorId());
+//        	System.out.println("Professor Name: " + ProfessorList.get(i).getUserName());
+//            System.out.println("Department: " + ProfessorList.get(i).getDepartment());
+//            System.out.println("Designation: " + ProfessorList.get(i).getDesignation()); 
+//            System.out.println("*******************************************************************");
+//            
+//	    }
+//		
+//		System.out.println("-------------Viewing Courses In Catalog-------------");
+//		
+//		for(int i = 0; i < CourseCatalog.size(); i++){
+//    		
+//    		System.out.println("Course " + i + ": ");
+//        	System.out.println("Course Code: " + CourseCatalog.get(i).getCourseId());
+//            System.out.println("Course Name: " + CourseCatalog.get(i).getCourseName());
+//            System.out.println("Course Description: " + CourseCatalog.get(i).getCourseDescription());
+//            System.out.println("*******************************************************************");
+//		}
+//		
+//		System.out.println("Enter Course Code: ");
+//		int courseId = sc.nextInt();
+//		
+//		System.out.println("Enter Professor Id: ");
+//		int professorId = sc.nextInt();
+//		
+//		adminServices.assignCourseToProfessor(courseId, professorId);
+//	}
 }

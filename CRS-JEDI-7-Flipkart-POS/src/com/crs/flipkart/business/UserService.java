@@ -4,7 +4,6 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Admin;
-import com.crs.flipkart.utils.Utils.UserType;
 
 /**
  * @author devanshugarg
@@ -14,25 +13,20 @@ import com.crs.flipkart.utils.Utils.UserType;
 public class UserService implements UserInterface {
 	
 	@Override
-	public boolean userLogin(UserType userType, String userId, String userPassword) {
+	public boolean userLogin(String userId, String userPassword) {
 		
-		switch(userType) {
-		
-		case ADMIN:
-			Admin admin[] = AdminService.admin;
-			
-			for(int i = 0; i < admin.length; i++) {
-				 
-				if(userId.equals(admin[i].getUserEmailId()) && userPassword.equals(admin[i].getUserPassword())) {
-					
-					System.out.println("Successfully Logged In!");
-					return true;
-				}
-			}
-		default:
-			System.out.println("Login Unsuccessful!");
-			return false;
+		Admin admin = AdminService.admin;
+		System.out.println(userId);
+		System.out.println(userPassword);
+		System.out.println(admin.getUserEmailId());
+		System.out.println(admin.getUserPassword());
+		if(userId.equals(admin.getUserEmailId()) && userPassword.equals(admin.getUserPassword())) {
+				
+			System.out.println("Successfully Logged In!");
+			return true;
 		}
+		System.out.println("Login Unsuccessful!");
+		return false;
 	}
 	
 	@Override

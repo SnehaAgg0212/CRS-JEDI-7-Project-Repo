@@ -3,11 +3,13 @@
  */
 package com.crs.flipkart.business;
 
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Admin;
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 
@@ -17,17 +19,25 @@ import com.crs.flipkart.bean.Student;
  */
 public class AdminService implements AdminInterface {
 
-//	public static final GradeCard grades[] = new GradeCard[] {
-//			new GradeCard(414, "Software Engineering", 1, 9.8, 7),
-//			new GradeCard(213, "Modern Algebra", 1, 8, 7),
-//			new GradeCard(212, "Software Project Management", 1, 10, 7)
-//	};
-
-	public static final Admin admin[] = new Admin[] {new Admin("userName",  "admin@gmail.com",  "admin",  "admin",  101,  "phoneNo", "Male",  "address",  "dateOfJoining"),
-			new Admin("userName",  "admin1@gmail.com",  "admin1",  "admin",  102,  "phoneNo", "Male",  "address",  "dateOfJoining"),
-			new Admin("userName",  "admin2@gmail.com",  "admin2",  "admin",  103,  "phoneNo", "Male",  "address",  "dateOfJoining"),
-			new Admin("userName",  "admin3@gmail.com",  "admin3",  "admin",  104,  "phoneNo", "Female",  "address",  "dateOfJoining")};
-
+	static Vector<GradeCard> stud1 = new Vector<GradeCard>() {{
+		add (new GradeCard(401, "SE",101, 9, 7)); 
+		add (new GradeCard(402, "DSA",101, 8, 7)); 
+		add (new GradeCard(403, "Java",101, 8.5, 7));
+	}};
+	
+	static Vector<GradeCard> stud2 = new Vector<GradeCard>() {{
+		add (new GradeCard(401, "SE",102, 9.8, 7));
+		add (new GradeCard(402, "DSA",102, 9.2, 7)); 
+		add (new GradeCard(403, "Java",102, 9, 7));
+	}};
+	
+	public static final HashMap<Integer, Vector<GradeCard>> grades = new HashMap<Integer, Vector<GradeCard>>() {{
+			put(101, stud1);
+			put(102, stud2);
+		}};
+	
+	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  "admin",  101,  "phoneNo", "Male",  "address",  "dateOfJoining");
+	
 	Scanner sc = new Scanner(System.in);
 
     static int profId = 100;
@@ -41,7 +51,14 @@ public class AdminService implements AdminInterface {
         userId ++;
     }
 
-    Vector<Student> StudentList = new Vector<>();
+    Vector<Student> StudentList = new Vector<Student>() {{
+    	add(new Student("username_1", "username_1@flipkart.com", "ABCD", "student", 1,
+				"1234567890", "female", "location", "CS", 101, 123, false));
+			add(new Student("username_2", "username_2@flipkart.com", "ABCD", "student", 1,
+					"1234567890", "female", "location", "CS", 102, 123, false));
+			add(new Student("username_3", "username_3@flipkart.com", "ABCD", "student", 1,
+					"1234567890", "female", "location", "CS", 103, 123, false));
+    }};
     Vector<Professor> ProfessorList = new Vector<>();
     Vector<Course> CourseList = new Vector<>();
 
@@ -90,25 +107,35 @@ public class AdminService implements AdminInterface {
 		return true;
 	}
 
-//	@Override
-//	public void GenerateGradeCard(int studentId, String studentName, int semesterId)
-//	{
-//		System.out.println("Semester: " + semesterId);
-//
-//		System.out.println(" StudentId: " + studentId + " StudentName: " + studentName);
-//
-//		double overallGpa = 0.0;
-//
-//		for(GradeCard course_grade:grades) {
-//			System.out.println(course_grade.getCourseId() + " " + course_grade.getCourseName() + " " + course_grade.getGpa());
-//			overallGpa += course_grade.getGpa();
-//		}
-//
-//		overallGpa /= (double)grades.length;
-//
-//		System.out.println("Overall GPA: " + overallGpa);
-//
-//	}
+	@Override
+	public void generateGradeCard(int studentId, int semesterId)
+	{
+		System.out.println("Semester: " + semesterId);
+
+		System.out.println(" StudentId: " + studentId + " StudentName: Raj");
+
+		double overallGpa = 0.0;
+
+		if(grades.containsKey(studentId)) {
+			
+			Vector<GradeCard> studentGrade = grades.get(studentId);
+			
+			for(GradeCard course_grade : studentGrade) {
+				
+				System.out.println(course_grade.getCourseId() + " " + course_grade.getCourseName() + " " + course_grade.getGpa());
+				overallGpa += course_grade.getGpa();
+			}
+			
+			overallGpa /= (double)studentGrade.size();
+			
+			System.out.println("Overall GPA: " + overallGpa);
+		} 
+		else {
+			
+			System.out.println("Student not present.");
+		}
+
+	}
 
 	@Override
 	public void addCourse(Course course) {

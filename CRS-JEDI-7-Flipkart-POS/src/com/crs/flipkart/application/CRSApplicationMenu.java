@@ -5,10 +5,8 @@ package com.crs.flipkart.application;
 
 import java.util.Scanner;
 
-import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
-import com.crs.flipkart.utils.Utils.UserType;
 
 /**
  * @author devanshugarg
@@ -17,6 +15,7 @@ import com.crs.flipkart.utils.Utils.UserType;
 public class CRSApplicationMenu {
 
 	CRSApplicationMenu crsApplicationMenu = new CRSApplicationMenu();
+	static Scanner sc = new Scanner(System.in);
 	
 	/**
 	 * @param args
@@ -24,29 +23,32 @@ public class CRSApplicationMenu {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Scanner sc = new Scanner(System.in);
-		
 		createMainMenu();
 		
 		int userInput;
-		userInput = sc.nextInt();
 		
-		switch(userInput) {
-		
-		case 1:
-			userLogin();
-			break;
-		case 2:
-			registerStudent();
-			break;
-		case 3:	
-			updatePassword();
-			break;
-		case 4:
-			exit();
-			break;
-		default:
-			System.out.println("Invalid Input !");
+		while(true) {
+			
+			userInput = sc.nextInt();
+			
+			switch(userInput) {
+			
+			case 1:
+				userLogin();
+				break;
+			case 2:
+				registerStudent();
+				break;
+			case 3:	
+				updatePassword();
+				break;
+			case 4:
+				exit();
+				break;
+			default:
+				System.out.println("Invalid Input !");
+				createMainMenu();
+			}
 		}
 		
 	}
@@ -54,7 +56,7 @@ public class CRSApplicationMenu {
 	/**
 	 * Method to Create Main Menu
 	 */
-	public static void createMainMenu()
+	private static void createMainMenu()
 	{
         System.out.println("#------------------------Welcome to Course Registration System------------------------#");
         
@@ -76,11 +78,8 @@ public class CRSApplicationMenu {
 		
 		System.out.println("-----------------Login------------------");
 		
-		int userType; 
+		String role = "ADMIN"; 
 		String userEmailId, userPassword;
-		
-		System.out.println("Enter UserType as 0->ADMIN, 1->PROFESSOR, 2->STUDENT: ");
-		userType = sc.nextInt();
 		
 		System.out.println("Enter Email ID: ");
 		userEmailId = sc.next();
@@ -88,17 +87,33 @@ public class CRSApplicationMenu {
 		System.out.println("Enter Password: ");
 		userPassword = sc.next();
 		
-		userService.userLogin(UserType.ADMIN, userEmailId, userPassword);
-
-		sc.close();
+		boolean login = userService.userLogin(userEmailId, userPassword);
+		
+		if(login) {
+			
+			switch (role) {
+			
+			case "ADMIN": 
+				CRSAdminMenu.createAdminMenu();
+				break;
+			case "STUDENT": 
+				CRSStudentMenu.createStudentMenu(100); //studentID need to be passed
+				break;
+			case "PROFESSOR": 
+				CRSProfessorMenu.createProfessorMenu(100); //professorID need to be passed
+				break;
+			}
+		}
+		else {
+			
+			System.out.println("Invalid Credentials !");
+		}
 	}
 	
 	/**
 	 * Student Registration
 	 */
 	private static void registerStudent() {
-		
-		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("---------------Student Registration-------------");
 		
@@ -134,8 +149,6 @@ public class CRSApplicationMenu {
 	 * Password Updation
 	 */
 	private static void updatePassword() {
-		
-		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("------------------Update Password--------------------");
 		

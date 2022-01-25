@@ -22,8 +22,6 @@ public interface AdminInterface {
 	 */
 	boolean approveStudentRegistration(int studentId);
 
-//	void GenerateGradeCard(int studentId, String studentName, int semesterId);
-
 	/**
 	 * @return
 	 */
@@ -54,5 +52,11 @@ public interface AdminInterface {
 	 * @param professorId
 	 */
 	void assignCourseToProfessor(int courseId, int professorId);
+
+	/**
+	 * @param studentId
+	 * @param semesterId
+	 */
+	void generateGradeCard(int studentId, int semesterId);
 
 }
