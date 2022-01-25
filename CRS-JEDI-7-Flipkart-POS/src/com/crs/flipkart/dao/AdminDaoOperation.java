@@ -38,6 +38,37 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	
 	/**
 	 * 
+	 * @param user
+	 */
+	@Override
+	public void addUser(User user) {
+		
+		statement = null;
+		
+		try {
+			String sql = SQLQueriesConstant.ADD_USER_QUERY;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, user.getUserId());
+			statement.setString(2, user.getUserName());
+			statement.setString(3, user.getUserEmailId());
+			statement.setString(4, user.getUserPassword());
+			statement.setString(5, user.getRole());
+			statement.setString(6, user.getPhoneNo());
+			statement.setString(7, user.getGender());
+			statement.setString(8, user.getAddress());
+			int row = statement.executeUpdate();
+			if (row == 0) {
+				System.out.println("User with User Id " + user.getUserId() + " not added.");
+			} else {
+				System.out.println("User with User Id " + user.getUserId() + " added.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * 
 	 * @param professor
 	 */
 	@Override
@@ -127,6 +158,21 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	@Override
 	public void approveStudentRegistration(int studentId) {
 		
+		statement = null;
+		
+		try {
+			String sql = SQLQueriesConstant.APPROVE_STUDENT_QUERY;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, studentId);
+			int row = statement.executeUpdate();
+			if (row == 0) {
+				System.out.println("Student with Student Id " + studentId + " does not exists.");
+			} else {
+				System.out.println("Student with Student Id " + studentId + " is approved.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 	
 	/**
@@ -138,6 +184,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	@Override
 	public Vector<RegisteredCourse> generateGradeCard(int studentId, int semesterId) {
 		
+		statement = null;
+		
 		return null;
 	}
 	
@@ -148,6 +196,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	@Override
 	public void addCourse(Course course) {
 		
+		statement = null;
 	}
 	
 	/**
@@ -156,6 +205,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public Vector<Course> viewCourse() {
+		
+		statement = null;
 		
 		return null;
 	}
@@ -166,15 +217,22 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void deleteCourse(int courseId) {
+	
+		statement = null;
 		
+		try {
+			String sql = SQLQueriesConstant.DELETE_COURSE_QUERY;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, courseId);
+			int row = statement.executeUpdate();
+			if (row == 0) {
+				System.out.println("Course with Course Id " + courseId + " does not exists.");
+			} else {
+				System.out.println("Course with Course Id " + courseId + " deleted.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 	
-	/**
-	 * 
-	 * @param user
-	 */
-	@Override
-	public void addUser(User user) {
-		
-	}
 }
