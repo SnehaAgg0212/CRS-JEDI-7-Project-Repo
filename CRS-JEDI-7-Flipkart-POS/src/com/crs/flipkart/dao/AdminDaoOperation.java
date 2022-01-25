@@ -32,7 +32,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	/**
 	 * Default Constructor
 	 */
-	private AdminDaoOperation() {
+	public AdminDaoOperation() {
 		
 	}
 	
