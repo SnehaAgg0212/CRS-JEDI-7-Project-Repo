@@ -16,10 +16,6 @@ public class UserService implements UserInterface {
 	public boolean userLogin(String userId, String userPassword) {
 		
 		Admin admin = AdminService.admin;
-		System.out.println(userId);
-		System.out.println(userPassword);
-		System.out.println(admin.getUserEmailId());
-		System.out.println(admin.getUserPassword());
 		if(userId.equals(admin.getUserEmailId()) && userPassword.equals(admin.getUserPassword())) {
 				
 			System.out.println("Successfully Logged In!");
