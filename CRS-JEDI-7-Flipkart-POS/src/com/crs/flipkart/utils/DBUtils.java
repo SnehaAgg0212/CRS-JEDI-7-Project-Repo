@@ -37,8 +37,8 @@ public class DBUtils {
 				Properties properties = new Properties();
 				InputStream inputStream = DBUtils.class.getClassLoader().getResourceAsStream("./config.properties");
 				properties.load(inputStream);
-				String driver = properties.getProperty("driver");
-				String url = properties.getProperty("url");
+				String driver = "com.mysql.jdbc.Driver";
+				String url = "jdbc:mysql://localhost:3306/test";
 				String username = properties.getProperty("username");
 				String password = properties.getProperty("password");
 				Class.forName(driver);

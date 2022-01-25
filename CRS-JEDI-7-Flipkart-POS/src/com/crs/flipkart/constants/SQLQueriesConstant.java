@@ -23,4 +23,6 @@ public class SQLQueriesConstant {
 	public static final String GET_STUDENT_ID = "select studentId from student where userId = ?";
 	public static final String GET_PROFESSOR_ID = "select professorId from professor where userId = ?";
 	public static final String IS_APPROVED = "select isApproved from student where studentId = ?";
+	
+	public static final String VIEW_COURSES_GRADE = "select courseId,gpa from gradecard where studentId=? and semesterId=?";
 }

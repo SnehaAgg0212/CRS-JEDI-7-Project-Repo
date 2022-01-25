@@ -12,6 +12,7 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.dao.AdminDaoOperation;
 
 /**
  * @author LENOVO
@@ -19,23 +20,9 @@ import com.crs.flipkart.bean.Student;
  */
 public class AdminService implements AdminInterface {
 
-	static Vector<GradeCard> stud1 = new Vector<GradeCard>() {{
-		add (new GradeCard(401, "SE",101, 9, 7)); 
-		add (new GradeCard(402, "DSA",101, 8, 7)); 
-		add (new GradeCard(403, "Java",101, 8.5, 7));
-	}};
 	
-	static Vector<GradeCard> stud2 = new Vector<GradeCard>() {{
-		add (new GradeCard(401, "SE",102, 9.8, 7));
-		add (new GradeCard(402, "DSA",102, 9.2, 7)); 
-		add (new GradeCard(403, "Java",102, 9, 7));
-	}};
-	
-	public static final HashMap<Integer, Vector<GradeCard>> grades = new HashMap<Integer, Vector<GradeCard>>() {{
-			put(101, stud1);
-			put(102, stud2);
-		}};
-	
+	AdminDaoOperation adminDaoOperation =new AdminDaoOperation();
+
 	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  "admin",  101,  "phoneNo", "Male",  "address",  "dateOfJoining");
 	
 	Scanner sc = new Scanner(System.in);
@@ -110,31 +97,23 @@ public class AdminService implements AdminInterface {
 	@Override
 	public void generateGradeCard(int studentId, int semesterId)
 	{
-		System.out.println("Semester: " + semesterId);
-
-		System.out.println(" StudentId: " + studentId + " StudentName: Raj");
-
-		double overallGpa = 0.0;
-
-		if(grades.containsKey(studentId)) {
+		Vector<GradeCard>grades = new Vector<GradeCard>();
+		
+		grades = adminDaoOperation.generateGradeCard(studentId,semesterId);
+		
+		double overallgpa=0.0;
+		
+		for(GradeCard course_grade:grades) {
 			
-			Vector<GradeCard> studentGrade = grades.get(studentId);
+			System.out.println("CourseId:"+course_grade.getCourseId() + "gpa:"+course_grade.getGpa());
 			
-			for(GradeCard course_grade : studentGrade) {
-				
-				System.out.println(course_grade.getCourseId() + " " + course_grade.getGpa());
-				overallGpa += course_grade.getGpa();
-			}
-			
-			overallGpa /= (double)studentGrade.size();
-			
-			System.out.println("Overall GPA: " + overallGpa);
-		} 
-		else {
-			
-			System.out.println("Student not present.");
+			overallgpa+=course_grade.getGpa();
 		}
-
+		
+		overallgpa/=(double)grades.size();
+		
+		System.out.println("Overall GPA:"+overallgpa);
+		
 	}
 
 	@Override
