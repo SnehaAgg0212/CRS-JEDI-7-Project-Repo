@@ -47,11 +47,11 @@ public interface AdminInterface {
 	 */
 	void deleteCourse(int courseId);
 
-	/**
-	 * @param courseId
-	 * @param professorId
-	 */
-	void assignCourseToProfessor(int courseId, int professorId);
+//	/**
+//	 * @param courseId
+//	 * @param professorId
+//	 */
+//	void assignCourseToProfessor(int courseId, int professorId);
 
 	/**
 	 * @param studentId

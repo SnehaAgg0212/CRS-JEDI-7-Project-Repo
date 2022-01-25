@@ -12,6 +12,7 @@ public class Professor extends User {
 	private int professorId;
 	private String department;
 	private String designation;
+	private int courseId;
 	
 	/**
 	 * Default Constructor
@@ -31,13 +32,15 @@ public class Professor extends User {
 	 * @param professorId
 	 * @param department
 	 * @param designation
+	 * @param courseId
 	 */
 	public Professor(String userName, String userEmailId, String userPassword, String role, int userId, String phoneNo,
-			String gender, String address, int professorId, String department, String designation) {
+			String gender, String address, int professorId, String department, String designation, int courseId) {
 		super(userName, userEmailId, userPassword, role, userId, phoneNo, gender, address);
 		this.professorId = professorId;
 		this.department = department;
 		this.designation = designation;
+		this.courseId = courseId;
 	}
 
 	/**
@@ -75,6 +78,20 @@ public class Professor extends User {
 	 */
 	public void setDesignation(String designation) {
 		this.designation = designation;
+	}
+
+	/**
+	 * @return the courseId
+	 */
+	public int getCourseId() {
+		return courseId;
+	}
+
+	/**
+	 * @param courseId the courseId to set
+	 */
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
 	}
 	
 }

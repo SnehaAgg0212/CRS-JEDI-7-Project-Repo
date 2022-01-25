@@ -163,17 +163,17 @@ public class AdminService implements AdminInterface {
 	    }
 	}
 
-	@Override
-	public void assignCourseToProfessor(int courseId, int professorId) {
-
-		for (Course element : CourseList) {
-
-			if(element != null && courseId == element.getCourseId()) {
-
-				element.setProfessorId(professorId);
-				System.out.println("Course Assigned to Professor successfully.");
-				break;
-			}
-		}
-	}
+//	@Override
+//	public void assignCourseToProfessor(int courseId, int professorId) {
+//
+//		for (Course element : CourseList) {
+//
+//			if(element != null && courseId == element.getCourseId()) {
+//
+//				element.setProfessorId(professorId);
+//				System.out.println("Course Assigned to Professor successfully.");
+//				break;
+//			}
+//		}
+//	}
 }

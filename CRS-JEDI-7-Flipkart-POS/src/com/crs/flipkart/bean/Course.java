@@ -14,7 +14,6 @@ public class Course {
 	private String courseDescription;
 	private double courseFee;
 	private int courseSeats;
-	private int professorId;
 	
 	/**
 	 * Default Constructor
@@ -29,7 +28,6 @@ public class Course {
 	 * @param courseDescription
 	 * @param courseFee
 	 * @param courseSeats
-	 * @param professorId
 	 */
 	public Course(int courseId, String courseName, String courseDescription, double courseFee, int courseSeats,
 			int professorId) {
@@ -39,7 +37,6 @@ public class Course {
 		this.courseDescription = courseDescription;
 		this.courseFee = courseFee;
 		this.courseSeats = courseSeats;
-		this.professorId = professorId;
 	}
 
 	/**
@@ -110,20 +107,6 @@ public class Course {
 	 */
 	public void setCourseSeats(int courseSeats) {
 		this.courseSeats = courseSeats;
-	}
-
-	/**
-	 * @return the professorId
-	 */
-	public int getProfessorId() {
-		return professorId;
-	}
-
-	/**
-	 * @param professorId the professorId to set
-	 */
-	public void setProfessorId(int professorId) {
-		this.professorId = professorId;
 	}
 
 }
