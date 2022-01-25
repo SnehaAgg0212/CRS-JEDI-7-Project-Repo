@@ -7,23 +7,34 @@ import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
+import com.crs.flipkart.dao.RegistrationDaoInterface;
+import com.crs.flipkart.dao.RegistrationDaoOperation;
 
 /**
  * @author devanshugarg
  *
  */
 public class RegistrationService implements RegistrationInterface {
+	
+	RegistrationDaoInterface registrationDaoInterface = new RegistrationDaoOperation();
 
 	@Override
 	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) {
 		
-		return false;
+		if(registrationDaoInterface.totalRegisteredCourses(studentId) >= 6) {
+			System.out.println("More than 6 courses are registered!");
+			return false;
+		}else if(!registrationDaoInterface.isSeatAvailable(courseId)) {
+			System.out.println("No Seats available for this CourseId!");
+			return false;
+		}
+		return registrationDaoInterface.addCourse(studentId, courseId);
 	}
 	
 	@Override
 	public boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) {
 		
-		return false;
+		return registrationDaoInterface.dropCourse(studentId, courseId);
 	}
 		
 	@Override
@@ -40,7 +51,7 @@ public class RegistrationService implements RegistrationInterface {
 	@Override
 	public Vector<Course> viewRegisteredCourses(int studentId){
 		
-		return null;
+		return registrationDaoInterface.viewRegisteredCourses(studentId);
 	}
 	
 	@Override
@@ -52,7 +63,7 @@ public class RegistrationService implements RegistrationInterface {
 	@Override
 	public Vector<Course> viewCourses(int studentId){
 		
-		return null;
+		return registrationDaoInterface.viewCourses(studentId);
 	}
 	
 	@Override

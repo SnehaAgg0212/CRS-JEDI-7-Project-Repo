@@ -24,4 +24,23 @@ public class SQLQueriesConstant {
 	public static final String GET_PROFESSOR_ID = "select professorId from professor where userId = ?";
 	public static final String IS_APPROVED = "select isApproved from student where studentId = ?";
 	public static final String VIEW_COURSES_GRADE = "select courseId, gpa from gradecard where studentId = ? and semesterId = ?";
+	
+	
+	/**
+	 * StudentDaoQueries
+	 */
+	public static final String VIEW_AVAILABLE_COURSES = "select * from Course where courseSeats > 0 and courseId not in (select courseId from registeredCourse where studentId = ?)";
+	public static final String TOTAL_REGISTERED_COURSES = "select courseId from registeredCourse where studentId = ?";
+	public static final String AVAILABLE_SEATS = "select courseSeats from Course where courseId = ?";
+	public static final String ADD_COURSE = "insert into registeredcourse (studentId,courseId) values ( ? , ?)";
+	public static final String DECREMENT_SEAT = "update Course set courseSeats = courseSeats-1 where courseId = ? ";
+	public static final String DROP_COURSE = "delete from registeredcourse where studentId = ? AND courseId = ?";
+	public static final String INCREMENT_SEAT = "update Course set courseSeats = courseSeats+1 where courseId = ? ";
+	public static final String VIEW_REGISTERED_COURSES = "select * from Course inner join registeredCourse on Course.courseId = registeredCourse.courseId where registeredCourse.studentId = ?";
+
+
+
+
+
+
 }
