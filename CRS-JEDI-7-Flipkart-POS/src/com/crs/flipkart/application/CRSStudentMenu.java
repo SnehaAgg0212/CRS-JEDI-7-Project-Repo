@@ -117,7 +117,6 @@ public class CRSStudentMenu {
 		// TODO Auto-generated method stub
 		Vector<Course> availableCourse = viewAvailableCourse(studentId);
 		if(availableCourse == null) {
-			System.out.println("No Courses are available!");
 			return;
 		}
 		
@@ -141,7 +140,6 @@ public class CRSStudentMenu {
 		// TODO Auto-generated method stub
 		Vector<Course> availableCourse = viewRegisteredCourse(studentId);
 		if(availableCourse == null) {
-			System.out.println("No Courses are available!");
 			return;
 		}
 		
@@ -168,6 +166,7 @@ public class CRSStudentMenu {
 		availableCourses = registrationInterface.viewCourses(studentId);
 		
 		if(availableCourses.isEmpty()) {
+			System.out.println("No Courses are available!");
 			return null;
 		}
 		
@@ -189,6 +188,7 @@ public class CRSStudentMenu {
 		registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
 		
 		if(registeredCourses.isEmpty()) {
+			System.out.println("No Courses are Registered!");
 			return null;
 		}
 		
