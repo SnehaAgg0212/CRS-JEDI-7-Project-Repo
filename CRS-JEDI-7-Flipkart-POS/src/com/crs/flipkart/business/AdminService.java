@@ -12,12 +12,17 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.constants.SQLQueriesConstant;
+import com.crs.flipkart.dao.AdminDaoInterface;
+import com.crs.flipkart.dao.AdminDaoOperation;
 
 /**
  * @author LENOVO
  *
  */
 public class AdminService implements AdminInterface {
+	
+	AdminDaoInterface admininterface = new AdminDaoOperation();
 
 	static Vector<GradeCard> stud1 = new Vector<GradeCard>() {{
 		add (new GradeCard(401, "SE",101, 9, 7)); 
@@ -140,27 +145,19 @@ public class AdminService implements AdminInterface {
 	@Override
 	public void addCourse(Course course) {
 
-		    CourseList.add(course);
+		admininterface.addCourse(course);
 	}
 
 	@Override
 	public Vector<Course> viewCourse() {
 
-	    return CourseList;
+	    return admininterface.viewCourse();
 	}
 
 	@Override
 	public void deleteCourse(int courseId) {
 
-	    for(int i = 0; i < CourseList.size(); i++) {
-
-	        if(CourseList.get(i) != null && courseId == CourseList.get(i).getCourseId()) {
-
-	        	CourseList.removeElementAt(i);
-	        	System.out.println("Course Deleted successfully.");
-	            break;
-	        }
-	    }
+	    admininterface.deleteCourse(courseId);
 	}
 
 	@Override

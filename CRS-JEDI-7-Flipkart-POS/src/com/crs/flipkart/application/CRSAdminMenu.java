@@ -194,20 +194,20 @@ public class CRSAdminMenu {
 	    course.setCourseId(courseId);
 		
 		System.out.print("Enter Course Name: ");
-	    String courseName = sc.nextLine();
+	    String courseName = sc.next();
 	    course.setCourseName(courseName);
 	    
 	    System.out.println("Enter Course Description: ");
-	    String courseDesc = sc.nextLine();
+	    String courseDesc = sc.next();
 	    course.setCourseDescription(courseDesc);
-	    
+	    	    
 	    System.out.println("Enter Course Fees: ");
 	    double courseFee = sc.nextDouble();
 	    course.setCourseFee(courseFee);
 	    
 	    System.out.println("Enter Number of Seats: ");
 	    int noOfSeats = sc.nextInt();
-	    course.setCourseSeats(courseId);
+	    course.setCourseSeats(noOfSeats);
 	    
 	    adminServices.addCourse(course);
 	}
@@ -223,12 +223,12 @@ public class CRSAdminMenu {
 		
 		for(int i = 0; i < CourseList.size(); i++){
     		
-    		System.out.println("Course " + i + ": ");
+    		System.out.println("Course " + (int)i+1 + ": ");
         	System.out.println("Course Code: " + CourseList.get(i).getCourseId());
             System.out.println("Course Name: " + CourseList.get(i).getCourseName());
             System.out.println("Course Description: " + CourseList.get(i).getCourseDescription());
             System.out.println("Course Fees: " + CourseList.get(i).getCourseFee());
-            System.out.println("Remaining Seats: " + CourseList.get(i).getCourseSeats());
+            System.out.println("Course Seats: " + CourseList.get(i).getCourseSeats());
             System.out.println("*******************************************************************");
 		}
 	}
