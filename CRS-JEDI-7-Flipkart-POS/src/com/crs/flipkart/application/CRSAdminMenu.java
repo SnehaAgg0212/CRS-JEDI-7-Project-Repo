@@ -93,11 +93,7 @@ public class CRSAdminMenu {
 		System.out.println("Enter the Student Id: ");
 		int studentId = sc.nextInt();
 		
-		if(adminServices.approveStudentRegistration(studentId)) {
-			System.out.println("Student Registration is successful.");
-		} else {
-			System.out.println("Student Registration is failed.");
-		}
+		adminServices.approveStudentRegistration(studentId);
 	}
 	
 	/**
