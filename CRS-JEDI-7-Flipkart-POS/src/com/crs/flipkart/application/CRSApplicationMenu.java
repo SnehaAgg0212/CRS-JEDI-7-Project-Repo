@@ -97,7 +97,7 @@ public class CRSApplicationMenu {
 				CRSAdminMenu.createAdminMenu();
 				break;
 			case "STUDENT": 
-				CRSStudentMenu.createStudentMenu(101); //studentID need to be passed
+				CRSStudentMenu.createStudentMenu(102); //studentID need to be passed
 				break;
 			case "PROFESSOR": 
 				CRSProfessorMenu.createProfessorMenu(100); //professorID need to be passed

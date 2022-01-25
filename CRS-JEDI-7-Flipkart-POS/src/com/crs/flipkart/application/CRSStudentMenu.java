@@ -61,7 +61,7 @@ public class CRSStudentMenu {
 				dropCourse(studentId);
 				break;
 			case 4:
-				viewCourse(studentId);
+				viewAvailableCourse(studentId);
 				break;
 			case 5:
 				viewRegisteredCourse(studentId);
@@ -88,8 +88,25 @@ public class CRSStudentMenu {
 		// TODO Auto-generated method stub
 		int totalCourses = 1;
 		while(totalCourses < 7) {
-			Vector<Course> courseList = viewCourse(studentId);
+			Vector<Course> courseList = viewAvailableCourse(studentId);
+			if(courseList == null) {
+				return;
+			}
+			
+			System.out.println("Enter CourseID: " + totalCourses);
+			int courseId = sc.nextInt();
+			
+			boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
+			if(checkstatus) {
+				System.out.println("Course registration of " + courseId + " done successfully.");
+				totalCourses++;
+			}else {
+				System.out.println("Course registration of " + courseId + " is already done.");
+			}
 		}
+		
+		System.out.println();
+		System.out.println("Registration Successful");
 	}
 
 	/**
@@ -98,7 +115,7 @@ public class CRSStudentMenu {
 	 */
 	private static void addCourse(int studentId) {
 		// TODO Auto-generated method stub
-		Vector<Course> availableCourse = viewCourse(studentId);
+		Vector<Course> availableCourse = viewAvailableCourse(studentId);
 		if(availableCourse == null) {
 			System.out.println("No Courses are available!");
 			return;
@@ -144,14 +161,13 @@ public class CRSStudentMenu {
 	 * @param studentId
 	 * @return 
 	 */
-	private static Vector<Course> viewCourse(int studentId) {
+	private static Vector<Course> viewAvailableCourse(int studentId) {
 		// TODO Auto-generated method stub
 		Vector<Course> availableCourses = null;
 		
 		availableCourses = registrationInterface.viewCourses(studentId);
 		
 		if(availableCourses.isEmpty()) {
-			System.out.println("No Courses are available!");
 			return null;
 		}
 		
@@ -173,7 +189,6 @@ public class CRSStudentMenu {
 		registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
 		
 		if(registeredCourses.isEmpty()) {
-			System.out.println("No Courses are available!");
 			return null;
 		}
 		
