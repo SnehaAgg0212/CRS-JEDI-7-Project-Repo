@@ -15,12 +15,16 @@ import com.crs.flipkart.bean.User;
 
 import java.util.Vector;
 
+import com.crs.flipkart.utils.DBUtils;
+
 /**
  * @author devanshugarg
  *
  */
 public class AdminDaoOperation implements AdminDaoInterface {
 
+	Connection connection = DBUtils.getConnection();
+	
 	/**
 	 * 
 	 * @param professor
