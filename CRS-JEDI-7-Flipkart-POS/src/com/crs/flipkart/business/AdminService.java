@@ -122,7 +122,7 @@ public class AdminService implements AdminInterface {
 			
 			for(GradeCard course_grade : studentGrade) {
 				
-				System.out.println(course_grade.getCourseId() + " " + course_grade.getCourseName() + " " + course_grade.getGpa());
+				System.out.println(course_grade.getCourseId() + " " + course_grade.getGpa());
 				overallGpa += course_grade.getGpa();
 			}
 			
