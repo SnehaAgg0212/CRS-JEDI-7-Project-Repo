@@ -6,33 +6,57 @@ package com.crs.flipkart.business;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.*;
+import com.crs.flipkart.dao.ProfessorDaoInterface;
+import com.crs.flipkart.dao.ProfessorDaoOperation;
 /**
  * @author devanshugarg
  *
  */
 public class ProfessorService implements ProfessorInterface {
 
+	ProfessorDaoInterface professorDaoOperation = new ProfessorDaoOperation();
+	
 	@Override
-	public void addGrade(String studentId,String courseCode,String grade) {
+	public boolean addGrade(String studentId, String courseCode, String grade) {
 		
+		try {
+			professorDaoOperation.addGrade(studentId, courseCode, grade);
+		} catch (Exception e) {
+			throw e;
+		}
+		return true;
 	}
 	
 	@Override
 	public Vector<EnrolledStudent> viewEnrolledStudents(String professorId) {
 		
-		return null;
+		Vector<EnrolledStudent> enrolledStudents = new Vector<>();
+		
+		try {
+			enrolledStudents = professorDaoOperation.getEnrolledStudents(professorId);
+		} catch (Exception e) {
+			throw e;
+		}
+		return enrolledStudents;
 	}
 
 	@Override
 	public Vector<Course> viewCourses(String professorId) {
 	
-		return null;
+		Vector<Course> coursesOffered = new Vector<>();
+		
+		try {
+			coursesOffered = professorDaoOperation.getCoursesByProfessor(professorId);
+		} catch (Exception e) {
+			throw e;
+		}
+		return coursesOffered;
 	}
 	
 	@Override
 	public String getProfessorById(String professorId)
 	{
 	
-		return null;
+		return professorDaoOperation.getProfessorById(professorId);
 	}
 }
