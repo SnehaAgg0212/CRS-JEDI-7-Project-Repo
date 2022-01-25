@@ -3,8 +3,8 @@ package com.crs.flipkart.dao;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.bean.RegisteredCourse;
 import com.crs.flipkart.bean.User;
 
 public interface AdminDaoInterface {
@@ -39,7 +39,7 @@ public interface AdminDaoInterface {
 	 * @param semesterId
 	 * @return
 	 */
-	Vector<RegisteredCourse> generateGradeCard(int studentId, int semesterId);
+	Vector<GradeCard> generateGradeCard(int studentId, int semesterId);
 
 	/**
 	 * 

@@ -9,9 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.bean.RegisteredCourse;
-import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 
 import com.crs.flipkart.constants.SQLQueriesConstant;
@@ -186,10 +185,30 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 * @return
 	 */
 	@Override
-	public Vector<RegisteredCourse> generateGradeCard(int studentId, int semesterId) {
+	public Vector<GradeCard> generateGradeCard(int studentId, int semesterId) {
 		
 		statement = null;
-		return null;
+		
+		Vector<GradeCard> grades = new Vector<>();
+		
+		try {
+			String sql = SQLQueriesConstant.VIEW_COURSES_GRADE;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, studentId);
+			statement.setInt(2, semesterId);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				GradeCard gradeCard = new GradeCard();
+				gradeCard.setCourseId(resultSet.getInt("courseId"));
+				gradeCard.setSemesterId(semesterId);
+				gradeCard.setGpa(resultSet.getDouble("gpa"));
+				gradeCard.setStudentId(studentId);
+				grades.add(gradeCard);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return grades;
 	}
 	
 	/**

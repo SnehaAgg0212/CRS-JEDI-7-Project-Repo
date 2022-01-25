@@ -99,30 +99,22 @@ public class AdminService implements AdminInterface {
 	@Override
 	public void generateGradeCard(int studentId, int semesterId)
 	{
-		System.out.println("Semester: " + semesterId);
-
-		System.out.println(" StudentId: " + studentId + " StudentName: Raj");
-
-		double overallGpa = 0.0;
-
-		if(grades.containsKey(studentId)) {
+		Vector<GradeCard> grades = new Vector<>();
+		
+		grades = adminDaoOperation.generateGradeCard(studentId, semesterId);
+		
+		double overallgpa=0.0;
+		
+		for(GradeCard course_grade : grades) {
 			
-			Vector<GradeCard> studentGrade = grades.get(studentId);
+			System.out.println("CourseId: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
 			
-			for(GradeCard course_grade : studentGrade) {
-				
-				System.out.println(course_grade.getCourseId() + " " + course_grade.getGpa());
-				overallGpa += course_grade.getGpa();
-			}
-			
-			overallGpa /= (double)studentGrade.size();
-			
-			System.out.println("Overall GPA: " + overallGpa);
-		} 
-		else {
-			
-			System.out.println("Student not present.");
+			overallgpa += course_grade.getGpa();
 		}
+		
+		overallgpa /= (double)grades.size();
+		
+		System.out.println("Overall GPA: " + overallgpa);
 
 	}
 
