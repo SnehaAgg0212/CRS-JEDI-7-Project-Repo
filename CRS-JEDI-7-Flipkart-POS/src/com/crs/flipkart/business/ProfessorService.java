@@ -1,38 +1,64 @@
-/**
- * 
- */
 package com.crs.flipkart.business;
 
-import java.util.Vector;
-
+import java.util.*;
 import com.crs.flipkart.bean.*;
-/**
- * @author devanshugarg
- *
- */
+import com.crs.flipkart.dao.ProfessorDaoOperation;
+
+
+
 public class ProfessorService implements ProfessorInterface {
+	ProfessorDaoOperation prof=new ProfessorDaoOperation();
+	
 
 	@Override
-	public void addGrade(String studentId,String courseCode,String grade) {
+	public boolean addGrade(String studentId,String courseCode,String grade) {
+		
+		try
+		{
+			prof.addGrade(studentId, courseCode, grade);
+		}
+		catch(Exception ex)
+		{
+			System.out.println("No Grades Alloted");
+		}
+		return true;
 		
 	}
 	
 	@Override
 	public Vector<EnrolledStudent> viewEnrolledStudents(String professorId) {
+		List<EnrolledStudent> enrolledStudents=new ArrayList<EnrolledStudent>();
+		try
+		{
+			enrolledStudents=prof.getEnrolledStudents(professorId);
+		}
+		catch(Exception ex)
+		{
+			throw ex;
+		}
+		return (Vector<EnrolledStudent>) enrolledStudents;
+	}
 		
-		return null;
+	@Override
+	public List<Course> viewCourses(String professorId) {
+		List<Course> coursesOffered=new ArrayList<Course>();
+		try
+		{
+			coursesOffered=prof.getCoursesByProfessor(professorId);
+		}
+		catch(Exception ex)
+		{
+			throw ex;
+		}
+		return coursesOffered;
 	}
 
-	@Override
-	public Vector<Course> viewCourses(String professorId) {
 	
-		return null;
-	}
 	
 	@Override
 	public String getProfessorById(String professorId)
 	{
 	
-		return null;
+		return prof.getProfessorById(professorId);
 	}
 }

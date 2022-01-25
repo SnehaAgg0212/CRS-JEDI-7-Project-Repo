@@ -1,5 +1,6 @@
 package com.crs.flipkart.business;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
@@ -11,8 +12,9 @@ public interface ProfessorInterface {
 	 * @param studentId
 	 * @param courseCode
 	 * @param grade
+	 * @return 
 	 */
-	void addGrade(String studentId, String courseCode, String grade);
+	boolean addGrade(String studentId, String courseCode, String grade);
 
 	/**
 	 * @param professorId
@@ -24,7 +26,7 @@ public interface ProfessorInterface {
 	 * @param professorId
 	 * @return
 	 */
-	Vector<Course> viewCourses(String professorId);
+	List<Course> viewCourses(String professorId);
 
 	/**
 	 * @param professorId
