@@ -296,4 +296,23 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param studentId
+	 */
+	@Override
+	public void setIsGenerateGrade(int studentId) {
+		
+ 		statement = null;
+
+ 		try {
+ 			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, studentId);
+ 			System.out.println("Student with Student Id " + studentId +"'s GradeCard is generated.");
+ 		} catch (SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 	}
+	
 }

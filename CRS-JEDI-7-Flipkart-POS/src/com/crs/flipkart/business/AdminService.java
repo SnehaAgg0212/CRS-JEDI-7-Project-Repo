@@ -23,23 +23,6 @@ import com.crs.flipkart.dao.AdminDaoOperation;
 public class AdminService implements AdminInterface {
 	
 	AdminDaoInterface adminDaoOperation = new AdminDaoOperation();
-
-//	static Vector<GradeCard> stud1 = new Vector<>() {{
-//		add (new GradeCard(401, "SE",101, 9, 7)); 
-//		add (new GradeCard(402, "DSA",101, 8, 7)); 
-//		add (new GradeCard(403, "Java",101, 8.5, 7));
-//	}};
-//	
-//	static Vector<GradeCard> stud2 = new Vector<>() {{
-//		add (new GradeCard(401, "SE",102, 9.8, 7));
-//		add (new GradeCard(402, "DSA",102, 9.2, 7)); 
-//		add (new GradeCard(403, "Java",102, 9, 7));
-//	}};
-//	
-//	public static final HashMap<Integer, Vector<GradeCard>> grades = new HashMap<Integer, Vector<GradeCard>>() {{
-//			put(101, stud1);
-//			put(102, stud2);
-//		}};
 	
 	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  RoleConstant.ADMIN,  101,  "phoneNo", GenderConstant.MALE,  "address",  "dateOfJoining");
 	
@@ -137,6 +120,12 @@ public class AdminService implements AdminInterface {
 
 		adminDaoOperation.deleteCourse(courseId);
 	}
+	
+	@Override
+	public void setIsGenerateGrade(int studentId) {
+		
+ 		adminDaoOperation.setIsGenerateGrade(studentId);
+ 	}
 
 //	@Override
 //	public void assignCourseToProfessor(int courseId, int professorId) {

@@ -46,16 +46,15 @@ public interface AdminInterface {
 	 */
 	void deleteCourse(int courseId);
 
-//	/**
-//	 * @param courseId
-//	 * @param professorId
-//	 */
-//	void assignCourseToProfessor(int courseId, int professorId);
-
 	/**
 	 * @param studentId
 	 * @param semesterId
 	 */
 	void generateGradeCard(int studentId, int semesterId);
+
+	/**
+	 * @param studentId
+	 */
+	void setIsGenerateGrade(int studentId);
 
 }

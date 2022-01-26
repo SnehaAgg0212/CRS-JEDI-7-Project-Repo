@@ -19,6 +19,7 @@ import com.crs.flipkart.utils.DBUtils;
 public class NotificationDaoOperation implements NotificationDaoInterface {
 
 	Connection connection = DBUtils.getConnection();
+	private PreparedStatement statement = null;
 	
 	/**
 	 * Default Constructor

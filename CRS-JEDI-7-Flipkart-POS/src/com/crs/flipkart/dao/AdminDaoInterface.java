@@ -65,4 +65,10 @@ public interface AdminDaoInterface {
 	 */
 	void addUser(User user);
 
+	/**
+	 * 
+	 * @param studentId
+	 */
+	void setIsGenerateGrade(int studentId);
+
 }

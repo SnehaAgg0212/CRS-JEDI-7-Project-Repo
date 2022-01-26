@@ -1,79 +1,35 @@
-package com.crs.flipkart.business;
+package com.crs.flipkart.dao;
 
 import java.sql.Date;
 import java.util.Vector;
 
-import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 
-public interface RegistrationInterface {
+public interface RegistrationDaoInterface {
 
 	/**
-	 * @param courseId
-	 * @param studentId
-	 * @param availableCourses
-	 * @return
-	 */
-	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses);
-
-	/**
-	 * @param courseId
-	 * @param studentId
-	 * @param registeredCourseList
-	 * @return
-	 */
-	boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList);
-
-	/**
-	 * @param studentId
-	 * @return
-	 */
-	boolean getRegistrationStatus(int studentId);
-
-	/**
-	 * @param studentId
-	 */
-	void setRegistrationStatus(int studentId);
-
-	/**
-	 * @param studentId
-	 * @return
-	 */
-	Vector<Course> viewRegisteredCourses(int studentId);
-
-	/**
-	 * @param studentId
-	 * @return
-	 */
-	Vector<Course> viewCourses(int studentId);
-
-	/**
-	 * @param studentId
-	 * @return
-	 */
-	boolean getPaymentStatus(int studentId);
-
-	/**
+	 * 
 	 * @param studentId
 	 * @return
 	 */
 	double calculateFee(int studentId);
 
 	/**
+	 * 
 	 * @param studentId
-	 * @param semesterId
 	 * @return
 	 */
-	Vector<GradeCard> viewGradeCard(int studentId, int semesterId);
+	boolean getRegistrationStatus(int studentId);
 
 	/**
+	 * 
 	 * @param studentId
-	 * @param invoiceId
-	 * @param amount
+	 * @return
 	 */
-	void setPaymentStatus(int studentId, int invoiceId, double amount);
+	boolean getPaymentStatus(int studentId);
 
 	/**
+	 * 
 	 * @param studentId
 	 * @param invoiceId
 	 * @param cardType
@@ -87,6 +43,7 @@ public interface RegistrationInterface {
 			String bankName, Date expiryDate);
 
 	/**
+	 * 
 	 * @param studentId
 	 * @param invoiceId
 	 * @param chequeNo
@@ -101,6 +58,7 @@ public interface RegistrationInterface {
 			String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate);
 
 	/**
+	 * 
 	 * @param studentId
 	 * @param invoiceId
 	 * @param bankAccountHolderName
@@ -109,9 +67,26 @@ public interface RegistrationInterface {
 	void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName);
 
 	/**
+	 * 
+	 * @param studentId
+	 * @param invoiceId
+	 * @param amount
+	 */
+	void setPaymentStatus(int studentId, int invoiceId, double amount);
+
+	/**
+	 * 
 	 * @param studentId
 	 * @return
 	 */
 	boolean isGenerated(int studentId);
+
+	/**
+	 * 
+	 * @param studentId
+	 * @param semesterId
+	 * @return
+	 */
+	Vector<GradeCard> viewGradeCard(int studentId, int semesterId);
 
 }

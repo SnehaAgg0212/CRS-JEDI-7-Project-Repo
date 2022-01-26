@@ -31,4 +31,10 @@ public interface StudentInterface {
 	 */
 	Boolean isApproved(int studentId);
 
+	/**
+	 * @param studentId
+	 * @return
+	 */
+	Boolean isGenerated(int studentId);
+
 }

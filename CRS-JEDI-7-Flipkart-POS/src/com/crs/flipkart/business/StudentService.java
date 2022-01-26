@@ -16,6 +16,8 @@ import com.crs.flipkart.dao.StudentDaoOperation;
 public class StudentService implements StudentInterface {
 	
 	StudentDaoInterface studentDaoOperation = new StudentDaoOperation();
+	
+	public static final Student student = new Student("userName",  "student@gmail.com",  "student",  RoleConstant.STUDENT,  101,  "phoneNo", GenderConstant.MALE,  "address", "branchName", 13, 2022, true);
 
 	@Override
 	public int register(String userName, String userEmailId, String userPassword, int userId, String phoneNo,
@@ -43,4 +45,10 @@ public class StudentService implements StudentInterface {
 		
 		return studentDaoOperation.isApproved(studentId);
 	}
+	
+	@Override
+	public Boolean isGenerated(int studentId) {
+
+ 		return null;
+ 	}
 }
