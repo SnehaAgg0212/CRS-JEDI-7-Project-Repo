@@ -10,6 +10,8 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.business.AdminInterface;
 import com.crs.flipkart.business.AdminService;
+import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
 
 /**
  * @author LENOVO
@@ -129,15 +131,15 @@ public class CRSAdminMenu {
 	    String department = sc.nextLine();
 	    professor.setDepartment(department);
 	    
-	    System.out.print("Enter Professor Gender: ");
-	    String gender = sc.nextLine();
-	    professor.setGender(gender);
+	    System.out.print("Enter Professor Gender: \t 1: Male \t 2.Female \t 3.Other");
+	    int gender = sc.nextInt();
+	    professor.setGender(GenderConstant.getName(gender));
 	    
 	    System.out.print("Enter Professor Address: ");
 	    String address = sc.nextLine();
 	    professor.setAddress(address);
 	    
-	    professor.setRole("Professor");
+	    professor.setRole(RoleConstant.stringToRole("PROFESSOR"));
 	    
 	    adminServices.addProfessor(professor);
 	}
