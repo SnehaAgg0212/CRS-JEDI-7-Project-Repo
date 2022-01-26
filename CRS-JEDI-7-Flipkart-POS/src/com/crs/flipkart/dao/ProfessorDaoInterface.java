@@ -36,4 +36,10 @@ public interface ProfessorDaoInterface {
 	 */
 	String getProfessorById(int professorId);
 
+	boolean addCourse(int professorId, int courseSelectedId);
+
+	Vector<Course> viewAvailableCourses();
+
+	boolean checkSelectedCourse(int professorId);
+
 }

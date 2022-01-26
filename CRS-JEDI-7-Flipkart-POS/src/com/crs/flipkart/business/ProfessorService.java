@@ -25,6 +25,20 @@ public class ProfessorService implements ProfessorInterface {
 		return true;
 	}
 	
+	
+	@Override
+	public boolean addCourse(int professorId, int courseSelectedId) {
+		
+		try {
+			if(!professorDaoOperation.checkSelectedCourse(professorId)) {
+				return false;
+			}
+			return professorDaoOperation.addCourse(professorId, courseSelectedId);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	@Override
 	public Vector<EnrolledStudent> viewEnrolledStudents(int professorId) {
 
@@ -36,6 +50,19 @@ public class ProfessorService implements ProfessorInterface {
 			throw e;
 		}
 		return enrolledStudents;
+	}
+	
+	@Override
+	public Vector<Course> viewAvailableCourses() {
+
+		Vector<Course> availableCourses = new Vector<>();
+		
+		try {
+			availableCourses = professorDaoOperation.viewAvailableCourses();
+		} catch (Exception e) {
+			throw e;
+		}
+		return availableCourses;
 	}
 	
 	@Override

@@ -61,17 +61,53 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		{
 			System.out.println("Error: "+e.getMessage());
 		}
-		finally
-		{
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 		return false;
 		
+	}
+	
+	
+	@Override
+	public boolean addCourse(int professorId, int courseSelectedId) {
+		// TODO Auto-generated method stub
+		Connection connection=DBUtils.getConnection();
+		try {
+			String sql = SQLQueriesConstant.ADD_COURSE_TO_PROFESSOR;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, courseSelectedId);
+			statement.setInt(2, professorId);
+			statement.executeUpdate();
+			
+			return true;
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Error: "+e.getMessage());
+		}
+		
+		return false;
+		
+	}
+	
+	public boolean checkSelectedCourse(int professorId) {
+		
+		try {
+			String sql = SQLQueriesConstant.CHECK_SELECTED_COURSE;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, professorId);
+			
+			ResultSet result = statement.executeQuery();
+			if(result.next() && result.getInt("courseId") != 0) {
+				return false;
+			}
+			return true;
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Error: "+e.getMessage());
+		}
+		
+		return false;
 	}
 
 	/**
@@ -99,16 +135,38 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		{
 			System.out.println("Couldn't find enrolled students"+e.getMessage());
 		}
-		finally
-		{
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		
+		return enrolledStudents;
+		
+	}
+	
+	@Override
+	public Vector<Course> viewAvailableCourses() {
+		// TODO Auto-generated method stub
+		Connection connection=DBUtils.getConnection();
+		Vector<Course> availableCourses = new Vector<Course>();
+		try {
+			String sql = SQLQueriesConstant.GET_AVAILABLE_COURSES;
+			statement = connection.prepareStatement(sql);
+			statement.executeQuery();
+			
+			ResultSet resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				Course course = new Course();
+				course.setCourseId(resultSet.getInt(1));
+ 				course.setCourseName(resultSet.getString(2));
+ 				course.setCourseDescription(resultSet.getString(3));
+ 				course.setCourseFee(resultSet.getDouble(4));
+ 				course.setCourseSeats(resultSet.getInt(5));
+ 				availableCourses.add(course);
 			}
 		}
-		return enrolledStudents;
+		catch(SQLException e)
+		{
+			System.out.println("Couldn't find enrolled students"+e.getMessage());
+		}
+		
+		return availableCourses;
 		
 	}
 
@@ -135,17 +193,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		}
 		catch(SQLException e)
 		{
+			
 			System.out.println("Error: "+e.getMessage());
 		}
-		finally
-		{
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 		return courseList;
 	}
 
@@ -172,18 +223,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		}
 		catch(SQLException e)
 		{
+			
 			System.out.println("Error: "+ e.getMessage());
 		}
-		finally
-		{
-			try 
-			{
-				connection.close();
-			} catch (SQLException e) 
-			{
-				e.printStackTrace();
-			}
-		}
+		
 		
 		return prof_Name;
 	}

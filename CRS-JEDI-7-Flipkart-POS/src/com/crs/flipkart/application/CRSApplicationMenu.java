@@ -100,7 +100,7 @@ public class CRSApplicationMenu {
 				CRSStudentMenu.createStudentMenu(100); //studentID need to be passed
 				break;
 			case "PROFESSOR": 
-				CRSProfessorMenu.createProfessorMenu(201); //professorID need to be passed
+				CRSProfessorMenu.createProfessorMenu(101); //professorID need to be passed
 				break;
 			}
 		}

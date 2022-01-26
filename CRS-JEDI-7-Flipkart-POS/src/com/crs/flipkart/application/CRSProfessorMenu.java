@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.EnrolledStudent;
+import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.ProfessorService;
 
 /**
@@ -21,6 +22,7 @@ import com.crs.flipkart.business.ProfessorService;
  */
 public class CRSProfessorMenu {
 	static ProfessorService profService = new ProfessorService();
+	static AdminService adminservice = new AdminService();
 	static Scanner sc = new Scanner(System.in);
 	
 	/**
@@ -77,7 +79,22 @@ public class CRSProfessorMenu {
 	 */
 	private static void chooseCourses(int professorId) {
 		// TODO Auto-generated method stub
+		Vector<Course> allCourses = profService.viewAvailableCourses();
+		System.out.println(String.format("%20s %20s","COURSE ID","COURSE NAME"));
+		for(Course course: allCourses) {
+			System.out.println(String.format("%20s %20s",course.getCourseId(),course.getCourseName()));
+		}
 		
+		System.out.println();
+		System.out.println("Enter the Course you want to teach: ");
+		int courseSelected = sc.nextInt();
+		
+		boolean status = profService.addCourse(professorId, courseSelected);
+		if(status) {
+			System.out.println("CourseId " + courseSelected + " is registered for ProfessorId " + professorId + " successfully");
+		}else {
+			System.out.println("Professor has already registered.");
+		}
 	}
 
 	/**

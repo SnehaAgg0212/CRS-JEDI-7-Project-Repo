@@ -34,4 +34,8 @@ public interface ProfessorInterface {
 	 */
 	String getProfessorById(int professorId);
 
+	boolean addCourse(int professorId, int courseSelectedId);
+
+	Vector<Course> viewAvailableCourses();
+
 }
