@@ -3,6 +3,9 @@
  */
 package com.crs.flipkart.bean;
 
+import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
+
 /**
  * @author devanshugarg
  *
@@ -34,8 +37,8 @@ public class Professor extends User {
 	 * @param designation
 	 * @param courseId
 	 */
-	public Professor(String userName, String userEmailId, String userPassword, String role, int userId, String phoneNo,
-			String gender, String address, int professorId, String department, String designation, int courseId) {
+	public Professor(String userName, String userEmailId, String userPassword, RoleConstant role, int userId, String phoneNo,
+			GenderConstant gender, String address, int professorId, String department, String designation, int courseId) {
 		super(userName, userEmailId, userPassword, role, userId, phoneNo, gender, address);
 		this.professorId = professorId;
 		this.department = department;

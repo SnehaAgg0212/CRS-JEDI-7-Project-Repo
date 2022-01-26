@@ -1,5 +1,7 @@
 package com.crs.flipkart.business;
 
+import com.crs.flipkart.constants.GenderConstant;
+
 public interface StudentInterface {
 
 	/**
@@ -14,19 +16,19 @@ public interface StudentInterface {
 	 * @param batch
 	 * @return
 	 */
-	String register(String userName, String userEmailId, String userPassword, int userId, String phoneNo, String gender,
+	int register(String userName, String userEmailId, String userPassword, int userId, String phoneNo, GenderConstant gender,
 			String address, String branch, int batch);
 
 	/**
 	 * @param userId
 	 * @return
 	 */
-	String getStudentId(String userId);
+	int getStudentId(int userId);
 
 	/**
 	 * @param studentId
 	 * @return
 	 */
-	Boolean isApproved(String studentId);
+	Boolean isApproved(int studentId);
 
 }

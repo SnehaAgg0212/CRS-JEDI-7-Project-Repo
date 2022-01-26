@@ -12,7 +12,7 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.User;
-
+import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.SQLQueriesConstant;
 
 import java.util.Vector;
@@ -51,9 +51,9 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setString(2, user.getUserName());
 			statement.setString(3, user.getUserEmailId());
 			statement.setString(4, user.getUserPassword());
-			statement.setString(5, user.getRole());
+			statement.setString(5, user.getRole().toString());
 			statement.setString(6, user.getPhoneNo());
-			statement.setString(7, user.getGender());
+			statement.setString(7, user.getGender().toString());
 			statement.setString(8, user.getAddress());
 			int row = statement.executeUpdate();
 			System.out.println(row + " user added.");
@@ -116,7 +116,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				Professor professor = new Professor();
 				professor.setProfessorId(resultSet.getInt(1));
 				professor.setUserName(resultSet.getString(2));
-				professor.setGender(resultSet.getString(3));
+				professor.setGender(GenderConstant.stringToGender(resultSet.getString(3)));
 				professor.setDepartment(resultSet.getString(4));
 				professor.setDesignation(resultSet.getString(5));
 				professorList.add(professor);

@@ -3,6 +3,9 @@
  */
 package com.crs.flipkart.bean;
 
+import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
+
 /**
  * @author devanshugarg
  *
@@ -35,8 +38,8 @@ public class Student extends User{
 	 * @param batch
 	 * @param isApproved
 	 */
-	public Student(String userName, String userEmailId, String userPassword, String role, int userId, String phoneNo,
-			String gender, String address, String branchName, int studentId, int batch, boolean isApproved) {
+	public Student(String userName, String userEmailId, String userPassword, RoleConstant role, int userId, String phoneNo,
+			GenderConstant gender, String address, String branchName, int studentId, int batch, boolean isApproved) {
 		super(userName, userEmailId, userPassword, role, userId, phoneNo, gender, address);
 		this.branchName = branchName;
 		this.studentId = studentId;

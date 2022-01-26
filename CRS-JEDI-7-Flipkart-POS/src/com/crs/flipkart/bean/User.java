@@ -3,6 +3,9 @@
  */
 package com.crs.flipkart.bean;
 
+import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
+
 /**
  * @author devanshugarg
  *
@@ -12,10 +15,10 @@ public class User {
 	private String userName;
     private String userEmailId;
     private String userPassword;
-    private String role;
+    private RoleConstant role;
     private int userId;
     private String phoneNo;
-    private String gender;
+    private GenderConstant gender;
 	private String address;
 	
 	/**
@@ -33,8 +36,8 @@ public class User {
 	 * @param gender
 	 * @param address
 	 */
-	public User(String userName, String userEmailId, String userPassword, String role, int userId, String phoneNo,
-			String gender, String address) {
+	public User(String userName, String userEmailId, String userPassword, RoleConstant role, int userId, String phoneNo,
+			GenderConstant gender, String address) {
 		super();
 		this.userName = userName;
 		this.userEmailId = userEmailId;
@@ -84,13 +87,13 @@ public class User {
 	/**
 	 * @return the role
 	 */
-	public String getRole() {
+	public RoleConstant getRole() {
 		return role;
 	}
 	/**
 	 * @param role the role to set
 	 */
-	public void setRole(String role) {
+	public void setRole(RoleConstant role) {
 		this.role = role;
 	}
 	/**
@@ -120,13 +123,13 @@ public class User {
 	/**
 	 * @return the gender
 	 */
-	public String getGender() {
+	public GenderConstant getGender() {
 		return gender;
 	}
 	/**
 	 * @param gender the gender to set
 	 */
-	public void setGender(String gender) {
+	public void setGender(GenderConstant gender) {
 		this.gender = gender;
 	}
 	/**

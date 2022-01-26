@@ -117,7 +117,8 @@ public class CRSApplicationMenu {
 		
 		System.out.println("---------------Student Registration-------------");
 		
-		String studentName, studentEmailId, studentPassword, studentGender, studentPhoneNo, studentBranch, studentBatch, studentAddress;
+		String studentName, studentEmailId, studentPassword, studentGender, studentPhoneNo, studentBranch, studentAddress;
+		int studentBatch;
 		
 		System.out.println("Enter Student Name: ");
 		studentName = sc.nextLine();
@@ -134,8 +135,8 @@ public class CRSApplicationMenu {
 		System.out.println("Enter Student Branch: ");
 		studentBranch = sc.nextLine();
 		
-		System.out.println("Enter Student Batch: ");
-		studentBatch = sc.nextLine();
+		System.out.println("Enter Student Batch (Graduation Year): ");
+		studentBatch = sc.nextInt();
 		
 		System.out.println("Enter Student Address: ");
 		studentAddress = sc.nextLine();

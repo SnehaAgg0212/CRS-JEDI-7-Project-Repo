@@ -3,7 +3,6 @@
  */
 package com.crs.flipkart.business;
 
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -12,6 +11,8 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
 
@@ -23,24 +24,24 @@ public class AdminService implements AdminInterface {
 	
 	AdminDaoInterface adminDaoOperation = new AdminDaoOperation();
 
-	static Vector<GradeCard> stud1 = new Vector<GradeCard>() {{
-		add (new GradeCard(401, "SE",101, 9, 7)); 
-		add (new GradeCard(402, "DSA",101, 8, 7)); 
-		add (new GradeCard(403, "Java",101, 8.5, 7));
-	}};
+//	static Vector<GradeCard> stud1 = new Vector<>() {{
+//		add (new GradeCard(401, "SE",101, 9, 7)); 
+//		add (new GradeCard(402, "DSA",101, 8, 7)); 
+//		add (new GradeCard(403, "Java",101, 8.5, 7));
+//	}};
+//	
+//	static Vector<GradeCard> stud2 = new Vector<>() {{
+//		add (new GradeCard(401, "SE",102, 9.8, 7));
+//		add (new GradeCard(402, "DSA",102, 9.2, 7)); 
+//		add (new GradeCard(403, "Java",102, 9, 7));
+//	}};
+//	
+//	public static final HashMap<Integer, Vector<GradeCard>> grades = new HashMap<Integer, Vector<GradeCard>>() {{
+//			put(101, stud1);
+//			put(102, stud2);
+//		}};
 	
-	static Vector<GradeCard> stud2 = new Vector<GradeCard>() {{
-		add (new GradeCard(401, "SE",102, 9.8, 7));
-		add (new GradeCard(402, "DSA",102, 9.2, 7)); 
-		add (new GradeCard(403, "Java",102, 9, 7));
-	}};
-	
-	public static final HashMap<Integer, Vector<GradeCard>> grades = new HashMap<Integer, Vector<GradeCard>>() {{
-			put(101, stud1);
-			put(102, stud2);
-		}};
-	
-	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  "admin",  101,  "phoneNo", "Male",  "address",  "dateOfJoining");
+	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  RoleConstant.ADMIN,  101,  "phoneNo", GenderConstant.MALE,  "address",  "dateOfJoining");
 	
 	Scanner sc = new Scanner(System.in);
 
@@ -55,14 +56,15 @@ public class AdminService implements AdminInterface {
         userId ++;
     }
 
-    Vector<Student> StudentList = new Vector<Student>() {{
-    	add(new Student("username_1", "username_1@flipkart.com", "ABCD", "student", 1,
-				"1234567890", "female", "location", "CS", 101, 123, false));
-			add(new Student("username_2", "username_2@flipkart.com", "ABCD", "student", 1,
-					"1234567890", "female", "location", "CS", 102, 123, false));
-			add(new Student("username_3", "username_3@flipkart.com", "ABCD", "student", 1,
-					"1234567890", "female", "location", "CS", 103, 123, false));
-    }};
+//    Vector<Student> StudentList = new Vector<Student>() {{
+//    	add(new Student("username_1", "username_1@flipkart.com", "ABCD", "student", 1,
+//				"1234567890", "female", "location", "CS", 101, 123, false));
+//			add(new Student("username_2", "username_2@flipkart.com", "ABCD", "student", 1,
+//					"1234567890", "female", "location", "CS", 102, 123, false));
+//			add(new Student("username_3", "username_3@flipkart.com", "ABCD", "student", 1,
+//					"1234567890", "female", "location", "CS", 103, 123, false));
+//    }};
+    Vector<Student> StudentList = new Vector<>();
     Vector<Professor> ProfessorList = new Vector<>();
     Vector<Course> CourseList = new Vector<>();
 

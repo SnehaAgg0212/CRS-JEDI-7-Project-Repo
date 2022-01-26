@@ -3,6 +3,9 @@
  */
 package com.crs.flipkart.bean;
 
+import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
+
 /**
  * @author LENOVO
  *
@@ -29,8 +32,8 @@ public class Admin extends User{
 	 * @param address
 	 * @param dateOfJoining
 	 */
-	public Admin(String userName, String userEmailId, String userPassword, String role, int userId, String phoneNo,
-			String gender, String address, String dateOfJoining) {
+	public Admin(String userName, String userEmailId, String userPassword, RoleConstant role, int userId, String phoneNo,
+			GenderConstant gender, String address, String dateOfJoining) {
 		super(userName, userEmailId, userPassword, role, userId, phoneNo, gender, address);
 		this.dateOfJoining = dateOfJoining;
 	}
