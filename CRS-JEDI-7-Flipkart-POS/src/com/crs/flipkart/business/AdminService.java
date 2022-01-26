@@ -12,6 +12,7 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
 
 /**
@@ -19,10 +20,10 @@ import com.crs.flipkart.dao.AdminDaoOperation;
  *
  */
 public class AdminService implements AdminInterface {
+	
+	AdminDaoInterface adminDaoOperation = new AdminDaoOperation();
 
 	
-	AdminDaoOperation adminDaoOperation =new AdminDaoOperation();
-
 	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  "admin",  101,  "phoneNo", "Male",  "address",  "dateOfJoining");
 	
 	Scanner sc = new Scanner(System.in);
@@ -58,88 +59,69 @@ public class AdminService implements AdminInterface {
 	    profIdincrementor();
 	    userIdincrementor();
 
-	    ProfessorList.add(professor);
+	    adminDaoOperation.addProfessor(professor);
     }
 
 	@Override
 	public Vector<Professor> viewProfessor() {
 
-	    return ProfessorList;
+	    return adminDaoOperation.viewProfessor();
 	}
 
 	@Override
 	public void deleteProfessor(int professorId) {
 
-	    for(int i = 0; i < ProfessorList.size(); i++) {
-
-	        if(ProfessorList.get(i) != null && professorId == ProfessorList.get(i).getProfessorId()){
-
-	        	ProfessorList.removeElementAt(i);
-	            System.out.println("Professor Deleted successfully.");
-	            break;
-	        }
-	    }
+		adminDaoOperation.deleteProfessor(professorId);
 	}
 
 	@Override
-	public boolean approveStudentRegistration(int studentId) {
+	public void approveStudentRegistration(int studentId) {
 
-		for (Student element : StudentList) {
-
-			if(element.getStudentId() == studentId) {
-
-				return false;
-			}
-		}
-		return true;
+		adminDaoOperation.approveStudentRegistration(studentId);
 	}
 
 	@Override
 	public void generateGradeCard(int studentId, int semesterId)
 	{
-		Vector<GradeCard>grades = new Vector<GradeCard>();
+		Vector<GradeCard> grades = new Vector<>();
 		
-		grades = adminDaoOperation.generateGradeCard(studentId,semesterId);
+		grades = adminDaoOperation.generateGradeCard(studentId, semesterId);
 		
 		double overallgpa=0.0;
 		
-		for(GradeCard course_grade:grades) {
+		for(GradeCard course_grade : grades) {
 			
-			System.out.println("CourseId:"+course_grade.getCourseId() + "gpa:"+course_grade.getGpa());
+			System.out.println("CourseId: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
 			
-			overallgpa+=course_grade.getGpa();
+			overallgpa += course_grade.getGpa();
 		}
 		
-		overallgpa/=(double)grades.size();
+		overallgpa /= (double)grades.size();
 		
-		System.out.println("Overall GPA:"+overallgpa);
-		
+		System.out.println("Overall GPA: " + overallgpa);
+
 	}
 
 	@Override
 	public void addCourse(Course course) {
 
-		    CourseList.add(course);
+		adminDaoOperation.addCourse(course);
 	}
 
 	@Override
 	public Vector<Course> viewCourse() {
 
-	    return CourseList;
+	    return adminDaoOperation.viewCourse();
 	}
 
 	@Override
 	public void deleteCourse(int courseId) {
 
-	    for(int i = 0; i < CourseList.size(); i++) {
-
-	        if(CourseList.get(i) != null && courseId == CourseList.get(i).getCourseId()) {
-
-	        	CourseList.removeElementAt(i);
-	        	System.out.println("Course Deleted successfully.");
-	            break;
-	        }
-	    }
+		adminDaoOperation.deleteCourse(courseId);
+	}
+	
+	public void setIsGenerateGrade(int studentId){
+		adminDaoOperation.setIsGenerateGrade(studentId);
 	}
 
 //	@Override

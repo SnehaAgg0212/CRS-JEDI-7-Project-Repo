@@ -2,6 +2,7 @@
  * 
  */
 package com.crs.flipkart.utils;
+import java.lang.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -39,6 +40,9 @@ public class DBUtils {
 				properties.load(inputStream);
 				String driver = "com.mysql.jdbc.Driver";
 				String url = "jdbc:mysql://localhost:3306/test";
+//				String driver=properties.getProperty("driver");
+//				String url=properties.getProperty("url");
+//				
 				String username = properties.getProperty("username");
 				String password = properties.getProperty("password");
 				Class.forName(driver);

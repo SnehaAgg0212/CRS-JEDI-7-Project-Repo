@@ -18,9 +18,8 @@ public interface AdminInterface {
 	
 	/**
 	 * @param studentId
-	 * @return
 	 */
-	boolean approveStudentRegistration(int studentId);
+	void approveStudentRegistration(int studentId);
 
 	/**
 	 * @return
@@ -58,5 +57,7 @@ public interface AdminInterface {
 	 * @param semesterId
 	 */
 	void generateGradeCard(int studentId, int semesterId);
+	
+	void setIsGenerateGrade(int studentId);
 
 }

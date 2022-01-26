@@ -5,7 +5,6 @@ import java.util.Vector;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.bean.RegisteredCourse;
 import com.crs.flipkart.bean.User;
 
 public interface AdminDaoInterface {
@@ -65,5 +64,7 @@ public interface AdminDaoInterface {
 	 * @param user
 	 */
 	void addUser(User user);
+	
+	void setIsGenerateGrade(int studentId);
 
 }
