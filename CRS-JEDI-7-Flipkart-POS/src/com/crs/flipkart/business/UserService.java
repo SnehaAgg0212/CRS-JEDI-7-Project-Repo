@@ -4,6 +4,8 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Admin;
+import com.crs.flipkart.dao.UserDaoInterface;
+import com.crs.flipkart.dao.UserDaoOperation;
 
 /**
  * @author devanshugarg
@@ -11,41 +13,26 @@ import com.crs.flipkart.bean.Admin;
  */
 
 public class UserService implements UserInterface {
+	UserDaoInterface userDaoInterface= new UserDaoOperation();
+	
 	
 	@Override
-	public boolean userLogin(String userId, String userPassword) {
-		
-		Admin admin = AdminService.admin;
-		if(userId.equals(admin.getUserEmailId()) && userPassword.equals(admin.getUserPassword())) {
-				
-			System.out.println("Successfully Logged In!");
-			return true;
-		}
-		System.out.println("Login Unsuccessful!");
-		return false;
+	public void updatePassword (String  userEmailId, String newPassword) {
+		 if(userDaoInterface.updatePassword (userEmailId, newPassword)) {
+			 System.out.println("Password successfully updated");
+		 }
+		 else {
+			 System.out.println("Wrong password");
+		 }
 	}
 	
 	@Override
-	public boolean updatePassword (String userId, String newPassword) {
-		
-		return false;
+	public String getRoleOfUser (int userId) {
+		return userDaoInterface.getRole(userId);
 	}
 	
-	@Override
-	public String getRoleOfUser (String userId) {
-		
-		return null;
-	}
-	
-	/**
-	 * Method to verify User credentials
-	 * @param emailId
-	 * @param password
-	 * @return
-	 */
 	@Override
 	public boolean validateUser(String emailId, String password) {
-		
-		return false;
+		return userDaoInterface.verifyCredentials(emailId, password);
 	}
 }

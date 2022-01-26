@@ -24,9 +24,8 @@ public class CRSApplicationMenu {
 		// TODO Auto-generated method stub
 		
 		createMainMenu();
-		
-		int userInput;
-		
+		UserInterface userInterface =new UserService();
+		int userInput;	
 		while(true) {
 			
 			userInput = sc.nextInt();
@@ -87,7 +86,7 @@ public class CRSApplicationMenu {
 		System.out.println("Enter Password: ");
 		userPassword = sc.next();
 		
-		boolean login = userService.userLogin(userEmailId, userPassword);
+		boolean login = userService.validateUser(userEmailId, userPassword);
 		
 		if(login) {
 			
@@ -154,18 +153,21 @@ public class CRSApplicationMenu {
 		
 		String userEmailId, oldPassword, newPassword, confirmNewPassword;
 		
+		UserInterface userService = new UserService();
+		
 		System.out.println("Enter Email Id: ");
-		userEmailId = sc.nextLine();
+		userEmailId = sc.next();
 		
 		System.out.println("Enter Current Password: ");
-		oldPassword = sc.nextLine();
+		oldPassword = sc.next();
 		
 		System.out.println("Enter New Password: ");
-		newPassword = sc.nextLine();
+		newPassword = sc.next();
 		
 		System.out.println("Confirm New Password: ");
-		confirmNewPassword = sc.nextLine();
+		confirmNewPassword = sc.next();
 		
+		userService.updatePassword(userEmailId, confirmNewPassword);
 	}
 	
 	/**

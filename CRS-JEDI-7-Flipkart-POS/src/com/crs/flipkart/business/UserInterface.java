@@ -2,25 +2,18 @@ package com.crs.flipkart.business;
 
 public interface UserInterface {
 
-	/**
-	 * @param userId
-	 * @param userPassword
-	 * @return
-	 */
-	boolean userLogin(String userId, String userPassword);
 
 	/**
-	 * @param userId
+	 * @param userEmailId
 	 * @param newPassword
-	 * @return
 	 */
-	boolean updatePassword(String userId, String newPassword);
+	void updatePassword(String userEmailId, String newPassword);
 
 	/**
 	 * @param userId
 	 * @return
 	 */
-	String getRoleOfUser(String userId);
+	String getRoleOfUser(int userId);
 
 	/**
 	 * @param emailId

@@ -24,4 +24,11 @@ public class SQLQueriesConstant {
 	public static final String GET_PROFESSOR_ID = "select professorId from professor where userId = ?";
 	public static final String IS_APPROVED = "select isApproved from student where studentId = ?";
 	public static final String VIEW_COURSES_GRADE = "select courseId, gpa from gradecard where studentId = ? and semesterId = ?";
+	
+	/**
+	 * UserDAOQueries
+	 */
+	public static final String UPDATE_PASSWORD="update user set userPassword=? where userEmailId = ? ";
+	public static final String VERIFY_CREDENTIALS="select userPassword from user where userEmailId = ?";
+	public static final String GET_ROLE="select role from user where userId = ?;";
 }
