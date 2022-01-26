@@ -25,4 +25,8 @@ public interface RegistrationDaoInterface {
 
 	Vector<Course> viewRegisteredCourses(int studentId);
 
+	boolean semesterRegistration(int semester, int studentId);
+	
+	boolean addSemester(int semester, int studentId);
+
 }

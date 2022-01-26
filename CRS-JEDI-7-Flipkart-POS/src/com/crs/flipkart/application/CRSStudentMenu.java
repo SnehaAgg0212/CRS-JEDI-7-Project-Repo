@@ -9,6 +9,8 @@ import java.util.Vector;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.business.RegistrationInterface;
 import com.crs.flipkart.business.RegistrationService;
+import com.crs.flipkart.business.StudentInterface;
+import com.crs.flipkart.business.StudentService;
 
 /**
  * @author devanshugarg
@@ -18,6 +20,7 @@ public class CRSStudentMenu {
 
 	static Scanner sc = new Scanner(System.in);
 	static RegistrationInterface registrationInterface = new RegistrationService();
+	static StudentInterface studentInterface = new StudentService();
 	/**
 	 * Method to Create Main Menu
 	 */
@@ -34,7 +37,7 @@ public class CRSStudentMenu {
 	        System.out.println("********************************* Student Menu ************************************");
 	        System.out.println("***********************************************************************************");
 	        
-	        System.out.println("1. Course Registration");
+	        System.out.println("1. Semester Registration");
 			System.out.println("2. Add Course");
 			System.out.println("3. Drop Course");
 			System.out.println("4. View Course");
@@ -86,27 +89,34 @@ public class CRSStudentMenu {
 	 */
 	private static void registerCourses(int studentId) {
 		// TODO Auto-generated method stub
-		int totalCourses = 1;
-		while(totalCourses < 7) {
-			Vector<Course> courseList = viewAvailableCourse(studentId);
-			if(courseList == null) {
-				return;
-			}
-			
-			System.out.println("Enter CourseID: " + totalCourses);
-			int courseId = sc.nextInt();
-			
-			boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
-			if(checkstatus) {
-				System.out.println("Course registration of " + courseId + " done successfully.");
-				totalCourses++;
-			}else {
-				System.out.println("Course registration of " + courseId + " is already done.");
-			}
-		}
 		
-		System.out.println();
-		System.out.println("Registration Successful");
+		System.out.println("Enter the Semester: ");
+		int semester = sc.nextInt();
+		
+		boolean check = studentInterface.semesterRegistration(semester, studentId);
+		if(check) {
+			int totalCourses = 1;
+			while(totalCourses < 7) {
+				Vector<Course> courseList = viewAvailableCourse(studentId);
+				if(courseList == null) {
+					return;
+				}
+				
+				System.out.println("Enter CourseID: " + totalCourses);
+				int courseId = sc.nextInt();
+				
+				boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
+				if(checkstatus) {
+					System.out.println("Course registration of " + courseId + " done successfully.");
+					totalCourses++;
+				}else {
+					System.out.println("Course registration of " + courseId + " is already done.");
+				}
+			}
+			
+			System.out.println();
+			System.out.println("Registration Successful");
+		}
 	}
 
 	/**
@@ -166,7 +176,7 @@ public class CRSStudentMenu {
 		availableCourses = registrationInterface.viewCourses(studentId);
 		
 		if(availableCourses.isEmpty()) {
-			System.out.println("No Courses are available!");
+			System.out.println("No Courses are available right now!");
 			return null;
 		}
 		

@@ -37,9 +37,8 @@ public class SQLQueriesConstant {
 	public static final String DROP_COURSE = "delete from registeredcourse where studentId = ? AND courseId = ?";
 	public static final String INCREMENT_SEAT = "update Course set courseSeats = courseSeats+1 where courseId = ? ";
 	public static final String VIEW_REGISTERED_COURSES = "select * from Course inner join registeredCourse on Course.courseId = registeredCourse.courseId where registeredCourse.studentId = ?";
-
-
-
+	public static final String CHECK_STUDENT_AND_SEM = "select studentId from semesterRegistration where studentId = ? and semester = ?";
+	public static final String ADD_SEMESTER = "insert into semesterRegistration(semesterId, studentId, semester, date) values (?,?,?,curdate())";
 
 
 

@@ -13,6 +13,7 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.utils.DBUtils;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author devanshugarg
@@ -37,6 +38,45 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface{
 			sql = SQLQueriesConstant.DECREMENT_SEAT;
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, courseId);
+			statement.executeUpdate();
+			return true;
+			
+		}catch(SQLException error) {
+			System.out.println("Error: " + error.getMessage());
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean semesterRegistration(int semester, int studentId) {
+		
+		try {
+			
+			String sql = SQLQueriesConstant.CHECK_STUDENT_AND_SEM;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, studentId);
+			statement.setInt(2, semester);
+			
+			ResultSet result = statement.executeQuery();
+			while(result.next()) {
+				return true;
+			}
+					
+		}catch(SQLException error) {
+			System.out.println("Error: " + error.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean addSemester(int semester, int studentId) {
+		
+		try {
+			
+			String sql = SQLQueriesConstant.ADD_SEMESTER;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, Utils.generateId());
+			statement.setInt(2, studentId);
+			statement.setInt(3, semester);
 			statement.executeUpdate();
 			return true;
 			

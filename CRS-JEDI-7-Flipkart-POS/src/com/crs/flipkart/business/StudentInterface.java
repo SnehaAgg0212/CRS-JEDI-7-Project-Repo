@@ -29,4 +29,6 @@ public interface StudentInterface {
 	 */
 	Boolean isApproved(String studentId);
 
+	boolean semesterRegistration(int semester, int studentId);
+
 }
