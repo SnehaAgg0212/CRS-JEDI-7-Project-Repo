@@ -29,13 +29,18 @@ public class Course {
 	 * @param courseFee
 	 * @param courseSeats
 	 */
-	public Course(int courseId, String courseName, String courseDescription, double courseFee, int courseSeats,
-			int professorId) {
+	public Course(int courseId, String courseName, String courseDescription, double courseFee, int courseSeats) {
 		super();
 		this.courseId = courseId;
 		this.courseName = courseName;
 		this.courseDescription = courseDescription;
 		this.courseFee = courseFee;
+		this.courseSeats = courseSeats;
+	}
+	public Course(int courseId, String courseName, int courseSeats) {
+		super();
+		this.courseId = courseId;
+		this.courseName = courseName;
 		this.courseSeats = courseSeats;
 	}
 

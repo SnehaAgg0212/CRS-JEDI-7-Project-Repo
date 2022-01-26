@@ -14,24 +14,24 @@ public interface ProfessorInterface {
 	 * @param grade
 	 * @return
 	 */
-	boolean addGrade(String studentId, String courseCode, String grade);
+	boolean addGrade(int studentId, int courseId, Double gpa, int semesterId);
 
 	/**
 	 * @param professorId
 	 * @return
 	 */
-	Vector<EnrolledStudent> viewEnrolledStudents(String professorId);
+	Vector<EnrolledStudent> viewEnrolledStudents(int professorId);
 
 	/**
 	 * @param professorId
 	 * @return
 	 */
-	List<Course> viewCourses(String professorId);
+	List<Course> viewCourses(int professorId);
 
 	/**
 	 * @param professorId
 	 * @return
 	 */
-	String getProfessorById(String professorId);
+	String getProfessorById(int professorId);
 
 }

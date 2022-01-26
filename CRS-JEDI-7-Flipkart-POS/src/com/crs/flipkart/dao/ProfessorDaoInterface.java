@@ -13,27 +13,27 @@ public interface ProfessorDaoInterface {
 	 * @param courseCode
 	 * @param grade
 	 */
-	void addGrade(String studentId, String courseCode, String grade);
+	boolean addGrade(int studentId, int courseId, Double gpa, int semesterId);
 
 	/**
 	 * 
 	 * @param professorId
 	 * @return
 	 */
-	Vector<EnrolledStudent> getEnrolledStudents(String professorId);
+	Vector<EnrolledStudent> getEnrolledStudents(int professorId);
 
 	/**
 	 * 
 	 * @param professorId
 	 * @return
 	 */
-	Vector<Course> getCoursesByProfessor(String professorId);
+	Vector<Course> getCoursesByProfessor(int professorId);
 
 	/**
 	 * 
 	 * @param professorId
 	 * @return
 	 */
-	String getProfessorById(String professorId);
+	String getProfessorById(int professorId);
 
 }

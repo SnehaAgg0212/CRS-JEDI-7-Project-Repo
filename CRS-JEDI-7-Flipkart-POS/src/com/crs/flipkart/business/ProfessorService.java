@@ -12,13 +12,13 @@ import com.crs.flipkart.dao.ProfessorDaoOperation;
 
 public class ProfessorService implements ProfessorInterface {
 	
-	ProfessorDaoInterface professorDaoOperation = new ProfessorDaoOperation();
+	static ProfessorDaoInterface professorDaoOperation = new ProfessorDaoOperation();
 	
 	@Override
-	public boolean addGrade(String studentId, String courseCode, String grade) {
+	public boolean addGrade(int studentId, int courseId, Double gpa, int semesterId) {
 		
 		try {
-			professorDaoOperation.addGrade(studentId, courseCode, grade);
+			professorDaoOperation.addGrade(studentId, courseId, gpa, semesterId);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -26,7 +26,7 @@ public class ProfessorService implements ProfessorInterface {
 	}
 	
 	@Override
-	public Vector<EnrolledStudent> viewEnrolledStudents(String professorId) {
+	public Vector<EnrolledStudent> viewEnrolledStudents(int professorId) {
 
 		Vector<EnrolledStudent> enrolledStudents = new Vector<>();
 		
@@ -39,7 +39,7 @@ public class ProfessorService implements ProfessorInterface {
 	}
 	
 	@Override
-	public Vector<Course> viewCourses(String professorId) {
+	public Vector<Course> viewCourses(int professorId) {
 
 		Vector<Course> coursesOffered = new Vector<>();
 		
@@ -52,7 +52,7 @@ public class ProfessorService implements ProfessorInterface {
 	}
 	
 	@Override
-	public String getProfessorById(String professorId)
+	public String getProfessorById(int professorId)
 	{
 	
 		return professorDaoOperation.getProfessorById(professorId);

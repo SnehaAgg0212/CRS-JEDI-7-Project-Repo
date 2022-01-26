@@ -3,7 +3,13 @@
  */
 package com.crs.flipkart.application;
 
+import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.Vector;
+
+import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.EnrolledStudent;
+import com.crs.flipkart.business.ProfessorService;
 
 /**
  * @author devanshugarg
@@ -14,7 +20,7 @@ import java.util.Scanner;
  *
  */
 public class CRSProfessorMenu {
-
+	static ProfessorService profService = new ProfessorService();
 	static Scanner sc = new Scanner(System.in);
 	
 	/**
@@ -80,7 +86,17 @@ public class CRSProfessorMenu {
 	 */
 	private static void viewEnrolledStudents(int professorId) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(String.format("%20s %20s %20s","COURSE CODE","COURSE NAME","Student" ));
+		try {
+			Vector<EnrolledStudent> enrolledStudents = new Vector<EnrolledStudent>();
+			enrolledStudents = profService.viewEnrolledStudents(professorId);
+			for (EnrolledStudent obj: enrolledStudents) {
+				System.out.println(String.format("%20s %20s %20s",obj.getCourseCode(), obj.getCourseName(),obj.getStudentId()));
+			}
+			
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage()+"Something went wrong, please try again later!");
+		}
 	}
 
 	/**
@@ -89,7 +105,45 @@ public class CRSProfessorMenu {
 	 */
 	private static void addGrade(int professorId) {
 		// TODO Auto-generated method stub
-		
+	
+		int courseCode, studentId, semesterId;
+		double grade;
+	
+			Vector<EnrolledStudent> enrolledStudents = new Vector<EnrolledStudent>();
+			enrolledStudents = profService.viewEnrolledStudents(professorId);
+			System.out.println(String.format("%20s %20s %20s","COURSE CODE","COURSE NAME","Student ID" ));
+			for (EnrolledStudent obj: enrolledStudents) {
+				System.out.println(String.format("%20s %20s %20s",obj.getCourseCode(), obj.getCourseName(),obj.getStudentId()));
+			}
+			Vector<Course> coursesEnrolled = new Vector<Course>();
+			coursesEnrolled	= profService.viewCourses(professorId);
+			System.out.println("----------------Add Grade--------------");
+			System.out.printf("Enter student id: ");
+			studentId = sc.nextInt();
+			System.out.printf("Enter course code: ");
+			courseCode = sc.nextInt();
+			System.out.println("Enter grade: ");
+			grade = sc.nextDouble();
+			System.out.println("Enter semester Id: ");
+			semesterId = sc.nextInt();
+			profService.addGrade(studentId, courseCode, grade, semesterId);
+			System.out.println("Grade added successfully for "+studentId);
+			/*if (!(ProfessorValidator.isValidStudent(enrolledStudents, studentId)
+			&& ProfessorValidator.isValidCourse(coursesEnrolled, courseCode))) {
+				professorInterface.addGrade(studentId, courseCode, grade);
+				System.out.println("Grade added successfully for "+studentId);
+			} else {
+				System.out.println("Invalid data entered, try again!");
+			}
+			
+		} catch(GradeNotAllotedException ex) {
+			System.out.println("Grade cannot be added for"+ex.getStudentId());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
 	}
 
 	/**
@@ -97,7 +151,18 @@ public class CRSProfessorMenu {
 	 * @param professorId
 	 */
 	private static void getCourses(int professorId) {
+		
 		// TODO Auto-generated method stub
+		try {
+			Vector<Course> coursesEnrolled = profService.viewCourses(professorId);
+			System.out.println(String.format("%20s %20s %20s","COURSE ID","COURSE NAME","No. of Students" ));
+			for(Course obj: coursesEnrolled) {
+				System.out.println(String.format("%20s %20s %20s",obj.getCourseId(), obj.getCourseName(), obj.getCourseSeats()));
+			}		
+		} catch(Exception ex) {
+			System.out.println("Something went wrong!"+ex.getMessage());
+		}
+
 		
 	}
 
