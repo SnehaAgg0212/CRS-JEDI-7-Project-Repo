@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
+import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.utils.DBUtils;
 
 /**
@@ -38,7 +39,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public int sendPaymentNotification(String type, int studentId, String modeOfPayment, double amount) {
+	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount) {
 		
 		int notificationId = 0;
 		return notificationId;
@@ -51,7 +52,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public int sendRegistrationNotification(String type, int studentId) {
+	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId) {
 		
 		int notificationId = 0;
 		return notificationId;
@@ -64,7 +65,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public int sendApprovalNotification(String type, int studentId) {
+	public int sendApprovalNotification(NotificationTypeConstant type, int studentId) {
 		
 		int notificationId = 0;
 		return notificationId;
@@ -78,7 +79,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public UUID addPayment(int studentId, String modeOfPayment, double amount) {
+	public UUID addPayment(int studentId, int modeOfPayment, double amount) {
 		
 		UUID referenceId;
 		referenceId = UUID.randomUUID();

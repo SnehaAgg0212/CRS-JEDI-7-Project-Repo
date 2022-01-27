@@ -3,6 +3,8 @@
  */
 package com.crs.flipkart.business;
 
+import com.crs.flipkart.constants.NotificationTypeConstant;
+
 /**
  * @author devanshugarg
  *
@@ -10,7 +12,7 @@ package com.crs.flipkart.business;
 public class NotificationService implements NotificationInterface {
 
 	@Override
-	public void sendPaymentNotification(String type, int studentId, String modeOfPayment, double amount) {
+	public void sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount) {
 		
 	}
 	
@@ -21,12 +23,12 @@ public class NotificationService implements NotificationInterface {
 	}
     
     @Override
-	public void sendRegistrationNotification(String type, int studentId){
+	public void sendRegistrationNotification(NotificationTypeConstant type, int studentId){
 
     }
 
     @Override
-	public void sendApprovalNotification(String type, int studentId){
+	public void sendApprovalNotification(NotificationTypeConstant type, int studentId){
 
     }
 }

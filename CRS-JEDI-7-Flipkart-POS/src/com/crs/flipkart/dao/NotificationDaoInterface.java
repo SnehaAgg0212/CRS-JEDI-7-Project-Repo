@@ -2,6 +2,8 @@ package com.crs.flipkart.dao;
 
 import java.util.UUID;
 
+import com.crs.flipkart.constants.NotificationTypeConstant;
+
 public interface NotificationDaoInterface {
 
 	/**
@@ -12,7 +14,7 @@ public interface NotificationDaoInterface {
 	 * @param amount
 	 * @return
 	 */
-	int sendPaymentNotification(String type, int studentId, String modeOfPayment, double amount);
+	int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount);
 
 	/**
 	 * 
@@ -20,7 +22,7 @@ public interface NotificationDaoInterface {
 	 * @param studentId
 	 * @return
 	 */
-	int sendRegistrationNotification(String type, int studentId);
+	int sendRegistrationNotification(NotificationTypeConstant type, int studentId);
 
 	/**
 	 * 
@@ -28,7 +30,7 @@ public interface NotificationDaoInterface {
 	 * @param studentId
 	 * @return
 	 */
-	int sendApprovalNotification(String type, int studentId);
+	int sendApprovalNotification(NotificationTypeConstant type, int studentId);
 
 	/**
 	 * 
@@ -37,7 +39,7 @@ public interface NotificationDaoInterface {
 	 * @param amount
 	 * @return
 	 */
-	UUID addPayment(int studentId, String modeOfPayment, double amount);
+	UUID addPayment(int studentId, int modeOfPayment, double amount);
 
 	/**
 	 * 

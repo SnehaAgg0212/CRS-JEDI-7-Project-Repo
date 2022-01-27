@@ -1,5 +1,7 @@
 package com.crs.flipkart.business;
 
+import com.crs.flipkart.constants.NotificationTypeConstant;
+
 public interface NotificationInterface {
 
 	/**
@@ -8,7 +10,7 @@ public interface NotificationInterface {
 	 * @param modeOfPayment
 	 * @param amount
 	 */
-	void sendPaymentNotification(String type, int studentId, String modeOfPayment, double amount);
+	void sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount);
 
 	/**
 	 * @param notificationId
@@ -20,12 +22,13 @@ public interface NotificationInterface {
 	 * @param type
 	 * @param studentId
 	 */
-	void sendRegistrationNotification(String type, int studentId);
+	void sendApprovalNotification(NotificationTypeConstant type, int studentId);
 
 	/**
+	 * 
 	 * @param type
 	 * @param studentId
 	 */
-	void sendApprovalNotification(String type, int studentId);
+	void sendRegistrationNotification(NotificationTypeConstant type, int studentId);
 
 }

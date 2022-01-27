@@ -32,7 +32,7 @@ public class CRSProfessorMenu {
 	public static void createProfessorMenu(int professorId)
 	{
 		
-		while(true) {
+		while(CRSApplicationMenu.loggedin) {
 			
 	        System.out.println("#------------------------Welcome to Course Registration System------------------------#");
 	        
@@ -46,7 +46,7 @@ public class CRSProfessorMenu {
 			System.out.println("4. Choose Courses");
 			System.out.println("5. Exit");
 	        
-	        System.out.println("*********************************************************************************");
+	        System.out.println("*************************************************************************************");
 	        
 	        System.out.print("Enter User Input: ");
 			
@@ -67,6 +67,7 @@ public class CRSProfessorMenu {
 				chooseCourses(professorId);
 				break;
 			case 5:
+				CRSApplicationMenu.loggedin = false;
 				return;
 			default:
 				System.out.println("Invalid Input !");
@@ -134,8 +135,8 @@ public class CRSProfessorMenu {
 		for (EnrolledStudent obj: enrolledStudents) {
 			System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
 		}
-		Vector<Course> coursesEnrolled = new Vector<Course>();
-		coursesEnrolled	= professorService.viewCourses(professorId);
+//		Vector<Course> coursesEnrolled = new Vector<Course>();
+//		coursesEnrolled	= professorService.viewCourses(professorId);
 		System.out.println("----------------Add Grade--------------");
 		System.out.printf("Enter Student Id: ");
 		studentId = sc.nextInt();

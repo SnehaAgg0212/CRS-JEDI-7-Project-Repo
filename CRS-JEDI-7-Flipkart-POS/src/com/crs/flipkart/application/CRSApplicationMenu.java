@@ -3,10 +3,21 @@
  */
 package com.crs.flipkart.application;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import com.crs.flipkart.business.NotificationInterface;
+import com.crs.flipkart.business.NotificationService;
+import com.crs.flipkart.business.ProfessorInterface;
+import com.crs.flipkart.business.ProfessorService;
+import com.crs.flipkart.business.StudentInterface;
+import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
+import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.NotificationTypeConstant;
+import com.crs.flipkart.constants.RoleConstant;
 
 /**
  * @author devanshugarg
@@ -16,7 +27,11 @@ public class CRSApplicationMenu {
 
 	CRSApplicationMenu crsApplicationMenu = new CRSApplicationMenu();
 	static UserInterface userService = new UserService();
+	static StudentInterface studentService = new StudentService();
+	static ProfessorInterface professorService = new ProfessorService();
+	static NotificationInterface notificationService = new NotificationService();
 	static Scanner sc = new Scanner(System.in);
+	static boolean loggedin = false;
 	
 	/**
 	 * @param args
@@ -26,29 +41,35 @@ public class CRSApplicationMenu {
 		
 		int userInput;
 		
-		while(true) {
-			
-			createMainMenu();
-			
-			userInput = sc.nextInt();
-			
-			switch(userInput) {
-			
-			case 1:
-				userLogin();
-				break;
-			case 2:
-				registerStudent();
-				break;
-			case 3:	
-				updatePassword();
-				break;
-			case 4:
-				exit();
-				break;
-			default:
-				System.out.println("Invalid Input !");
+		try {
+			while(true) {
+				
+				createMainMenu();
+				
+				userInput = sc.nextInt();
+				
+				switch(userInput) {
+				
+				case 1:
+					userLogin();
+					break;
+				case 2:
+					registerStudent();
+					break;
+				case 3:	
+					updatePassword();
+					break;
+				case 4:
+					exit();
+					break;
+				default:
+					System.out.println("Invalid Input !");
+				}
 			}
+		} catch(Exception e) {
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			sc.close();
 		}
 		
 	}
@@ -73,11 +94,9 @@ public class CRSApplicationMenu {
 	 */
 	private static void userLogin() {
 		
-		Scanner sc = new Scanner(System.in);
-		
 		System.out.println("-----------------Login------------------");
 		
-		String role = "ADMIN"; 
+		// String role = "ADMIN"; 
 		// String role = "STUDENT"; 
 		// String role = "PROFESSOR"; 
 		String userEmailId, userPassword;
@@ -88,20 +107,38 @@ public class CRSApplicationMenu {
 		System.out.println("Enter Password: ");
 		userPassword = sc.next();
 		
-		boolean login = userService.validateUser(userEmailId, userPassword);
+		loggedin = userService.validateUser(userEmailId, userPassword);
 		
-		if(login) {
+		if(loggedin) {
 			
-			switch (role) {
+			DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+			LocalDateTime dateObj = LocalDateTime.now();
+			String formattedDate = dateObj.format(formatObj);
+			String role = userService.getRoleOfUser(userEmailId);
+			RoleConstant userRole = RoleConstant.stringToRole(role);
+			int userId = userService.getUserId(userEmailId);
 			
-			case "ADMIN": 
+			switch (userRole) {
+			
+			case ADMIN: 
+				System.out.println(formattedDate + " Login Successful.");
 				CRSAdminMenu.createAdminMenu();
 				break;
-			case "STUDENT": 
-				CRSStudentMenu.createStudentMenu(501); //studentID need to be passed
+			case STUDENT: 
+				int studentId = studentService.getStudentId(userId);
+				boolean isApproved = studentService.isApproved(studentId);
+				if(isApproved) {
+					System.out.println(formattedDate + " Login Successful.");
+					CRSStudentMenu.createStudentMenu(studentId); 
+				} else {
+					System.out.println("Failed to login, you have not been approved by the administrator!");
+					loggedin = false;
+				}
 				break;
-			case "PROFESSOR": 
-				CRSProfessorMenu.createProfessorMenu(101); //professorID need to be passed
+			case PROFESSOR: 
+				int professorId = professorService.getProfessorId(userId);
+				System.out.println(formattedDate + " Login Successful.");
+				CRSProfessorMenu.createProfessorMenu(professorId);
 				break;
 			}
 		}
@@ -118,8 +155,11 @@ public class CRSApplicationMenu {
 		
 		System.out.println("---------------Student Registration-------------");
 		
-		String studentName, studentEmailId, studentPassword, studentGender, studentPhoneNo, studentBranch, studentAddress;
-		int studentBatch;
+		int userId = 0; // TODO: UserId Generation is required
+		
+		String studentName, studentEmailId, studentPassword, studentPhoneNo, studentBranch, studentAddress;
+		int studentBatch, studentGender;
+		GenderConstant gender;
 		
 		System.out.println("Enter Student Name: ");
 		studentName = sc.nextLine();
@@ -130,8 +170,9 @@ public class CRSApplicationMenu {
 		System.out.println("Enter Student Password: ");
 		studentPassword = sc.nextLine();
 		
-		System.out.println("Enter Student Gender: ");
-		studentGender = sc.nextLine();
+		System.out.println("Enter Student Gender: \t 1: Male \t 2.Female \t 3.Other");
+		studentGender = sc.nextInt();
+		gender = GenderConstant.getName(studentGender);
 		
 		System.out.println("Enter Student Branch: ");
 		studentBranch = sc.nextLine();
@@ -145,6 +186,8 @@ public class CRSApplicationMenu {
 		System.out.println("Enter Student Phone Number: ");
 		studentPhoneNo = sc.nextLine();
 		
+		int studentId = studentService.register(studentName, studentEmailId, studentPassword, userId, studentPhoneNo, gender, studentAddress, studentBranch, studentBatch);
+		notificationService.sendRegistrationNotification(NotificationTypeConstant.REGISTRATION, studentId);
 	}
 	
 	/**
@@ -152,23 +195,30 @@ public class CRSApplicationMenu {
 	 */
 	private static void updatePassword() {
 		
-		System.out.println("------------------Update Password--------------------");
-		
-		String userEmailId, oldPassword, newPassword, confirmNewPassword;
-		
-		System.out.println("Enter Email Id: ");
-		userEmailId = sc.nextLine();
-		
-		System.out.println("Enter Current Password: ");
-		oldPassword = sc.nextLine();
-		
-		System.out.println("Enter New Password: ");
-		newPassword = sc.nextLine();
-		
-		System.out.println("Confirm New Password: ");
-		confirmNewPassword = sc.nextLine();
-		
-		userService.updatePassword(userEmailId, oldPassword, newPassword, confirmNewPassword);
+		try {
+			
+			System.out.println("------------------Update Password--------------------");
+			
+			String userEmailId, oldPassword, newPassword, confirmNewPassword;
+			
+			System.out.println("Enter Email Id: ");
+			userEmailId = sc.nextLine();
+			
+			System.out.println("Enter Current Password: ");
+			oldPassword = sc.nextLine();
+			
+			System.out.println("Enter New Password: ");
+			newPassword = sc.nextLine();
+			
+			System.out.println("Confirm New Password: ");
+			confirmNewPassword = sc.nextLine();
+			
+			userService.updatePassword(userEmailId, oldPassword, newPassword, confirmNewPassword);
+			
+		} catch (Exception e) {
+			
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 	
 	/**

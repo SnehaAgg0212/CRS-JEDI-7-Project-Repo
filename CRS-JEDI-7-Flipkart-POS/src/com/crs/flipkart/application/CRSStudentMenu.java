@@ -9,10 +9,13 @@ import java.util.Scanner;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
+import com.crs.flipkart.business.NotificationInterface;
+import com.crs.flipkart.business.NotificationService;
 import com.crs.flipkart.business.RegistrationInterface;
 import com.crs.flipkart.business.RegistrationService;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
+import com.crs.flipkart.constants.NotificationTypeConstant;
 
 /**
  * @author devanshugarg
@@ -23,8 +26,9 @@ public class CRSStudentMenu {
 	static Scanner sc = new Scanner(System.in);
 	static RegistrationInterface registrationInterface = new RegistrationService();
 	static StudentInterface studentInterface = new StudentService();
-	static int invoiceId;
+	static NotificationInterface notificationInterface = new NotificationService();
  	static double fee;
+ 	static int invoiceId;
 	
 	/**
 	 * Method to Create Main Menu
@@ -32,7 +36,7 @@ public class CRSStudentMenu {
 	public static void createStudentMenu(int studentId)
 	{
 		
-		while(true) {
+		while(CRSApplicationMenu.loggedin) {
 			
 	        System.out.println("#------------------------Welcome to Course Registration System------------------------#");
 	        
@@ -49,7 +53,7 @@ public class CRSStudentMenu {
 			System.out.println("7. Make Payment");
 			System.out.println("8. Exit");
 	        
-	        System.out.println("*********************************************************************************");
+	        System.out.println("***********************************************************************************");
 	        
 	        System.out.print("Enter User Input: ");
 	        
@@ -81,6 +85,7 @@ public class CRSStudentMenu {
 				makePayment(studentId);
 				break;
 			case 8:
+				CRSApplicationMenu.loggedin = false;
 				return;
 			default:
 				System.out.println("Invalid Input !");
@@ -235,11 +240,16 @@ public class CRSStudentMenu {
 
 			Vector<GradeCard> grades = registrationInterface.viewGradeCard(studentId, semesterId);
 
-			double overallgpa=0.0;
+			if(grades.isEmpty()) {
+				System.out.println("\"You haven't registered for any course.");
+				return;
+			}
+			
+			double overallgpa = 0.0;
 
 			for(GradeCard course_grade : grades) {
 
-				System.out.println("CourseId: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
+				System.out.println("Course Code: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
 
 				overallgpa += course_grade.getGpa();
 			}
@@ -269,7 +279,7 @@ public class CRSStudentMenu {
  			System.out.println("You have not registered yet.");
  		}
  		else if(ispaid) {
- 			System.out.println("You have already paid.");
+ 			System.out.println("You have already paid the fees.");
  		}
  		else if(isapprove && !ispaid) {
  			System.out.println("Total Fees = " + fee);
@@ -286,40 +296,27 @@ public class CRSStudentMenu {
  				System.out.println("Select Mode of Payment: ");
  				int selected_mode = sc.nextInt();
 
- 				System.out.println("Enter Invoice Id: ");
- 				invoiceId = sc.nextInt();
-
- 				int done = 0;
+ 				// TODO: invoiceId Generation
 
  				switch(selected_mode) {
 
  				case 1:
  					paymentByCard(studentId);
- 					done = 1;
+ 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
  					break;
  				case 2:
  					paymentByCheque(studentId);					
- 					done = 1;
+ 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
  					break;
  				case 3:
  					paymentByNetBanking(studentId);
- 					done = 1;
+ 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
  					break;
  				default:
  					System.out.println("Invalid Input!");
  					break;
  				}
-	 			if (done == 1) {
-	 				System.out.println("Payment Succesfully.");
-	 			}
-	 			else {
-	 				System.out.println("Payment Failed.");
-	 			}
-
  			}
-	 		else {
-	 			System.out.println("You have already paid the fees.");
-	 		}
  		}
 	}
 
@@ -385,7 +382,7 @@ public class CRSStudentMenu {
 	private static void paymentByNetBanking(int studentId) {
 		// TODO Auto-generated method stub
 		
-		registrationInterface.setPaymentStatus(studentId,invoiceId,fee);
+		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
 
  		System.out.println("Enter Bank Account Holder Name: ");
  		String bankAccountHolderName = sc.next();

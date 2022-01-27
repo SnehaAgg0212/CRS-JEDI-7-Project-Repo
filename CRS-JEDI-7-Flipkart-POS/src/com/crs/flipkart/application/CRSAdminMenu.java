@@ -10,7 +10,10 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.business.AdminInterface;
 import com.crs.flipkart.business.AdminService;
+import com.crs.flipkart.business.NotificationInterface;
+import com.crs.flipkart.business.NotificationService;
 import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
 
 /**
@@ -20,6 +23,7 @@ import com.crs.flipkart.constants.RoleConstant;
 public class CRSAdminMenu {
 	
 	static AdminInterface adminServices = new AdminService();
+	static NotificationInterface notificationService = new NotificationService();
 	static Scanner sc = new Scanner(System.in);
 
 	/**
@@ -27,7 +31,7 @@ public class CRSAdminMenu {
 	 */
 	public static void createAdminMenu()
 	{
-		while(true) {
+		while(CRSApplicationMenu.loggedin) {
 			
 	        System.out.println("#------------------------Welcome to Course Registration System------------------------#");
 	        
@@ -78,6 +82,7 @@ public class CRSAdminMenu {
 				generateGradeCard();
 				break;
 			case 9:
+				CRSApplicationMenu.loggedin = false;
 				return;
 			default:
 				System.out.println("Invalid Input !");
@@ -96,6 +101,7 @@ public class CRSAdminMenu {
 		int studentId = sc.nextInt();
 		
 		adminServices.approveStudentRegistration(studentId);
+		notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
 	}
 	
 	/**
@@ -257,7 +263,11 @@ public class CRSAdminMenu {
 		System.out.println("Enter the Semester Id: ");
 		int semester = sc.nextInt();
 		
-		adminServices.generateGradeCard(studentId, semester);
+		try {
+			adminServices.generateGradeCard(studentId, semester);
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 	
 //	/**

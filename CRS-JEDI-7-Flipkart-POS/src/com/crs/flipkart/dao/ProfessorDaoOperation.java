@@ -228,4 +228,29 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  		}
  		return professorName;
 	}
+	
+	/**
+	 * Retrieve Professor Id from User Id
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public int getProfessorId(int userId) {
+		
+		statement = null;
+		int professorId = 0;
+		
+		try {
+			String sql = SQLQueriesConstant.GET_PROFESSOR_ID;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, userId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			if(resultSet.next()) {
+ 				professorId = resultSet.getInt(1);
+ 			}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return professorId;
+	}
 }

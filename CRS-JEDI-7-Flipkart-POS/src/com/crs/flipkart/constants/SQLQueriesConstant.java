@@ -59,5 +59,6 @@ public class SQLQueriesConstant {
 
  	public static final String UPDATE_PASSWORD = "update user set userPassword=? where userEmailId = ?";
  	public static final String VERIFY_CREDENTIALS = "select userPassword from user where userEmailId = ?";
- 	public static final String GET_ROLE = "select role from user where userId = ?";
+ 	public static final String GET_ROLE = "select role from user where userEmailId = ?";
+ 	public static final String GET_USER_ID = "select userId from user where userEmailId = ?";
 }

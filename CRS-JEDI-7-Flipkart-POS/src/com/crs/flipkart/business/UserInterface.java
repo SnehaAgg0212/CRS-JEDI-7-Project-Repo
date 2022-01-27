@@ -6,7 +6,7 @@ public interface UserInterface {
 	 * @param userId
 	 * @return
 	 */
-	String getRoleOfUser(int userId);
+	String getRoleOfUser(String userEmailId);
 
 	/**
 	 * @param emailId
@@ -23,5 +23,12 @@ public interface UserInterface {
 	 * @param confirmNewPassword
 	 */
 	void updatePassword(String userEmailId, String oldPassword, String newPassword, String confirmNewPassword);
+
+	/**
+	 * 
+	 * @param userEmailId
+	 * @return
+	 */
+	int getUserId(String userEmailId);
 
 }

@@ -20,26 +20,26 @@ public class UserService implements UserInterface {
 		
 		 if(!newPassword.equals(confirmNewPassword)) {
 			 System.out.println(newPassword + " " + confirmNewPassword);
-			 System.out.println("New password and Confirm new Password are different!!");
+			 System.out.println("New password and Confirm New Password are different!!");
 			 return;
 		 }
 
 		 if(!validateUser(userEmailId,oldPassword)) {
-			 System.out.println("Either emailId or password is wrong, try again!!");
+			 System.out.println("Either EmailId or Password is wrong, try again!!");
 			 return;
 		 }
 
 		 if(userDaoOperation.updatePassword(userEmailId, newPassword)) {
-			 System.out.println("Password successfully updated!!");
+			 System.out.println("Password updated successfully!");
 		 } else {
-			 System.out.println("Error occured!");
+			 System.out.println("Something went wrong, please try again!");
 		 }
 	}
 	
 	@Override
-	public String getRoleOfUser(int userId) {
+	public String getRoleOfUser(String userEmailId) {
 		
-		return userDaoOperation.getRole(userId);
+		return userDaoOperation.getRole(userEmailId);
 	}
 	
 	/**
@@ -52,5 +52,16 @@ public class UserService implements UserInterface {
 	public boolean validateUser(String emailId, String password) {
 		
 		return userDaoOperation.verifyCredentials(emailId, password);
+	}
+	
+	/**
+	 * 
+	 * @param userEmailId
+	 * @return
+	 */
+	@Override
+	public int getUserId(String userEmailId) {
+		
+		return userDaoOperation.getUserId(userEmailId);
 	}
 }

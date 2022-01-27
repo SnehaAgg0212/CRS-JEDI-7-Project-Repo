@@ -39,14 +39,6 @@ public class AdminService implements AdminInterface {
         userId ++;
     }
 
-//    Vector<Student> StudentList = new Vector<Student>() {{
-//    	add(new Student("username_1", "username_1@flipkart.com", "ABCD", "student", 1,
-//				"1234567890", "female", "location", "CS", 101, 123, false));
-//			add(new Student("username_2", "username_2@flipkart.com", "ABCD", "student", 1,
-//					"1234567890", "female", "location", "CS", 102, 123, false));
-//			add(new Student("username_3", "username_3@flipkart.com", "ABCD", "student", 1,
-//					"1234567890", "female", "location", "CS", 103, 123, false));
-//    }};
     Vector<Student> StudentList = new Vector<>();
     Vector<Professor> ProfessorList = new Vector<>();
     Vector<Course> CourseList = new Vector<>();
@@ -88,7 +80,12 @@ public class AdminService implements AdminInterface {
 		
 		grades = adminDaoOperation.generateGradeCard(studentId, semesterId);
 		
-		double overallgpa=0.0;
+		if (grades.isEmpty()) {
+			System.out.println("You haven't registered for any course.");
+			return;
+		}
+		
+		double overallgpa = 0.0;
 		
 		for(GradeCard course_grade : grades) {
 			

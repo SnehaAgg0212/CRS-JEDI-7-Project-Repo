@@ -23,6 +23,13 @@ public interface UserDaoInterface {
 	 * @param userId
 	 * @return
 	 */
-	String getRole(int userId);
+	String getRole(String userEmailId);
+
+	/**
+	 * 
+	 * @param userEmailId
+	 * @return
+	 */
+	int getUserId(String userEmailId);
 
 }

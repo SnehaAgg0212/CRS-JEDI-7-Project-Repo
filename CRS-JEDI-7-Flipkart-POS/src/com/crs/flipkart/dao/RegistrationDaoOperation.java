@@ -45,8 +45,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			while(resultSet.next()) {
 				fee += resultSet.getDouble("courseFee");
 			}
-		}
-		catch(SQLException e){
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		return fee;
@@ -70,8 +69,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			if(resultSet.next() && resultSet.getInt("isApproved") == 1) {
 				return true;
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());	
 		}
 		return false;
@@ -95,8 +93,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			if(resultSet.next() && resultSet.getInt("status") == 1) {
 				return true;
 			}
-		}
-		catch(SQLException e){
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());	
 		}
 		return false;
@@ -129,8 +126,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.setString(6, bankName);
 			statement.setDate(7,expiryDate);
 			statement.executeUpdate();
-		}
-		catch(SQLException e){
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());	
 		}
 	}
@@ -164,8 +160,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.setString(7,bankBranchName);
 			statement.setDate(8,chequeDate);
 			statement.executeUpdate();
-		}
-		catch(SQLException e){
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());	
 		}
 	}
@@ -189,8 +184,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.setString(2, bankAccountHolderName);
 			statement.setInt(3, invoiceId);
 			statement.executeUpdate();
-		}
-		catch(SQLException e){
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());	
 		}
 	}
@@ -214,8 +208,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.setDouble(3, amount);
 			statement.setBoolean(4, true);
 			statement.executeUpdate();
-		}
-		catch(SQLException e){
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());	
 		}
 	}
@@ -238,8 +231,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			if(resultSet.next() && resultSet.getInt("isGenerated") == 1) {
 				return true;
 			}
-		}
-		catch(SQLException e) {
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());				
 		}
 		return false;
@@ -272,8 +264,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 				gradeCard.setStudentId(studentId);
 				grades.add(gradeCard);				
 			}
-		}
-		catch(SQLException e) {
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());				
 		}
 		return grades;

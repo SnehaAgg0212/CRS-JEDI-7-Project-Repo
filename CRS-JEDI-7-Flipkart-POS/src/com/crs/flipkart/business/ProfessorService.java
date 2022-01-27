@@ -92,8 +92,7 @@ public class ProfessorService implements ProfessorInterface {
 	 * @return
 	 */
 	@Override
-	public String getProfessorById(int professorId)
-	{
+	public String getProfessorById(int professorId) {
 	
 		return professorDaoOperation.getProfessorById(professorId);
 	}
@@ -116,4 +115,15 @@ public class ProfessorService implements ProfessorInterface {
  			throw e;
  		}
  	}
+	
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public int getProfessorId(int userId) {
+	
+		return professorDaoOperation.getProfessorId(userId);
+	}
 }
