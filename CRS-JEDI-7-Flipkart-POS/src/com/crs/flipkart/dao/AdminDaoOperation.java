@@ -11,10 +11,14 @@ import java.sql.SQLException;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.constants.SQLQueriesConstant;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.crs.flipkart.utils.DBUtils;
@@ -314,5 +318,46 @@ public class AdminDaoOperation implements AdminDaoInterface {
  			System.out.println("Error: " + e.getMessage());
  		}
  	}
+	
+
+	/**
+	 * @return List of students with pending admission i.e. not approved
+	 */
+	@Override
+	public List<Student> viewPendingAdmissions() {
+		
+		statement = null;
+		List<Student> pendingStudents = new ArrayList<Student>();
+		try {
+			String sql = SQLQueriesConstant.VIEW_PENDING_ADMISSION_QUERY;
+			statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				Student student = new Student();
+				student.setUserId(resultSet.getInt(1));
+				student.setUserName(resultSet.getString(2));
+				student.setUserPassword(resultSet.getString(3));
+				student.setRole(RoleConstant.stringToRole(resultSet.getString(4)));
+				student.setGender(GenderConstant.stringToGender(resultSet.getString(5)));
+				student.setAddress(resultSet.getString(6));
+				student.setStudentId(resultSet.getInt(7));
+				
+				pendingStudents.add(student);
+				
+			}
+			
+			System.out.println(pendingStudents.size() + "students have approval pending.");
+			
+		} catch(SQLException e) {
+			
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return pendingStudents;
+		
+	}
 	
 }

@@ -1,9 +1,11 @@
 package com.crs.flipkart.business;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
 
 /**
  * @author devanshugarg
@@ -19,7 +21,7 @@ public interface AdminInterface {
 	/**
 	 * @param studentId
 	 */
-	void approveStudentRegistration(int studentId);
+	void approveStudentRegistration(int studentId, List<Student> pendingStudents);
 
 	/**
 	 * @return
@@ -57,4 +59,8 @@ public interface AdminInterface {
 	 */
 	void setIsGenerateGrade(int studentId);
 
+	/**
+	 * @return List of students with pending admission i.e. not approved
+	 */
+	public List<Student> viewPendingAdmissions();
 }

@@ -3,6 +3,7 @@
  */
 package com.crs.flipkart.business;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -58,8 +59,21 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public void approveStudentRegistration(int studentId) {
+	public void approveStudentRegistration(int studentId, List<Student> pendingStudents) {
 
+		Boolean isValidUnapprovedStudent = false;
+		for(Student student : pendingStudents) {
+			if(studentId == student.getStudentId()) {
+				isValidUnapprovedStudent = true;
+				break;
+			}
+		}
+		
+		if(!isValidUnapprovedStudent) {
+			System.out.println("Student not found.");
+			return;
+		}
+		
 		adminDaoOperation.approveStudentRegistration(studentId);
 	}
 
@@ -108,6 +122,11 @@ public class AdminService implements AdminInterface {
 		
  		adminDaoOperation.setIsGenerateGrade(studentId);
  	}
+	
+	@Override
+	public List<Student> viewPendingAdmissions() {
+		return adminDaoOperation.viewPendingAdmissions();
+	}
 
 //	@Override
 //	public void assignCourseToProfessor(int courseId, int professorId) {
