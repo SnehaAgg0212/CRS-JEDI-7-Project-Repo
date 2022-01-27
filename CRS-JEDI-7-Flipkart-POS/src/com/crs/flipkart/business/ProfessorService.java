@@ -14,19 +14,32 @@ public class ProfessorService implements ProfessorInterface {
 	
 	ProfessorDaoInterface professorDaoOperation = new ProfessorDaoOperation();
 	
+	/**
+	 * 
+	 * @param studentId
+	 * @param courseCode
+	 * @param gpa
+	 * @param semesterId
+	 * @return
+	 */
 	@Override
-	public boolean addGrade(String studentId, String courseCode, String grade) {
+	public boolean addGrade(int studentId, int courseCode, double gpa, int semesterId) {
 		
 		try {
-			professorDaoOperation.addGrade(studentId, courseCode, grade);
+			professorDaoOperation.addGrade(studentId, courseCode, gpa, semesterId);
 		} catch (Exception e) {
 			throw e;
 		}
 		return true;
 	}
 	
+	/**
+	 * 
+	 * @param professorId
+	 * @return
+	 */
 	@Override
-	public Vector<EnrolledStudent> viewEnrolledStudents(String professorId) {
+	public Vector<EnrolledStudent> viewEnrolledStudents(int professorId) {
 
 		Vector<EnrolledStudent> enrolledStudents = new Vector<>();
 		
@@ -38,8 +51,13 @@ public class ProfessorService implements ProfessorInterface {
 		return enrolledStudents;
 	}
 	
+	/**
+	 * 
+	 * @param professorId
+	 * @return
+	 */
 	@Override
-	public Vector<Course> viewCourses(String professorId) {
+	public Vector<Course> viewCourses(int professorId) {
 
 		Vector<Course> coursesOffered = new Vector<>();
 		
@@ -51,10 +69,51 @@ public class ProfessorService implements ProfessorInterface {
 		return coursesOffered;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	@Override
-	public String getProfessorById(String professorId)
+	public Vector<Course> viewAvailableCourses() {
+
+ 		Vector<Course> availableCourses = new Vector<>();
+
+ 		try {
+ 			availableCourses = professorDaoOperation.viewAvailableCourses();
+ 		} catch (Exception e) {
+ 			throw e;
+ 		}
+ 		return availableCourses;
+ 	}
+	
+	/**
+	 * 
+	 * @param professorId
+	 * @return
+	 */
+	@Override
+	public String getProfessorById(int professorId)
 	{
 	
 		return professorDaoOperation.getProfessorById(professorId);
 	}
+	
+	/**
+	 * 
+	 * @param professorId
+	 * @param courseSelectedId
+	 * @return
+	 */
+	@Override
+	public boolean addCourse(int professorId, int courseSelectedId) {
+
+ 		try {
+ 			if(!professorDaoOperation.checkSelectedCourse(professorId)) {
+ 				return false;
+ 			}
+ 			return professorDaoOperation.addCourse(professorId, courseSelectedId);
+ 		} catch (Exception e) {
+ 			throw e;
+ 		}
+ 	}
 }

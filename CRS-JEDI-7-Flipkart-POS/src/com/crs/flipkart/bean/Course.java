@@ -14,6 +14,7 @@ public class Course {
 	private String courseDescription;
 	private double courseFee;
 	private int courseSeats;
+	private int professorId;
 	
 	/**
 	 * Default Constructor
@@ -107,6 +108,20 @@ public class Course {
 	 */
 	public void setCourseSeats(int courseSeats) {
 		this.courseSeats = courseSeats;
+	}
+
+	/**
+	 * @return the professorId
+	 */
+	public int getProfessorId() {
+		return professorId;
+	}
+
+	/**
+	 * @param professorId the professorId to set
+	 */
+	public void setProfessorId(int professorId) {
+		this.professorId = professorId;
 	}
 
 }

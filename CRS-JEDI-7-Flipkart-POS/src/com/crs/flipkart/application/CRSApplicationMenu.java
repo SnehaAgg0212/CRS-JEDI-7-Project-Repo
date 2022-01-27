@@ -79,6 +79,8 @@ public class CRSApplicationMenu {
 		System.out.println("-----------------Login------------------");
 		
 		String role = "ADMIN"; 
+		// String role = "STUDENT"; 
+		// String role = "PROFESSOR"; 
 		String userEmailId, userPassword;
 		
 		System.out.println("Enter Email ID: ");
@@ -97,10 +99,10 @@ public class CRSApplicationMenu {
 				CRSAdminMenu.createAdminMenu();
 				break;
 			case "STUDENT": 
-				CRSStudentMenu.createStudentMenu(100); //studentID need to be passed
+				CRSStudentMenu.createStudentMenu(501); //studentID need to be passed
 				break;
 			case "PROFESSOR": 
-				CRSProfessorMenu.createProfessorMenu(100); //professorID need to be passed
+				CRSProfessorMenu.createProfessorMenu(101); //professorID need to be passed
 				break;
 			}
 		}
