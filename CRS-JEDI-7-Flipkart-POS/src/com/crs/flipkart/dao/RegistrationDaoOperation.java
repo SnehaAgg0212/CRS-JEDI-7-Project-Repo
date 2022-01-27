@@ -11,9 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.utils.DBUtils;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author devanshugarg
@@ -276,4 +278,225 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 		}
 		return grades;
 	}
+	
+	/**
+	 * 
+	 * @param studentId
+	 * @param courseId
+	 * @return
+	 */
+	@Override
+	public boolean addCourse(int studentId, int courseId) {
+
+		statement = null;
+		
+ 		try {
+ 			String sql = SQLQueriesConstant.ADD_COURSE;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, studentId);
+ 			statement.setInt(2, courseId);
+ 			statement.executeUpdate();
+
+ 			sql = SQLQueriesConstant.DECREMENT_SEAT;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, courseId);
+ 			statement.executeUpdate();
+ 			return true;
+ 		} catch(SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return false;
+ 	}
+	
+	/**
+	 * 
+	 * @param semester
+	 * @param studentId
+	 * @return
+	 */
+	@Override
+	public boolean semesterRegistration(int semester, int studentId) {
+
+		statement = null;
+		
+ 		try {
+ 			String sql = SQLQueriesConstant.CHECK_STUDENT_AND_SEM;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, studentId);
+ 			statement.setInt(2, semester);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()) {
+ 				return true;
+ 			}
+ 		} catch(SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return false;
+ 	}
+	
+	/**
+	 * 
+	 * @param semester
+	 * @param studentId
+	 * @return
+	 */
+	@Override
+	public boolean addSemester(int semester, int studentId) {
+
+		statement = null;
+		
+ 		try {
+ 			String sql = SQLQueriesConstant.ADD_SEMESTER;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, Utils.generateId());
+ 			statement.setInt(2, studentId);
+ 			statement.setInt(3, semester);
+ 			statement.executeUpdate();
+ 			return true;
+ 		} catch(SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return false;
+ 	}
+	
+	/**
+	 * 
+	 * @param studentId
+	 * @param courseId
+	 * @return
+	 */
+	@Override
+	public boolean dropCourse(int studentId, int courseId) {
+
+		statement = null;
+		
+ 		try {
+ 			String sql = SQLQueriesConstant.DROP_COURSE;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, studentId);
+ 			statement.setInt(2, courseId);
+ 			statement.executeUpdate();
+
+ 			sql = SQLQueriesConstant.INCREMENT_SEAT;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, courseId);
+ 			statement.executeUpdate();
+ 			return true;
+ 		} catch(SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return false;
+ 	}
+	
+	/**
+	 * 
+	 * @param courseId
+	 * @return
+	 */
+	@Override
+	public boolean isSeatAvailable(int courseId) {
+		
+		statement = null;
+		
+ 		try {
+ 			String sql = SQLQueriesConstant.AVAILABLE_SEATS;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, courseId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()) {
+ 				return resultSet.getInt("courseSeats") > 0;
+ 			}
+ 		} catch(SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return true;
+ 	}
+	
+	/**
+	 * 
+	 * @param studentId
+	 * @return
+	 */
+	@Override
+	public int totalRegisteredCourses(int studentId) {
+		
+ 		int totalcourse = 0;
+ 		statement = null;
+ 		
+ 		try {
+ 			String sql = SQLQueriesConstant.TOTAL_REGISTERED_COURSES;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, studentId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()) {
+ 				totalcourse++;
+ 			}
+ 			return totalcourse;
+ 		} catch(SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return totalcourse;
+ 	}
+	
+	/**
+	 * 
+	 * @param studentId
+	 * @return
+	 */
+	@Override
+	public Vector<Course> viewCourses(int studentId) {
+
+ 		Vector<Course> availableCourses = new Vector<>();
+ 		statement = null;
+ 		
+ 		try {
+ 			String sql = SQLQueriesConstant.VIEW_AVAILABLE_COURSES;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, studentId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()) {
+ 				Course course = new Course();
+ 				course.setCourseId(resultSet.getInt(1));
+  				course.setCourseName(resultSet.getString(2));
+  				course.setCourseDescription(resultSet.getString(3));
+  				course.setCourseFee(resultSet.getDouble(4));
+  				course.setCourseSeats(resultSet.getInt(5));
+  				availableCourses.add(course);
+ 			}
+ 		} catch(SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return availableCourses;
+ 	}
+	
+	/**
+	 * 
+	 * @param studentId
+	 * @return
+	 */
+	@Override
+	public Vector<Course> viewRegisteredCourses(int studentId) {
+
+ 		Vector<Course> availableCourses = new Vector<>();
+ 		statement = null;
+ 		
+ 		try {
+ 			String sql = SQLQueriesConstant.VIEW_REGISTERED_COURSES;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, studentId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()) {
+ 				Course course = new Course();
+ 				course.setCourseId(resultSet.getInt(1));
+  				course.setCourseName(resultSet.getString(2));
+  				course.setCourseDescription(resultSet.getString(3));
+  				course.setCourseFee(resultSet.getDouble(4));
+  				course.setCourseSeats(resultSet.getInt(5));
+  				availableCourses.add(course);
+ 			}
+ 		} catch(SQLException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return availableCourses;
+ 	}
 }

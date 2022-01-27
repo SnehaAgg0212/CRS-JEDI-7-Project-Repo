@@ -45,4 +45,15 @@ public class SQLQueriesConstant {
  	public static final String ADD_COURSE_TO_PROFESSOR = "update Professor set courseId = ? where professorId = ?";
  	public static final String GET_AVAILABLE_COURSES = "select course.courseId, course.courseName, course.courseDescription, course.courseFee, course.courseSeats from course where courseId not in (select courseId from Professor)";
  	public static final String CHECK_SELECTED_COURSE = "select courseId from professor where professorId = ?";
+ 	
+ 	public static final String VIEW_AVAILABLE_COURSES = "select * from Course where courseSeats > 0 and courseId not in (select courseId from registeredCourse where studentId = ?)";
+ 	public static final String TOTAL_REGISTERED_COURSES = "select courseId from registeredCourse where studentId = ?";
+ 	public static final String AVAILABLE_SEATS = "select courseSeats from Course where courseId = ?";
+ 	public static final String ADD_COURSE = "insert into registeredcourse (studentId,courseId) values (?, ?)";
+ 	public static final String DECREMENT_SEAT = "update Course set courseSeats = courseSeats-1 where courseId = ? ";
+ 	public static final String DROP_COURSE = "delete from registeredcourse where studentId = ? AND courseId = ?";
+ 	public static final String INCREMENT_SEAT = "update Course set courseSeats = courseSeats + 1 where courseId = ? ";
+ 	public static final String VIEW_REGISTERED_COURSES = "select * from Course inner join registeredCourse on Course.courseId = registeredCourse.courseId where registeredCourse.studentId = ?";
+ 	public static final String CHECK_STUDENT_AND_SEM = "select studentId from semesterRegistration where studentId = ? and semester = ?";
+ 	public static final String ADD_SEMESTER = "insert into semesterRegistration(semesterId, studentId, semester, date) values (?, ?, ?, curdate())";
 }

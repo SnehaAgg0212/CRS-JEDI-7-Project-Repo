@@ -6,6 +6,8 @@ package com.crs.flipkart.business;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
+import com.crs.flipkart.dao.RegistrationDaoInterface;
+import com.crs.flipkart.dao.RegistrationDaoOperation;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.dao.StudentDaoOperation;
 
@@ -16,6 +18,7 @@ import com.crs.flipkart.dao.StudentDaoOperation;
 public class StudentService implements StudentInterface {
 	
 	StudentDaoInterface studentDaoOperation = new StudentDaoOperation();
+	RegistrationDaoInterface registrationDaoOperation = new RegistrationDaoOperation();
 	
 	public static final Student student = new Student("userName",  "student@gmail.com",  "student",  RoleConstant.STUDENT,  101,  "phoneNo", GenderConstant.MALE,  "address", "branchName", 13, 2022, true);
 
@@ -50,5 +53,23 @@ public class StudentService implements StudentInterface {
 	public Boolean isGenerated(int studentId) {
 
  		return null;
+ 	}
+	
+	@Override
+	public boolean semesterRegistration(int semester, int studentId) {
+		
+ 		boolean check = registrationDaoOperation.semesterRegistration(semester, studentId);
+ 		if(!check) {
+ 			boolean checkstatus = registrationDaoOperation.addSemester(semester, studentId);
+ 			if(checkstatus) {
+ 				System.out.println("Semester Registration is done Successfully.");
+ 				return true;
+ 			} else {
+ 				System.out.println("Semseter Registration is Failed, Please try again!");
+ 			}
+ 		} else {
+ 			System.out.println("Registration of the semester is already done!");
+ 		}
+ 		return false;
  	}
 }

@@ -7,9 +7,12 @@ import java.sql.Date;
 import java.util.Vector;
 import java.util.Scanner;
 
+import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.business.RegistrationInterface;
 import com.crs.flipkart.business.RegistrationService;
+import com.crs.flipkart.business.StudentInterface;
+import com.crs.flipkart.business.StudentService;
 
 /**
  * @author devanshugarg
@@ -19,6 +22,7 @@ public class CRSStudentMenu {
 
 	static Scanner sc = new Scanner(System.in);
 	static RegistrationInterface registrationInterface = new RegistrationService();
+	static StudentInterface studentInterface = new StudentService();
 	static int invoiceId;
  	static double fee;
 	
@@ -36,7 +40,7 @@ public class CRSStudentMenu {
 	        System.out.println("********************************* Student Menu ************************************");
 	        System.out.println("***********************************************************************************");
 	        
-	        System.out.println("1. Course Registration");
+	        System.out.println("1. Semester Registration");
 			System.out.println("2. Add Course");
 			System.out.println("3. Drop Course");
 			System.out.println("4. View Course");
@@ -63,7 +67,7 @@ public class CRSStudentMenu {
 				dropCourse(studentId);
 				break;
 			case 4:
-				viewCourse(studentId);
+				viewAvailableCourse(studentId);
 				break;
 			case 5:
 				viewRegisteredCourse(studentId);
@@ -90,7 +94,35 @@ public class CRSStudentMenu {
 	 */
 	private static void registerCourses(int studentId) {
 		// TODO Auto-generated method stub
-		
+	
+		System.out.println("Enter the Semester Id: ");
+ 		int semesterId = sc.nextInt();
+
+ 		boolean check = studentInterface.semesterRegistration(semesterId, studentId);
+ 		if(check) {
+ 			int totalCourses = 1;
+ 			while(totalCourses < 7) {
+ 				
+ 				Vector<Course> courseList = viewAvailableCourse(studentId);
+ 				if(courseList == null) {
+ 					return;
+ 				}
+
+ 				System.out.println("Enter Course Id " + totalCourses + ": ");
+ 				int courseId = sc.nextInt();
+
+ 				boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
+ 				if(checkstatus) {
+ 					System.out.println("Course registration of " + courseId + " done successfully.");
+ 					totalCourses++;
+ 				} else {
+ 					System.out.println("Course registration of " + courseId + " is already done.");
+ 				}
+ 			}
+
+ 			System.out.println();
+ 			System.out.println("Registration Successful");
+ 		}
 	}
 
 	/**
@@ -100,6 +132,20 @@ public class CRSStudentMenu {
 	private static void addCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
+		Vector<Course> availableCourse = viewAvailableCourse(studentId);
+ 		if(availableCourse == null) {
+ 			return;
+ 		}
+
+ 		System.out.println("Enter the CourseID to ADD: ");
+ 		int courseId = sc.nextInt();
+
+ 		boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
+ 		if(checkstatus) {
+ 			System.out.println("Course registration of " + courseId + " done successfully.");
+ 		} else {
+ 			System.out.println("Course registration of " + courseId + " is already done.");
+ 		}
 	}
 
 	/**
@@ -109,24 +155,66 @@ public class CRSStudentMenu {
 	private static void dropCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
+		Vector<Course> availableCourse = viewRegisteredCourse(studentId);
+ 		if(availableCourse == null) {
+ 			return;
+ 		}
+
+ 		System.out.println("Enter the CourseID to DROP: ");
+ 		int courseId = sc.nextInt();
+
+ 		boolean checkstatus = registrationInterface.dropCourse(courseId, studentId, availableCourse);
+ 		if(checkstatus) {
+ 			System.out.println("Course Deletion of " + courseId + " done successfully.");
+ 		} else {
+ 			System.out.println("Course of " + courseId + " is already deleted.");
+ 		}
 	}
 
 	/**
 	 * View Course
 	 * @param studentId
 	 */
-	private static void viewCourse(int studentId) {
+	private static Vector<Course> viewAvailableCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
+		Vector<Course> availableCourses = null;
+
+ 		availableCourses = registrationInterface.viewCourses(studentId);
+
+ 		if(availableCourses.isEmpty()) {
+ 			System.out.println("No Courses are available right now!");
+ 			return null;
+ 		}
+
+ 		for(Course course : availableCourses) {
+ 			System.out.println(course.getCourseId() + " " + course.getCourseName() + " " + course.getCourseDescription() + " " + course.getCourseFee() + " " + course.getCourseSeats());
+ 		}
+
+ 		return availableCourses;
 	}
 
 	/**
 	 * View Registered Courses
 	 * @param studentId
 	 */
-	private static void viewRegisteredCourse(int studentId) {
+	private static Vector<Course> viewRegisteredCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
+		Vector<Course> registeredCourses = null;
+
+ 		registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
+
+ 		if(registeredCourses.isEmpty()) {
+ 			System.out.println("No Courses are Registered!");
+ 			return null;
+ 		}
+
+ 		for(Course course : registeredCourses) {
+ 			System.out.println(course.getCourseId() + " " + course.getCourseName() + " " + course.getCourseDescription() + " " + course.getCourseFee() + " " + course.getCourseSeats());
+ 		}
+
+ 		return registeredCourses;
 	}
 
 	/**

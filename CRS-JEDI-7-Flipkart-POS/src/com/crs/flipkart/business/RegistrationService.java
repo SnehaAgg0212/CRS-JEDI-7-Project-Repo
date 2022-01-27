@@ -3,8 +3,6 @@
  */
 package com.crs.flipkart.business;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
 import java.sql.Date;
 import java.util.Vector;
 
@@ -24,13 +22,20 @@ public class RegistrationService implements RegistrationInterface {
 	@Override
 	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) {
 		
-		return false;
+		if(registrationDaoOperation.totalRegisteredCourses(studentId) >= 6) {
+ 			System.out.println("More than 6 courses are registered!");
+ 			return false;
+ 		}else if(!registrationDaoOperation.isSeatAvailable(courseId)) {
+ 			System.out.println("No Seats available for this CourseId!");
+ 			return false;
+ 		}
+ 		return registrationDaoOperation.addCourse(studentId, courseId);
 	}
 	
 	@Override
 	public boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) {
 		
-		return false;
+		return registrationDaoOperation.dropCourse(studentId, courseId);
 	}
 		
 	@Override
@@ -47,7 +52,7 @@ public class RegistrationService implements RegistrationInterface {
 	@Override
 	public Vector<Course> viewRegisteredCourses(int studentId){
 		
-		return null;
+		return registrationDaoOperation.viewRegisteredCourses(studentId);
 	}
 	
 	@Override
@@ -59,7 +64,7 @@ public class RegistrationService implements RegistrationInterface {
 	@Override
 	public Vector<Course> viewCourses(int studentId){
 		
-		return null;
+		return registrationDaoOperation.viewCourses(studentId);
 	}
 	
 	@Override

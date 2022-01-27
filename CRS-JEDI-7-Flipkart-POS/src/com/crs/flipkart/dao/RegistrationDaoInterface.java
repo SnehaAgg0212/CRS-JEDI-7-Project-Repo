@@ -3,6 +3,7 @@ package com.crs.flipkart.dao;
 import java.sql.Date;
 import java.util.Vector;
 
+import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 
 public interface RegistrationDaoInterface {
@@ -88,5 +89,65 @@ public interface RegistrationDaoInterface {
 	 * @return
 	 */
 	Vector<GradeCard> viewGradeCard(int studentId, int semesterId);
+
+	/**
+	 * 
+	 * @param studentId
+	 * @param courseId
+	 * @return
+	 */
+	boolean addCourse(int studentId, int courseId);
+
+	/**
+	 * 
+	 * @param semester
+	 * @param studentId
+	 * @return
+	 */
+	boolean semesterRegistration(int semester, int studentId);
+
+	/**
+	 * 
+	 * @param semester
+	 * @param studentId
+	 * @return
+	 */
+	boolean addSemester(int semester, int studentId);
+
+	/**
+	 * 
+	 * @param studentId
+	 * @param courseId
+	 * @return
+	 */
+	boolean dropCourse(int studentId, int courseId);
+
+	/**
+	 * 
+	 * @param courseId
+	 * @return
+	 */
+	boolean isSeatAvailable(int courseId);
+
+	/**
+	 * 
+	 * @param studentId
+	 * @return
+	 */
+	int totalRegisteredCourses(int studentId);
+
+	/**
+	 * 
+	 * @param studentId
+	 * @return
+	 */
+	Vector<Course> viewCourses(int studentId);
+
+	/**
+	 * 
+	 * @param studentId
+	 * @return
+	 */
+	Vector<Course> viewRegisteredCourses(int studentId);
 
 }

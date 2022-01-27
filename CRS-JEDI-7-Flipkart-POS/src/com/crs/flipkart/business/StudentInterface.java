@@ -37,4 +37,11 @@ public interface StudentInterface {
 	 */
 	Boolean isGenerated(int studentId);
 
+	/**
+	 * @param semester
+	 * @param studentId
+	 * @return
+	 */
+	boolean semesterRegistration(int semester, int studentId);
+
 }
