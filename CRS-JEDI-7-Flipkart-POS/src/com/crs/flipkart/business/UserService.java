@@ -37,9 +37,15 @@ public class UserService implements UserInterface {
 	}
 	
 	@Override
-	public String getRoleOfUser(int userId) {
+	public String getRoleOfUser(String userId) {
 		
 		return userDaoOperation.getRole(userId);
+	}
+	
+	@Override
+	public int getUserId(String userEmailId) {
+		
+		return userDaoOperation.getUserId(userEmailId);
 	}
 	
 	/**

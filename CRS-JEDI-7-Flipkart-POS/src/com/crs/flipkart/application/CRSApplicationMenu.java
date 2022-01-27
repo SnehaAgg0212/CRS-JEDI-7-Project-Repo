@@ -5,6 +5,8 @@ package com.crs.flipkart.application;
 
 import java.util.Scanner;
 
+import com.crs.flipkart.business.StudentInterface;
+import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
 
@@ -16,6 +18,7 @@ public class CRSApplicationMenu {
 
 	CRSApplicationMenu crsApplicationMenu = new CRSApplicationMenu();
 	static UserInterface userService = new UserService();
+	static StudentInterface studentService = new StudentService();
 	static Scanner sc = new Scanner(System.in);
 	
 	/**
@@ -77,9 +80,7 @@ public class CRSApplicationMenu {
 		
 		System.out.println("-----------------Login------------------");
 		
-		String role = "ADMIN"; 
-		// String role = "STUDENT"; 
-		// String role = "PROFESSOR"; 
+		String role; 
 		String userEmailId, userPassword;
 		
 		System.out.println("Enter Email ID: ");
@@ -92,15 +93,21 @@ public class CRSApplicationMenu {
 		
 		if(login) {
 			
+			role = userService.getRoleOfUser(userEmailId);
+			int userId = userService.getUserId(userEmailId);
 			switch (role) {
 			
 			case "ADMIN": 
+				System.out.println(role + " Login Successfully");
 				CRSAdminMenu.createAdminMenu();
 				break;
-			case "STUDENT": 
-				CRSStudentMenu.createStudentMenu(501); //studentID need to be passed
+			case "STUDENT":
+				int studentId = studentService.getStudentId(userId);
+				System.out.println("StudentId " + studentId + " has Login Successfully");
+				CRSStudentMenu.createStudentMenu(studentId); 
 				break;
 			case "PROFESSOR": 
+				System.out.println(role + " Login Successfully");
 				CRSProfessorMenu.createProfessorMenu(101); //professorID need to be passed
 				break;
 			}

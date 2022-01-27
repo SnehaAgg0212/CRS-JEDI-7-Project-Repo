@@ -24,7 +24,7 @@ public class SQLQueriesConstant {
 	public static final String GET_PROFESSOR_ID = "select professorId from professor where userId = ?";
 	public static final String IS_APPROVED = "select isApproved from student where studentId = ?";
 	public static final String VIEW_COURSES_GRADE = "select courseId, gpa from gradecard where studentId = ? and semesterId = ?";
-	
+	public static final String GET_USERID = "select userId from user where userEmailId = ?";
 	public static final String ADD_STUDENT_QUERY = "insert into Student(userId, branchName, batch) values (?, ?, ?)";
 	
 	public static final String GET_REGISTERED_COURSE_FEE = "select courseFee from course where courseId IN (select courseId from registeredcourse where studentId = ?)";
@@ -59,5 +59,5 @@ public class SQLQueriesConstant {
 
  	public static final String UPDATE_PASSWORD = "update user set userPassword=? where userEmailId = ?";
  	public static final String VERIFY_CREDENTIALS = "select userPassword from user where userEmailId = ?";
- 	public static final String GET_ROLE = "select role from user where userId = ?";
+ 	public static final String GET_ROLE = "select userId, role from user where userEmailId = ?";
 }

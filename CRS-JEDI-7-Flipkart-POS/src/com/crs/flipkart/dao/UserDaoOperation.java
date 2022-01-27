@@ -83,11 +83,11 @@ public class UserDaoOperation implements UserDaoInterface {
  	
  	/**
  	 * 
- 	 * @param userId
+ 	 * @param userEmailId
  	 * @return
  	 */
  	@Override
-	public String getRole(int  userId) {
+	public String getRole(String  userEmailId) {
  		
  		statement = null;
  		String role = "";
@@ -95,7 +95,7 @@ public class UserDaoOperation implements UserDaoInterface {
  		try {
  			String sql = SQLQueriesConstant.GET_ROLE;
  			statement = connection.prepareStatement(sql);
- 			statement.setInt(1, userId);
+ 			statement.setString(1, userEmailId);
  			ResultSet resultSet = statement.executeQuery();
  			if(resultSet.next()) {
  				role = resultSet.getString("role");
@@ -104,5 +104,31 @@ public class UserDaoOperation implements UserDaoInterface {
  			System.out.println("Error: " + e.getMessage());
  		}
  		return role;
+ 	}
+ 	
+ 	
+ 	/**
+ 	 * 
+ 	 * @param userEmailId
+ 	 * @return
+ 	 */
+ 	@Override
+	public int getUserId(String  userEmailId) {
+ 		
+ 		statement = null;
+ 		int userId=0;
+ 		
+ 		try {
+ 			String sql = SQLQueriesConstant.GET_USERID;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setString(1, userEmailId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			if(resultSet.next()) {
+ 				userId = resultSet.getInt("userId");
+ 			}	
+ 		} catch(Exception e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
+ 		return userId;
  	}
 }
