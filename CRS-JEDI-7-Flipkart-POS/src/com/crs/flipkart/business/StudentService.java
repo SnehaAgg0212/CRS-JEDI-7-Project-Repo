@@ -53,13 +53,10 @@ public class StudentService implements StudentInterface {
  		if(!check) {
  			boolean checkstatus = registrationDaoOperation.addSemester(semester, studentId);
  			if(checkstatus) {
- 				System.out.println("Semester Registration is done Successfully.");
  				return true;
  			} else {
  				System.out.println("Semseter Registration is Failed, Please try again!");
  			}
- 		} else {
- 			System.out.println("Registration of the semester is already done!");
  		}
  		return false;
  	}

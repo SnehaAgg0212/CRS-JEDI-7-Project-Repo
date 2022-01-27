@@ -99,30 +99,37 @@ public class CRSStudentMenu {
  		int semester = sc.nextInt();
 
  		boolean check = studentInterface.semesterRegistration(semester, studentId);
- 		if(check) {
- 			int totalCourses = 1;
- 			while(totalCourses < 7) {
- 				
- 				Vector<Course> courseList = viewAvailableCourse(studentId);
- 				if(courseList == null) {
- 					return;
- 				}
+ 		boolean isApproved = studentInterface.isApproved(studentId);
 
- 				System.out.println("Enter Course Id " + totalCourses + ": ");
- 				int courseId = sc.nextInt();
+ 		if(isApproved) {
+ 			if(check) {
+ 	 			int totalCourses = 1;
+ 	 			while(totalCourses < 7) {
+ 	 				
+ 	 				Vector<Course> courseList = viewAvailableCourse(studentId);
+ 	 				if(courseList == null) {
+ 	 					return;
+ 	 				}
 
- 				boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
- 				if(checkstatus) {
- 					System.out.println("Course registration of " + courseId + " done successfully.");
- 					totalCourses++;
- 				} else {
- 					System.out.println("Course registration of " + courseId + " is already done.");
- 				}
- 			}
+ 	 				System.out.println("Enter Course Id " + totalCourses + ": ");
+ 	 				int courseId = sc.nextInt();
 
- 			System.out.println();
- 			System.out.println("Registration Successful");
+ 	 				boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
+ 	 				if(checkstatus) {
+ 	 					System.out.println("Course registration of " + courseId + " done successfully.");
+ 	 					totalCourses++;
+ 	 				} else {
+ 	 					System.out.println("Course registration of " + courseId + " is already done.");
+ 	 				}
+ 	 			}
+
+ 	 			System.out.println();
+ 	 			System.out.println("Registration Successful");
+ 	 		}
+ 		}else {
+ 			System.out.println("You are not yet Approved!");
  		}
+ 		
 	}
 
 	/**
@@ -132,20 +139,26 @@ public class CRSStudentMenu {
 	private static void addCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
-		Vector<Course> availableCourse = viewAvailableCourse(studentId);
- 		if(availableCourse == null) {
- 			return;
- 		}
+		boolean isApproved = studentInterface.isApproved(studentId);
+		if(isApproved) {
+			Vector<Course> availableCourse = viewAvailableCourse(studentId);
+	 		if(availableCourse == null) {
+	 			return;
+	 		}
 
- 		System.out.println("Enter the CourseID to ADD: ");
- 		int courseId = sc.nextInt();
+	 		System.out.println("Enter the CourseID to ADD: ");
+	 		int courseId = sc.nextInt();
 
- 		boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
- 		if(checkstatus) {
- 			System.out.println("Course registration of " + courseId + " done successfully.");
- 		} else {
- 			System.out.println("Course registration of " + courseId + " is already done.");
+	 		boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
+	 		if(checkstatus) {
+	 			System.out.println("Course registration of " + courseId + " done successfully.");
+	 		} else {
+	 			System.out.println("Course registration of " + courseId + " is already done.");
+	 		}
+		}else {
+ 			System.out.println("You are not yet Approved!");
  		}
+		
 	}
 
 	/**
@@ -155,20 +168,26 @@ public class CRSStudentMenu {
 	private static void dropCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
-		Vector<Course> availableCourse = viewRegisteredCourse(studentId);
- 		if(availableCourse == null) {
- 			return;
- 		}
+		boolean isApproved = studentInterface.isApproved(studentId);
+		if(isApproved) {
+			Vector<Course> availableCourse = viewRegisteredCourse(studentId);
+	 		if(availableCourse == null) {
+	 			return;
+	 		}
 
- 		System.out.println("Enter the CourseID to DROP: ");
- 		int courseId = sc.nextInt();
+	 		System.out.println("Enter the CourseID to DROP: ");
+	 		int courseId = sc.nextInt();
 
- 		boolean checkstatus = registrationInterface.dropCourse(courseId, studentId, availableCourse);
- 		if(checkstatus) {
- 			System.out.println("Course Deletion of " + courseId + " done successfully.");
- 		} else {
- 			System.out.println("Course of " + courseId + " is already deleted.");
+	 		boolean checkstatus = registrationInterface.dropCourse(courseId, studentId, availableCourse);
+	 		if(checkstatus) {
+	 			System.out.println("Course Deletion of " + courseId + " done successfully.");
+	 		} else {
+	 			System.out.println("Course of " + courseId + " is already deleted.");
+	 		}
+		}else {
+ 			System.out.println("You are not yet Approved!");
  		}
+		
 	}
 
 	/**
@@ -178,21 +197,28 @@ public class CRSStudentMenu {
 	private static Vector<Course> viewAvailableCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
-		Vector<Course> availableCourses = null;
+		boolean isApproved = studentInterface.isApproved(studentId);
+		if(isApproved) {
+			Vector<Course> availableCourses = null;
 
- 		availableCourses = registrationInterface.viewCourses(studentId);
+	 		availableCourses = registrationInterface.viewCourses(studentId);
 
- 		if(availableCourses.isEmpty()) {
- 			System.out.println("No Courses are available right now!");
- 			return null;
+	 		if(availableCourses.isEmpty()) {
+	 			System.out.println("No Courses are available right now!");
+	 			return null;
+	 		}
+	 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s","COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
+	 		System.out.println();
+	 		for(Course course : availableCourses) {
+	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s",course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+	 		}
+	 		System.out.println();
+	 		return availableCourses;
+		}else {
+ 			System.out.println("You are not yet Approved!");
  		}
- 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s","COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
- 		System.out.println();
- 		for(Course course : availableCourses) {
- 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s",course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
- 		}
- 		System.out.println();
- 		return availableCourses;
+		
+		return null;
 	}
 
 	/**
@@ -202,22 +228,28 @@ public class CRSStudentMenu {
 	private static Vector<Course> viewRegisteredCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
-		Vector<Course> registeredCourses = null;
+		boolean isApproved = studentInterface.isApproved(studentId);
+		if(isApproved) {
+			Vector<Course> registeredCourses = null;
 
- 		registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
+	 		registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
 
- 		if(registeredCourses.isEmpty()) {
- 			System.out.println("No Courses are Registered!");
- 			return null;
+	 		if(registeredCourses.isEmpty()) {
+	 			System.out.println("No Courses are Registered!");
+	 			return null;
+	 		}
+	 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s","COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
+	 		System.out.println();
+	 		for(Course course : registeredCourses) {
+	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s",course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+	 		}
+	 		System.out.println();
+
+	 		return registeredCourses;
+		}else {
+ 			System.out.println("You are not yet Approved!");
  		}
- 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s","COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
- 		System.out.println();
- 		for(Course course : registeredCourses) {
- 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s",course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
- 		}
- 		System.out.println();
-
- 		return registeredCourses;
+		return null;
 	}
 
 	/**
