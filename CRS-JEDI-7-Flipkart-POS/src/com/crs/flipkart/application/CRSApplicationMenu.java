@@ -167,7 +167,8 @@ public class CRSApplicationMenu {
 		System.out.println("Confirm New Password: ");
 		confirmNewPassword = sc.next();
 		
-		userService.updatePassword(userEmailId, confirmNewPassword);
+		userService.updatePassword(userEmailId,oldPassword,newPassword, confirmNewPassword);
+		createMainMenu();
 	}
 	
 	/**

@@ -17,12 +17,23 @@ public class UserService implements UserInterface {
 	
 	
 	@Override
-	public void updatePassword (String  userEmailId, String newPassword) {
+	public void updatePassword (String userEmailId, String oldPassword, String newPassword,String confirmNewPassword){
+		 if(!newPassword.equals(confirmNewPassword)) {
+			 System.out.println(newPassword + " " + confirmNewPassword);
+			 System.out.println("New password and Confirm new Password are different!!");
+			 return;
+		 }
+		 
+		 if(!validateUser(userEmailId,oldPassword)) {
+			 System.out.println("Either emailId or password is wrong, try again!!");
+			 return;
+		 }
+		 
 		 if(userDaoInterface.updatePassword (userEmailId, newPassword)) {
-			 System.out.println("Password successfully updated");
+			 System.out.println("Password successfully updated!!");
 		 }
 		 else {
-			 System.out.println("Wrong password");
+			 System.out.println("Error occured!");
 		 }
 	}
 	

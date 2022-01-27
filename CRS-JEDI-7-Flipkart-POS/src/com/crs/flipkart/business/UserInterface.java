@@ -4,10 +4,13 @@ public interface UserInterface {
 
 
 	/**
+	 * This function is for updating the user password
 	 * @param userEmailId
+	 * @param oldPassword
 	 * @param newPassword
+	 * @param confirmNewPassword
 	 */
-	void updatePassword(String userEmailId, String newPassword);
+	void updatePassword(String userEmailId, String oldPassword, String newPassword, String confirmNewPassword);
 
 	/**
 	 * @param userId
