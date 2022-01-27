@@ -95,10 +95,10 @@ public class CRSStudentMenu {
 	private static void registerCourses(int studentId) {
 		// TODO Auto-generated method stub
 	
-		System.out.println("Enter the Semester Id: ");
- 		int semesterId = sc.nextInt();
+		System.out.println("Enter the Semester: ");
+ 		int semester = sc.nextInt();
 
- 		boolean check = studentInterface.semesterRegistration(semesterId, studentId);
+ 		boolean check = studentInterface.semesterRegistration(semester, studentId);
  		if(check) {
  			int totalCourses = 1;
  			while(totalCourses < 7) {

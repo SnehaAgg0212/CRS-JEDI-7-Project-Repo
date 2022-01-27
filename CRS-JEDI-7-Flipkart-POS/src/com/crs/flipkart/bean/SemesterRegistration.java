@@ -14,6 +14,7 @@ public class SemesterRegistration {
 	private int semesterId;
 	private Date date;
 	private int studentId;
+	private int semester;
 	
 	/**
 	 * Default Constructor
@@ -27,11 +28,12 @@ public class SemesterRegistration {
 	 * @param date
 	 * @param studentId
 	 */
-	public SemesterRegistration(int semesterId, Date date, int studentId) {
+	public SemesterRegistration(int semesterId, Date date, int studentId, int semester) {
 		super();
 		this.semesterId = semesterId;
 		this.date = date;
 		this.studentId = studentId;
+		this.semester = semester;
 	}
 
 	/**
@@ -74,6 +76,20 @@ public class SemesterRegistration {
 	 */
 	public void setStudentId(int studentId) {
 		this.studentId = studentId;
+	}
+
+	/**
+	 * @return the semester
+	 */
+	public int getSemester() {
+		return semester;
+	}
+
+	/**
+	 * @param semester the semester to set
+	 */
+	public void setSemester(int semester) {
+		this.semester = semester;
 	}
 	
 }
