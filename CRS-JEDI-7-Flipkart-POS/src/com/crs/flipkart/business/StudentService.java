@@ -23,18 +23,9 @@ public class StudentService implements StudentInterface {
 	public static final Student student = new Student("userName",  "student@gmail.com",  "student",  RoleConstant.STUDENT,  101,  "phoneNo", GenderConstant.MALE,  "address", "branchName", 13, 2022, true);
 
 	@Override
-	public int register(String userName, String userEmailId, String userPassword, int userId, String phoneNo,
-			GenderConstant gender, String address, String branch, int batch) {
-				
-		Student student = new Student(userName, userEmailId, userPassword, RoleConstant.STUDENT, 
- 				userId, phoneNo, gender, address, branch, userId, batch, false);
-
- 		int studentId = 0;
-
- 		System.out.println("Your account has been created and pending for Approval by the Admin.");
- 		studentId = studentDaoOperation.addStudent(student);
-
- 		return studentId;
+	public void register(Student student) {
+		
+		studentDaoOperation.addStudent(student);
 	}
 	
 	@Override

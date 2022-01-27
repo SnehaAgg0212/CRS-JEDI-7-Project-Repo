@@ -5,12 +5,16 @@ package com.crs.flipkart.application;
 
 import java.util.Scanner;
 
+import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
+import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author devanshugarg
@@ -101,7 +105,7 @@ public class CRSApplicationMenu {
 			switch (role) {
 			
 			case "ADMIN": 
-				System.out.println(role + " Login Successfully");
+				System.out.println(role + " has Login Successfully");
 				CRSAdminMenu.createAdminMenu();
 				break;
 			case "STUDENT":
@@ -127,35 +131,54 @@ public class CRSApplicationMenu {
 	 */
 	private static void registerStudent() {
 		
+		Student student = new Student();
+		
 		System.out.println("---------------Student Registration-------------");
 		
-		String studentName, studentEmailId, studentPassword, studentGender, studentPhoneNo, studentBranch, studentAddress;
-		int studentBatch;
+		String studentName, studentEmailId, studentPassword, studentPhoneNo, studentBranch, studentAddress;
+		int studentBatch, studentGender;
+		
+		int studentId = Utils.generateId();
+		int userId = Utils.generateId();
+		
+		student.setUserId(userId);
+		student.setStudentId(studentId);
 		
 		System.out.println("Enter Student Name: ");
-		studentName = sc.nextLine();
+		studentName = sc.next();
+		student.setUserName(studentName);
 		
 		System.out.println("Enter Student Email ID: ");
-		studentEmailId = sc.nextLine();
+		studentEmailId = sc.next();
+		student.setUserEmailId(studentEmailId);
 		
 		System.out.println("Enter Student Password: ");
-		studentPassword = sc.nextLine();
+		studentPassword = sc.next();
+		student.setUserPassword(studentPassword);
+				
+		student.setRole(RoleConstant.stringToRole("STUDENT"));
 		
-		System.out.println("Enter Student Gender: ");
-		studentGender = sc.nextLine();
+		System.out.print("Enter Student Gender: \t 1: Male \t 2.Female \t 3.Other");
+		studentGender = sc.nextInt();
+		student.setGender(GenderConstant.getName(studentGender));
 		
 		System.out.println("Enter Student Branch: ");
-		studentBranch = sc.nextLine();
+		studentBranch = sc.next();
+		student.setBranchName(studentBranch);
 		
 		System.out.println("Enter Student Batch (Graduation Year): ");
 		studentBatch = sc.nextInt();
+		student.setBatch(studentBatch);
 		
 		System.out.println("Enter Student Address: ");
-		studentAddress = sc.nextLine();
+		studentAddress = sc.next();
+		student.setAddress(studentAddress);
 		
 		System.out.println("Enter Student Phone Number: ");
-		studentPhoneNo = sc.nextLine();
+		studentPhoneNo = sc.next();
+		student.setPhoneNo(studentPhoneNo);
 		
+		studentService.register(student);
 	}
 	
 	/**

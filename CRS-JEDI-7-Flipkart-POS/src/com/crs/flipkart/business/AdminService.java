@@ -15,6 +15,7 @@ import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author LENOVO
@@ -28,25 +29,6 @@ public class AdminService implements AdminInterface {
 	
 	Scanner sc = new Scanner(System.in);
 
-    static int profId = 100;
-    static int userId = 1000;
-
-    private void profIdincrementor() {
-        profId ++;
-    }
-
-    private void userIdincrementor() {
-        userId ++;
-    }
-
-//    Vector<Student> StudentList = new Vector<Student>() {{
-//    	add(new Student("username_1", "username_1@flipkart.com", "ABCD", "student", 1,
-//				"1234567890", "female", "location", "CS", 101, 123, false));
-//			add(new Student("username_2", "username_2@flipkart.com", "ABCD", "student", 1,
-//					"1234567890", "female", "location", "CS", 102, 123, false));
-//			add(new Student("username_3", "username_3@flipkart.com", "ABCD", "student", 1,
-//					"1234567890", "female", "location", "CS", 103, 123, false));
-//    }};
     Vector<Student> StudentList = new Vector<>();
     Vector<Professor> ProfessorList = new Vector<>();
     Vector<Course> CourseList = new Vector<>();
@@ -54,11 +36,11 @@ public class AdminService implements AdminInterface {
     @Override
 	public void addProfessor(Professor professor) {
 
-	    professor.setProfessorId(profId);
+    	int professorId = Utils.generateId();
+		int userId = Utils.generateId();
+    	
+	    professor.setProfessorId(professorId);
 	    professor.setUserId(userId);
-
-	    profIdincrementor();
-	    userIdincrementor();
 
 	    adminDaoOperation.addProfessor(professor);
     }
