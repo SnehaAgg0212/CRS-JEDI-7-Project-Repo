@@ -171,7 +171,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, studentId);
 			int row = statement.executeUpdate();
-			System.out.println(row + "student approved.");
+			System.out.println(row + " student approved.");
 			if (row == 0) {
 				System.out.println("Student with Student Id " + studentId + " does not exists.");
 			} else {
@@ -348,11 +348,11 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				
 			}
 			
-			System.out.println(pendingStudents.size() + "students have approval pending.");
+			System.out.println(pendingStudents.size() + " students have approval pending.");
 			
 		} catch(SQLException e) {
 			
-			System.out.println(e.getMessage());
+			System.out.println("Error " + e.getMessage());
 			
 		}
 		

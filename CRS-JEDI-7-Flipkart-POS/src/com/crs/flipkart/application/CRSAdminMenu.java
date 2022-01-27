@@ -45,8 +45,7 @@ public class CRSAdminMenu {
 	        System.out.println("6. View Courses in Catalog");
 	        System.out.println("7. Delete Course from Catalog");
 	        System.out.println("8. Generate Grade Card");
-	        System.out.println("9. View Pending Admissions");
-	        System.out.println("10. Exit");
+	        System.out.println("9. Exit");
 	        
 	        System.out.println("*********************************************************************************");
 	        
@@ -103,9 +102,9 @@ public class CRSAdminMenu {
 			return pendingStudents;
 		}
 		
-		System.out.println(String.format("%20s | %20s | %20s", "StudentId", "Name", "GenderConstant"));
+		System.out.println(String.format("%20s %20s %20s", "StudentId", "Name", "GenderConstant"));
 		for(Student student : pendingStudents) {
-			System.out.println(String.format("%20s | %20s | %20s", student.getStudentId(), student.getUserName(), student.getGender()));
+			System.out.println(String.format("%20s %20s %20s", student.getStudentId(), student.getUserName(), student.getGender()));
 		}
 		return pendingStudents;
 	}
@@ -126,7 +125,7 @@ public class CRSAdminMenu {
 		int studentId = sc.nextInt();
 		
 		adminServices.approveStudentRegistration(studentId, pendingStudents);
-		System.out.println("\nStudent Id : " +studentId+ " has been approved\n");
+		//System.out.println("\nStudent Id : " +studentId+ " has been approved\n");
 		
 	}
 	
