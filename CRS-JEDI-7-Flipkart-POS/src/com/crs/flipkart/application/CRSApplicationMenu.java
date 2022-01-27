@@ -58,9 +58,11 @@ public class CRSApplicationMenu {
 				break;
 			default:
 				System.out.println("Invalid Input !");
+			}	
+			if(userInput == 4) {
+				break;
 			}
-		}
-		
+		}	
 	}
 	
 	/**
@@ -96,12 +98,25 @@ public class CRSApplicationMenu {
 		System.out.println("Enter Password: ");
 		userPassword = sc.next();
 		
-		boolean login = userService.validateUser(userEmailId, userPassword);
+		role = userService.getRoleOfUser(userEmailId);
+		int userId = userService.getUserId(userEmailId);
+		int studentId = studentService.getStudentId(userId);
+		boolean isApproved = studentService.isApproved(studentId);
+		boolean login = false;
+		if(role == "STUDENT") {
+			if(isApproved) {
+				login = userService.validateUser(userEmailId, userPassword);
+			}else {
+				System.out.println("Student is not approved yet!");
+				System.out.println();
+				return;
+			}
+		}else {
+			login = userService.validateUser(userEmailId, userPassword);
+		}
+		
 		
 		if(login) {
-			
-			role = userService.getRoleOfUser(userEmailId);
-			int userId = userService.getUserId(userEmailId);
 			switch (role) {
 			
 			case "ADMIN": 
@@ -109,7 +124,7 @@ public class CRSApplicationMenu {
 				CRSAdminMenu.createAdminMenu();
 				break;
 			case "STUDENT":
-				int studentId = studentService.getStudentId(userId);
+				
 				System.out.println("StudentId " + studentId + " has Login Successfully");
 				CRSStudentMenu.createStudentMenu(studentId); 
 				break;
@@ -209,7 +224,7 @@ public class CRSApplicationMenu {
 	 * Exiting from the System
 	 */
 	private static void exit() {
-		
+		System.out.println();
 		System.out.println("Thanks for your visit !");
 	}
 }

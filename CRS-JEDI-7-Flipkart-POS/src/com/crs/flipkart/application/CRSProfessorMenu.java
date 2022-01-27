@@ -160,7 +160,7 @@ public class CRSProfessorMenu {
  			Vector<Course> coursesEnrolled = professorService.viewCourses(professorId);
  			System.out.println(String.format("%20s %20s %20s", "COURSE ID", "COURSE NAME", "No. of Students" ));
  			for(Course obj: coursesEnrolled) {
- 				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getCourseSeats()));
+ 				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), 10-obj.getCourseSeats()));
  			}		
  		} catch(Exception e) {
  			System.out.println("Something went wrong!" + e.getMessage());
