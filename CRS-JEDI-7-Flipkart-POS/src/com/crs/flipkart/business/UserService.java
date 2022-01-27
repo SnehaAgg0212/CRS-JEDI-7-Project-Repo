@@ -3,7 +3,8 @@
  */
 package com.crs.flipkart.business;
 
-import com.crs.flipkart.bean.Admin;
+import com.crs.flipkart.dao.UserDaoInterface;
+import com.crs.flipkart.dao.UserDaoOperation;
 
 /**
  * @author devanshugarg
@@ -12,31 +13,33 @@ import com.crs.flipkart.bean.Admin;
 
 public class UserService implements UserInterface {
 	
+	UserDaoInterface userDaoOperation = new UserDaoOperation();
+	
 	@Override
-	public boolean userLogin(String userId, String userPassword) {
+	public void updatePassword(String userEmailId, String oldPassword, String newPassword,String confirmNewPassword){
 		
-		Admin admin = AdminService.admin;
-		// Student student = StudentService.student;
-		if(userId.equals(admin.getUserEmailId()) && userPassword.equals(admin.getUserPassword())) {
-			// if(userId.equals(student.getUserEmailId()) && userPassword.equals(student.getUserPassword())) {
-				
-			System.out.println("Successfully Logged In!");
-			return true;
-		}
-		System.out.println("Login Unsuccessful!");
-		return false;
+		 if(!newPassword.equals(confirmNewPassword)) {
+			 System.out.println(newPassword + " " + confirmNewPassword);
+			 System.out.println("New password and Confirm new Password are different!!");
+			 return;
+		 }
+
+		 if(!validateUser(userEmailId,oldPassword)) {
+			 System.out.println("Either emailId or password is wrong, try again!!");
+			 return;
+		 }
+
+		 if(userDaoOperation.updatePassword(userEmailId, newPassword)) {
+			 System.out.println("Password successfully updated!!");
+		 } else {
+			 System.out.println("Error occured!");
+		 }
 	}
 	
 	@Override
-	public boolean updatePassword (String userId, String newPassword) {
+	public String getRoleOfUser(int userId) {
 		
-		return false;
-	}
-	
-	@Override
-	public String getRoleOfUser (String userId) {
-		
-		return null;
+		return userDaoOperation.getRole(userId);
 	}
 	
 	/**
@@ -48,6 +51,6 @@ public class UserService implements UserInterface {
 	@Override
 	public boolean validateUser(String emailId, String password) {
 		
-		return false;
+		return userDaoOperation.verifyCredentials(emailId, password);
 	}
 }

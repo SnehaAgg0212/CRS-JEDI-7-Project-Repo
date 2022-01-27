@@ -15,6 +15,7 @@ import com.crs.flipkart.business.UserService;
 public class CRSApplicationMenu {
 
 	CRSApplicationMenu crsApplicationMenu = new CRSApplicationMenu();
+	static UserInterface userService = new UserService();
 	static Scanner sc = new Scanner(System.in);
 	
 	/**
@@ -23,11 +24,11 @@ public class CRSApplicationMenu {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		createMainMenu();
-		
 		int userInput;
 		
 		while(true) {
+			
+			createMainMenu();
 			
 			userInput = sc.nextInt();
 			
@@ -47,7 +48,6 @@ public class CRSApplicationMenu {
 				break;
 			default:
 				System.out.println("Invalid Input !");
-				createMainMenu();
 			}
 		}
 		
@@ -74,7 +74,6 @@ public class CRSApplicationMenu {
 	private static void userLogin() {
 		
 		Scanner sc = new Scanner(System.in);
-		UserInterface userService = new UserService();
 		
 		System.out.println("-----------------Login------------------");
 		
@@ -89,7 +88,7 @@ public class CRSApplicationMenu {
 		System.out.println("Enter Password: ");
 		userPassword = sc.next();
 		
-		boolean login = userService.userLogin(userEmailId, userPassword);
+		boolean login = userService.validateUser(userEmailId, userPassword);
 		
 		if(login) {
 			
@@ -169,6 +168,7 @@ public class CRSApplicationMenu {
 		System.out.println("Confirm New Password: ");
 		confirmNewPassword = sc.nextLine();
 		
+		userService.updatePassword(userEmailId, oldPassword, newPassword, confirmNewPassword);
 	}
 	
 	/**

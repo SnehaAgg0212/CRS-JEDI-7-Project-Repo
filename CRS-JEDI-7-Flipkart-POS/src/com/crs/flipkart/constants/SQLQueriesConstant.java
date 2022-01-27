@@ -56,4 +56,8 @@ public class SQLQueriesConstant {
  	public static final String VIEW_REGISTERED_COURSES = "select * from Course inner join registeredCourse on Course.courseId = registeredCourse.courseId where registeredCourse.studentId = ?";
  	public static final String CHECK_STUDENT_AND_SEM = "select studentId from semesterRegistration where studentId = ? and semester = ?";
  	public static final String ADD_SEMESTER = "insert into semesterRegistration(semesterId, studentId, semester, date) values (?, ?, ?, curdate())";
+
+ 	public static final String UPDATE_PASSWORD = "update user set userPassword=? where userEmailId = ?";
+ 	public static final String VERIFY_CREDENTIALS = "select userPassword from user where userEmailId = ?";
+ 	public static final String GET_ROLE = "select role from user where userId = ?";
 }

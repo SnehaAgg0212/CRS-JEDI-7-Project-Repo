@@ -323,7 +323,7 @@ public class CRSStudentMenu {
  		}
 	}
 
-	private static void paymentByNetBanking(int studentId) {
+	private static void paymentByCard(int studentId) {
 		// TODO Auto-generated method stub
 		
 		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
@@ -382,7 +382,7 @@ public class CRSStudentMenu {
  		registrationInterface.paymentByCheque(studentId, invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate);
 	}
 
-	private static void paymentByCard(int studentId) {
+	private static void paymentByNetBanking(int studentId) {
 		// TODO Auto-generated method stub
 		
 		registrationInterface.setPaymentStatus(studentId,invoiceId,fee);

@@ -4,23 +4,9 @@ public interface UserInterface {
 
 	/**
 	 * @param userId
-	 * @param userPassword
 	 * @return
 	 */
-	boolean userLogin(String userId, String userPassword);
-
-	/**
-	 * @param userId
-	 * @param newPassword
-	 * @return
-	 */
-	boolean updatePassword(String userId, String newPassword);
-
-	/**
-	 * @param userId
-	 * @return
-	 */
-	String getRoleOfUser(String userId);
+	String getRoleOfUser(int userId);
 
 	/**
 	 * @param emailId
@@ -28,5 +14,14 @@ public interface UserInterface {
 	 * @return
 	 */
 	boolean validateUser(String emailId, String password);
+
+	/**
+	 * 
+	 * @param userEmailId
+	 * @param oldPassword
+	 * @param newPassword
+	 * @param confirmNewPassword
+	 */
+	void updatePassword(String userEmailId, String oldPassword, String newPassword, String confirmNewPassword);
 
 }
