@@ -24,9 +24,7 @@ import com.crs.flipkart.utils.Utils;
 public class AdminService implements AdminInterface {
 	
 	AdminDaoInterface adminDaoOperation = new AdminDaoOperation();
-	
-	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  RoleConstant.ADMIN,  101,  "phoneNo", GenderConstant.MALE,  "address",  "dateOfJoining");
-	
+		
 	Scanner sc = new Scanner(System.in);
 
     Vector<Student> StudentList = new Vector<>();

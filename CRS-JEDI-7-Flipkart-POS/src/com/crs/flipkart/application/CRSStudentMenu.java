@@ -186,11 +186,12 @@ public class CRSStudentMenu {
  			System.out.println("No Courses are available right now!");
  			return null;
  		}
-
+ 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s","COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
+ 		System.out.println();
  		for(Course course : availableCourses) {
- 			System.out.println(course.getCourseId() + " " + course.getCourseName() + " " + course.getCourseDescription() + " " + course.getCourseFee() + " " + course.getCourseSeats());
+ 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s",course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
  		}
-
+ 		System.out.println();
  		return availableCourses;
 	}
 
@@ -209,10 +210,12 @@ public class CRSStudentMenu {
  			System.out.println("No Courses are Registered!");
  			return null;
  		}
-
+ 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s","COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
+ 		System.out.println();
  		for(Course course : registeredCourses) {
- 			System.out.println(course.getCourseId() + " " + course.getCourseName() + " " + course.getCourseDescription() + " " + course.getCourseFee() + " " + course.getCourseSeats());
+ 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s",course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
  		}
+ 		System.out.println();
 
  		return registeredCourses;
 	}
