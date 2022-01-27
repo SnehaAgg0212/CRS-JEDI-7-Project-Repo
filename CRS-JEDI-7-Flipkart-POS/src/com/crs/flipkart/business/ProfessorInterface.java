@@ -52,4 +52,6 @@ public interface ProfessorInterface {
 	 */
 	boolean addCourse(int professorId, int courseSelectedId);
 
+	int getProfessorId(int userId);
+
 }

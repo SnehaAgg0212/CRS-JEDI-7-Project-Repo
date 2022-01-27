@@ -57,4 +57,11 @@ public interface ProfessorDaoInterface {
 	 */
 	String getProfessorById(int professorId);
 
+	/**
+	 * Retrieve Professor Id from User Id
+	 * @param userId
+	 * @return
+	 */
+	int getProfessorId(int userId);
+
 }

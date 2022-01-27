@@ -69,6 +69,12 @@ public class ProfessorService implements ProfessorInterface {
 		return coursesOffered;
 	}
 	
+	@Override
+	public int getProfessorId(int userId) {
+		
+		return professorDaoOperation.getProfessorId(userId);
+	}
+	
 	/**
 	 * 
 	 * @return

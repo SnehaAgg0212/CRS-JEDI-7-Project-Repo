@@ -5,6 +5,8 @@ package com.crs.flipkart.application;
 
 import java.util.Scanner;
 
+import com.crs.flipkart.business.ProfessorInterface;
+import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.UserInterface;
@@ -19,6 +21,7 @@ public class CRSApplicationMenu {
 	CRSApplicationMenu crsApplicationMenu = new CRSApplicationMenu();
 	static UserInterface userService = new UserService();
 	static StudentInterface studentService = new StudentService();
+	static ProfessorInterface professorService = new ProfessorService();
 	static Scanner sc = new Scanner(System.in);
 	
 	/**
@@ -107,8 +110,9 @@ public class CRSApplicationMenu {
 				CRSStudentMenu.createStudentMenu(studentId); 
 				break;
 			case "PROFESSOR": 
-				System.out.println(role + " Login Successfully");
-				CRSProfessorMenu.createProfessorMenu(101); //professorID need to be passed
+				int professorId = professorService.getProfessorId(userId);
+				System.out.println("ProfessorId " + professorId + " has Login Successfully");
+				CRSProfessorMenu.createProfessorMenu(professorId); //professorID need to be passed
 				break;
 			}
 		}
