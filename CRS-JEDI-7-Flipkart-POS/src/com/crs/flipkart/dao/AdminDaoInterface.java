@@ -1,10 +1,12 @@
 package com.crs.flipkart.dao;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 
 public interface AdminDaoInterface {
@@ -70,5 +72,10 @@ public interface AdminDaoInterface {
 	 * @param studentId
 	 */
 	void setIsGenerateGrade(int studentId);
+	
+	/**
+	 * @return List of students with pending admission i.e. not approved
+	 */
+	public List<Student> viewPendingAdmissions();
 
 }

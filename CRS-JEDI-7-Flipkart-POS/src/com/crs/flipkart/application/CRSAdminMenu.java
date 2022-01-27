@@ -3,11 +3,13 @@
  */
 package com.crs.flipkart.application;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.AdminInterface;
 import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.constants.GenderConstant;
@@ -78,6 +80,9 @@ public class CRSAdminMenu {
 				generateGradeCard();
 				break;
 			case 9:
+				viewPendingAdmissions();
+				break;
+			case 10:
 				return;
 			default:
 				System.out.println("Invalid Input !");
@@ -86,16 +91,42 @@ public class CRSAdminMenu {
 	}
 	
 	/**
+	 * Students who are not yet approved
+	 * @return List of students with pending admission i.e. not approved
+	 */
+	private static List<Student> viewPendingAdmissions() {
+		
+		List<Student> pendingStudents = adminServices.viewPendingAdmissions();
+		if(pendingStudents.size() == 0) {
+			System.out.println("No student left for approving admission.");
+			return pendingStudents;
+		}
+		
+		System.out.println(String.format("%20s %20s %20s", "StudentId", "Name", "GenderConstant"));
+		for(Student student : pendingStudents) {
+			System.out.println(String.format("%20s %20s %20s", student.getStudentId(), student.getUserName(), student.getGender()));
+		}
+		return pendingStudents;
+	}
+	
+	/** 
 	 * Approve Student
 	 */
 	private static void approveStudent() {
 		
 		System.out.println("---------------Student Approval Panel-------------");
 		
+		List<Student> pendingStudents = viewPendingAdmissions();
+		if(pendingStudents.size() == 0) {
+			return;
+		}
+		
 		System.out.println("Enter the Student Id: ");
 		int studentId = sc.nextInt();
 		
-		adminServices.approveStudentRegistration(studentId);
+		adminServices.approveStudentRegistration(studentId, pendingStudents);
+		//System.out.println("\nStudent Id : " +studentId+ " has been approved\n");
+		
 	}
 	
 	/**
