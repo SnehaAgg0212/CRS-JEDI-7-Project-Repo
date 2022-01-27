@@ -181,19 +181,17 @@ public class CRSAdminMenu {
 	private static void viewProfessor() {
 		
 		System.out.println("---------------Professor Details Display Panel-------------");
-	    
+	    System.out.println();
 	    Vector<Professor> ProfessorList = adminServices.viewProfessor();
-	    
+	    System.out.println();
+	    System.out.println(String.format("%-20s %-20s %-20s %-20s","PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
 	    for(int i = 0; i < ProfessorList.size(); i++){
 	    	
-    		System.out.println("Professor " + i + ": ");
-        	System.out.println("Professor Id: " + ProfessorList.get(i).getProfessorId());
-        	System.out.println("Professor Name: " + ProfessorList.get(i).getUserName());
-            System.out.println("Department: " + ProfessorList.get(i).getDepartment());
-            System.out.println("Designation: " + ProfessorList.get(i).getDesignation()); 
-            System.out.println("*******************************************************************");
-            
+    		System.out.println(String.format(" %-20s %-20s %-20s %-20s",ProfessorList.get(i).getProfessorId(), ProfessorList.get(i).getUserName(), ProfessorList.get(i).getDepartment(), ProfessorList.get(i).getDesignation()));
+        	
 	    }
+	    System.out.println();
+        
 	}
 	
 	/**
@@ -249,17 +247,13 @@ public class CRSAdminMenu {
 		System.out.println("-------------Viewing Courses In Catalog-------------");
 		
 		Vector<Course> CourseList = adminServices.viewCourse();
-		
+		System.out.println();
+	    System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s","COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
+	    
 		for(int i = 0; i < CourseList.size(); i++){
-    		
-    		System.out.println("Course " + (i + 1) + ": ");
-        	System.out.println("Course Code: " + CourseList.get(i).getCourseId());
-            System.out.println("Course Name: " + CourseList.get(i).getCourseName());
-            System.out.println("Course Description: " + CourseList.get(i).getCourseDescription());
-            System.out.println("Course Fees: " + CourseList.get(i).getCourseFee());
-            System.out.println("Course Seats: " + CourseList.get(i).getCourseSeats());
-            System.out.println("*******************************************************************");
+			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", CourseList.get(i).getCourseId(), CourseList.get(i).getCourseName(), CourseList.get(i).getCourseDescription(), CourseList.get(i).getCourseFee(), CourseList.get(i).getCourseSeats()));
 		}
+		System.out.println();
 	}
 	
 	/**
@@ -290,47 +284,4 @@ public class CRSAdminMenu {
 		
 		adminServices.generateGradeCard(studentId, semester);
 	}
-	
-//	/**
-//	 * Assign Course to Professor
-//	 */
-//	private static void assignCourseToProfessor() {
-//		
-//		System.out.println("-------------Assign Courses to Professors-------------");
-//		
-//		Vector<Professor> ProfessorList = adminServices.viewProfessor();
-//		Vector<Course> CourseCatalog = adminServices.viewCourse();
-//		
-//		System.out.println("---------------Professor Details Display Panel-------------");
-//		
-//		for(int i = 0; i < ProfessorList.size(); i++){
-//	    	
-//    		System.out.println("Professor " + i + ": ");
-//        	System.out.println("Professor Id: " + ProfessorList.get(i).getProfessorId());
-//        	System.out.println("Professor Name: " + ProfessorList.get(i).getUserName());
-//            System.out.println("Department: " + ProfessorList.get(i).getDepartment());
-//            System.out.println("Designation: " + ProfessorList.get(i).getDesignation()); 
-//            System.out.println("*******************************************************************");
-//            
-//	    }
-//		
-//		System.out.println("-------------Viewing Courses In Catalog-------------");
-//		
-//		for(int i = 0; i < CourseCatalog.size(); i++){
-//    		
-//    		System.out.println("Course " + i + ": ");
-//        	System.out.println("Course Code: " + CourseCatalog.get(i).getCourseId());
-//            System.out.println("Course Name: " + CourseCatalog.get(i).getCourseName());
-//            System.out.println("Course Description: " + CourseCatalog.get(i).getCourseDescription());
-//            System.out.println("*******************************************************************");
-//		}
-//		
-//		System.out.println("Enter Course Code: ");
-//		int courseId = sc.nextInt();
-//		
-//		System.out.println("Enter Professor Id: ");
-//		int professorId = sc.nextInt();
-//		
-//		adminServices.assignCourseToProfessor(courseId, professorId);
-//	}
 }
