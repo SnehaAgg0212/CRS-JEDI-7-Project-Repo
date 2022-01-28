@@ -168,15 +168,15 @@ public class CRSApplicationMenu {
 		Student student = new Student();
 		
 		System.out.println("Enter Student Name: ");
-		studentName = sc.nextLine();
+		studentName = sc.next();
 		student.setUserName(studentName);
 		
 		System.out.println("Enter Student Email ID: ");
-		studentEmailId = sc.nextLine();
+		studentEmailId = sc.next();
 		student.setUserEmailId(studentEmailId);
 		
 		System.out.println("Enter Student Password: ");
-		studentPassword = sc.nextLine();
+		studentPassword = sc.next();
 		student.setUserPassword(studentPassword);
 		
 		System.out.println("Enter Student Gender: \t 1: Male \t 2.Female \t 3.Other");
@@ -185,7 +185,7 @@ public class CRSApplicationMenu {
 		student.setGender(gender);
 		
 		System.out.println("Enter Student Branch: ");
-		studentBranch = sc.nextLine();
+		studentBranch = sc.next();
 		student.setBranchName(studentBranch);
 		
 		System.out.println("Enter Student Batch (Graduation Year): ");
@@ -193,7 +193,7 @@ public class CRSApplicationMenu {
 		student.setBatch(studentBatch);
 		
 		System.out.println("Enter Student Address: ");
-		studentAddress = sc.nextLine();
+		studentAddress = sc.next();
 		student.setAddress(studentAddress);
 		
 		System.out.println("Enter Student Phone Number: ");

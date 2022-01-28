@@ -4,6 +4,7 @@
 package com.crs.flipkart.application;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 import java.util.Scanner;
 
@@ -16,6 +17,7 @@ import com.crs.flipkart.business.RegistrationService;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.constants.NotificationTypeConstant;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author devanshugarg
@@ -278,7 +280,14 @@ public class CRSStudentMenu {
 	private static void viewGradeCard(int studentId, int semesterId) {
 		// TODO Auto-generated method stub
 		 
-		boolean isGenerated = registrationInterface.isGenerated(studentId);
+		boolean isGenerated=false;
+		
+		try {
+			isGenerated = registrationInterface.isGenerated(studentId);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		if(!isGenerated) {
 
@@ -286,7 +295,13 @@ public class CRSStudentMenu {
 		}
 		else {
 
-			Vector<GradeCard> grades = registrationInterface.viewGradeCard(studentId, semesterId);
+			Vector<GradeCard> grades=new Vector<GradeCard>();
+			try {
+				grades = registrationInterface.viewGradeCard(studentId, semesterId);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			if(grades.isEmpty()) {
 				System.out.println("\"You haven't registered for any course.");
@@ -315,13 +330,18 @@ public class CRSStudentMenu {
 	private static void makePayment(int studentId) {
 		// TODO Auto-generated method stub
 		
-		fee = registrationInterface.calculateFee(studentId);
 
  		boolean isapprove = true;
  		boolean ispaid = false;
 
- 		isapprove = registrationInterface.getRegistrationStatus(studentId);
- 		ispaid = registrationInterface.getPaymentStatus(studentId);
+ 		try {
+			isapprove = registrationInterface.getRegistrationStatus(studentId);
+			ispaid = registrationInterface.getPaymentStatus(studentId);
+			fee = registrationInterface.calculateFee(studentId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
  		if(!isapprove) {
  			System.out.println("You have not registered yet.");
@@ -345,6 +365,7 @@ public class CRSStudentMenu {
  				int selected_mode = sc.nextInt();
 
  				// TODO: invoiceId Generation
+ 				invoiceId=Utils.generateId();
 
  				switch(selected_mode) {
 
@@ -371,7 +392,12 @@ public class CRSStudentMenu {
 	private static void paymentByCard(int studentId) {
 		// TODO Auto-generated method stub
 		
-		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+		try {
+			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
  		System.out.println("Enter Card Type: ");
  		String cardType = sc.next();
@@ -393,13 +419,23 @@ public class CRSStudentMenu {
 
  		Date expiryDate = Date.valueOf(date);
 
- 		registrationInterface.paymentByCard(studentId, invoiceId, cardType, cardNumber, cardHolderName, cvv, bankName, expiryDate);	
+ 		try {
+			registrationInterface.paymentByCard(studentId, invoiceId, cardType, cardNumber, cardHolderName, cvv, bankName, expiryDate);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 
 	private static void paymentByCheque(int studentId) {
 		// TODO Auto-generated method stub
 		
-		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+		try {
+			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
  		System.out.println("Enter Cheque Number: ");
  		int chequeNo = sc.nextInt();
@@ -424,13 +460,23 @@ public class CRSStudentMenu {
 
  		Date chequeDate = Date.valueOf(date);
 
- 		registrationInterface.paymentByCheque(studentId, invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate);
+ 		try {
+			registrationInterface.paymentByCheque(studentId, invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static void paymentByNetBanking(int studentId) {
 		// TODO Auto-generated method stub
 		
-		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+		try {
+			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
  		System.out.println("Enter Bank Account Holder Name: ");
  		String bankAccountHolderName = sc.next();
@@ -438,7 +484,12 @@ public class CRSStudentMenu {
  		System.out.println("Enter Bank Name: ");
  		String bankName = sc.next();
 
- 		registrationInterface.paymentByNetBanking(studentId, invoiceId, bankAccountHolderName, bankName);
+ 		try {
+			registrationInterface.paymentByNetBanking(studentId, invoiceId, bankAccountHolderName, bankName);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

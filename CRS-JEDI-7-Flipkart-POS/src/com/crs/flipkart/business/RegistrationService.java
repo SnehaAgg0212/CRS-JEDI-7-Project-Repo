@@ -4,6 +4,7 @@
 package com.crs.flipkart.business;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
@@ -66,7 +67,7 @@ public class RegistrationService implements RegistrationInterface {
 	}
 		
 	@Override
-	public boolean getRegistrationStatus(int studentId) {
+	public boolean getRegistrationStatus(int studentId) throws SQLException {
 		
 		return registrationDaoOperation.getRegistrationStatus(studentId);
 	}
@@ -83,7 +84,7 @@ public class RegistrationService implements RegistrationInterface {
 	}
 	
 	@Override
-	public Vector<GradeCard> viewGradeCard(int studentId, int semesterId) {
+	public Vector<GradeCard> viewGradeCard(int studentId, int semesterId) throws SQLException{
 		
 		return registrationDaoOperation.viewGradeCard(studentId, semesterId);
 	}
@@ -95,19 +96,19 @@ public class RegistrationService implements RegistrationInterface {
 	}
 	
 	@Override
-	public boolean getPaymentStatus(int studentId) {
+	public boolean getPaymentStatus(int studentId) throws SQLException {
 		
 		return registrationDaoOperation.getPaymentStatus(studentId);
 	}
 	
 	@Override
-	public void setPaymentStatus(int studentId, int invoiceId, double amount) {
+	public void setPaymentStatus(int studentId, int invoiceId, double amount) throws SQLException{
 		
 		registrationDaoOperation.setPaymentStatus(studentId, invoiceId, amount);
 	}
 
 	@Override
-	public double calculateFee(int studentId) {
+	public double calculateFee(int studentId) throws SQLException {
 
 		double fee = registrationDaoOperation.calculateFee(studentId);
  		return fee;	
@@ -115,26 +116,26 @@ public class RegistrationService implements RegistrationInterface {
 	
 	@Override
 	public void paymentByCard(int studentId, int invoiceId, String cardType, String cardNumber,
- 			String cardHolderName, int cvv, String bankName, Date expiryDate) {
+ 			String cardHolderName, int cvv, String bankName, Date expiryDate) throws SQLException{
 		
 		registrationDaoOperation.paymentByCard(studentId, invoiceId, cardType, cardNumber, cardHolderName, cvv, bankName, expiryDate);
 	}
 	
 	@Override
 	public void paymentByCheque(int studentId, int invoiceId, int chequeNo, String bankAccountHolderName,
- 			String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) {
+ 			String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) throws SQLException{
 
 		registrationDaoOperation.paymentByCheque(studentId, invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate);
  	}
 	
 	@Override
-	public void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) {
+	public void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) throws SQLException{
 
 		registrationDaoOperation.paymentByNetBanking(studentId, invoiceId, bankAccountHolderName, bankName);
  	}
 	
 	@Override
-	public boolean isGenerated(int studentId) {
+	public boolean isGenerated(int studentId) throws SQLException{
 
  		return registrationDaoOperation.isGenerated(studentId);
  	}

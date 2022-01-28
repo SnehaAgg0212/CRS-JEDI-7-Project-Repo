@@ -1,6 +1,7 @@
 package com.crs.flipkart.dao;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
@@ -13,21 +14,21 @@ public interface RegistrationDaoInterface {
 	 * @param studentId
 	 * @return
 	 */
-	double calculateFee(int studentId);
+	double calculateFee(int studentId) throws SQLException;
 
 	/**
 	 * 
 	 * @param studentId
 	 * @return
 	 */
-	boolean getRegistrationStatus(int studentId);
+	boolean getRegistrationStatus(int studentId) throws SQLException;
 
 	/**
 	 * 
 	 * @param studentId
 	 * @return
 	 */
-	boolean getPaymentStatus(int studentId);
+	boolean getPaymentStatus(int studentId) throws SQLException;
 
 	/**
 	 * 
@@ -41,7 +42,7 @@ public interface RegistrationDaoInterface {
 	 * @param expiryDate
 	 */
 	void paymentByCard(int studentId, int invoiceId, String cardType, String cardNumber, String cardHolderName, int cvv,
-			String bankName, Date expiryDate);
+			String bankName, Date expiryDate) throws SQLException;
 
 	/**
 	 * 
@@ -56,7 +57,7 @@ public interface RegistrationDaoInterface {
 	 * @param chequeDate
 	 */
 	void paymentByCheque(int studentId, int invoiceId, int chequeNo, String bankAccountHolderName,
-			String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate);
+			String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) throws SQLException;
 
 	/**
 	 * 
@@ -65,7 +66,7 @@ public interface RegistrationDaoInterface {
 	 * @param bankAccountHolderName
 	 * @param bankName
 	 */
-	void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName);
+	void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) throws SQLException;
 
 	/**
 	 * 
@@ -73,14 +74,14 @@ public interface RegistrationDaoInterface {
 	 * @param invoiceId
 	 * @param amount
 	 */
-	void setPaymentStatus(int studentId, int invoiceId, double amount);
+	void setPaymentStatus(int studentId, int invoiceId, double amount) throws SQLException;
 
 	/**
 	 * 
 	 * @param studentId
 	 * @return
 	 */
-	boolean isGenerated(int studentId);
+	boolean isGenerated(int studentId) throws SQLException;
 
 	/**
 	 * 
@@ -88,7 +89,7 @@ public interface RegistrationDaoInterface {
 	 * @param semesterId
 	 * @return
 	 */
-	Vector<GradeCard> viewGradeCard(int studentId, int semesterId);
+	Vector<GradeCard> viewGradeCard(int studentId, int semesterId) throws SQLException;
 
 	/**
 	 * 
