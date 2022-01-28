@@ -20,6 +20,7 @@ import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
+import com.crs.flipkart.exceptions.UserNotFoundException;
 import com.crs.flipkart.utils.Utils;
 
 /**
@@ -101,54 +102,58 @@ public class CRSApplicationMenu {
 	 */
 	private static void userLogin() {
 		
-		System.out.println("-----------------Login------------------");
-		
-		String userEmailId, userPassword;
-		
-		System.out.println("Enter Email ID: ");
-		userEmailId = sc.next();
-		
-		System.out.println("Enter Password: ");
-		userPassword = sc.next();
-		
-		loggedin = userService.validateUser(userEmailId, userPassword);
-		
-		if(loggedin) {
+		try {
+			System.out.println("-----------------Login------------------");
 			
-			DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-			LocalDateTime dateObj = LocalDateTime.now();
-			String formattedDate = dateObj.format(formatObj);
-			String role = userService.getRoleOfUser(userEmailId);
-			RoleConstant userRole = RoleConstant.stringToRole(role);
-			int userId = userService.getUserId(userEmailId);
+			String userEmailId, userPassword;
 			
-			switch (userRole) {
+			System.out.println("Enter Email ID: ");
+			userEmailId = sc.next();
 			
-			case ADMIN: 
-				System.out.println(formattedDate + " Login Successful.");
-				CRSAdminMenu.createAdminMenu();
-				break;
-			case STUDENT: 
-				int studentId = studentService.getStudentId(userId);
-				boolean isApproved = studentService.isApproved(studentId);
-				if(isApproved) {
+			System.out.println("Enter Password: ");
+			userPassword = sc.next();
+			
+			loggedin = userService.validateUser(userEmailId, userPassword);
+			
+			if(loggedin) {
+				
+				DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+				LocalDateTime dateObj = LocalDateTime.now();
+				String formattedDate = dateObj.format(formatObj);
+				String role = userService.getRoleOfUser(userEmailId);
+				RoleConstant userRole = RoleConstant.stringToRole(role);
+				int userId = userService.getUserId(userEmailId);
+				
+				switch (userRole) {
+				
+				case ADMIN: 
 					System.out.println(formattedDate + " Login Successful.");
-					CRSStudentMenu.createStudentMenu(studentId); 
-				} else {
-					System.out.println("Failed to login, you have not been approved by the administrator!");
-					loggedin = false;
+					CRSAdminMenu.createAdminMenu();
+					break;
+				case STUDENT: 
+					int studentId = studentService.getStudentId(userId);
+					boolean isApproved = studentService.isApproved(studentId);
+					if(isApproved) {
+						System.out.println(formattedDate + " Login Successful.");
+						CRSStudentMenu.createStudentMenu(studentId); 
+					} else {
+						System.out.println("Failed to login, you have not been approved by the administrator!");
+						loggedin = false;
+					}
+					break;
+				case PROFESSOR: 
+					int professorId = professorService.getProfessorId(userId);
+					System.out.println(formattedDate + " Login Successful.");
+					CRSProfessorMenu.createProfessorMenu(professorId);
+					break;
 				}
-				break;
-			case PROFESSOR: 
-				int professorId = professorService.getProfessorId(userId);
-				System.out.println(formattedDate + " Login Successful.");
-				CRSProfessorMenu.createProfessorMenu(professorId);
-				break;
 			}
-		}
-		else {
-			
-			System.out.println("Invalid Credentials !");
+			else {
+				
+				System.out.println("Invalid Credentials !");
+			}
+		} catch (UserNotFoundException e) {
+			System.out.println("Error: " + e.getMessage());
 		}
 	}
 	

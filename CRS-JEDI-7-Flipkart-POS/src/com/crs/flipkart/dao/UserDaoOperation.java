@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.crs.flipkart.constants.SQLQueriesConstant;
+import com.crs.flipkart.exceptions.UserNotFoundException;
 import com.crs.flipkart.utils.DBUtils;
 
 /**
@@ -52,9 +53,10 @@ public class UserDaoOperation implements UserDaoInterface {
 	 * @param userEmailId
 	 * @param password
 	 * @return
+	 * @throws UserNotFoundException
 	 */
 	@Override
-	public boolean verifyCredentials(String userEmailId, String password) {
+	public boolean verifyCredentials(String userEmailId, String password) throws UserNotFoundException {
 		
 		statement = null;
 		
@@ -64,7 +66,7 @@ public class UserDaoOperation implements UserDaoInterface {
  			statement.setString(1,userEmailId);
  			ResultSet resultSet = statement.executeQuery();
  			if(!resultSet.next()) {
- 				return false;
+ 				throw new UserNotFoundException(userEmailId);
  			}
  			else if(password.equals(resultSet.getString("userPassword"))) {
  				return true;
@@ -82,7 +84,7 @@ public class UserDaoOperation implements UserDaoInterface {
 	 * @return
 	 */
  	@Override
-	public boolean updatePassword(String userEmailId, String newPassword){
+	public boolean updatePassword(String userEmailId, String newPassword) {
  		
  		statement = null;
  		

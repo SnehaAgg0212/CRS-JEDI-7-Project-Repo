@@ -1,5 +1,7 @@
 package com.crs.flipkart.business;
 
+import com.crs.flipkart.exceptions.UserNotFoundException;
+
 public interface UserInterface {
 
 	/**
@@ -12,8 +14,9 @@ public interface UserInterface {
 	 * @param emailId
 	 * @param password
 	 * @return
+	 * @throws UserNotFoundException 
 	 */
-	boolean validateUser(String emailId, String password);
+	boolean validateUser(String emailId, String password) throws UserNotFoundException;
 
 	/**
 	 * 
@@ -21,8 +24,9 @@ public interface UserInterface {
 	 * @param oldPassword
 	 * @param newPassword
 	 * @param confirmNewPassword
+	 * @throws UserNotFoundException 
 	 */
-	void updatePassword(String userEmailId, String oldPassword, String newPassword, String confirmNewPassword);
+	void updatePassword(String userEmailId, String oldPassword, String newPassword, String confirmNewPassword) throws UserNotFoundException;
 
 	/**
 	 * 

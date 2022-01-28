@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.crs.flipkart.dao.UserDaoInterface;
 import com.crs.flipkart.dao.UserDaoOperation;
+import com.crs.flipkart.exceptions.UserNotFoundException;
 
 /**
  * @author devanshugarg
@@ -43,17 +44,21 @@ public class UserService implements UserInterface {
 	UserDaoInterface userDaoOperation = UserDaoOperation.getInstance();
 	
 	@Override
-	public void updatePassword(String userEmailId, String oldPassword, String newPassword,String confirmNewPassword){
+	public void updatePassword(String userEmailId, String oldPassword, String newPassword,String confirmNewPassword) throws UserNotFoundException {
 		
 		 if(!newPassword.equals(confirmNewPassword)) {
 			 logger.info(newPassword + " " + confirmNewPassword);
 			 logger.info("New password and Confirm New Password are different!!");
 			 return;
 		 }
-
-		 if(!validateUser(userEmailId,oldPassword)) {
-			 logger.info("Either EmailId or Password is wrong, try again!!");
-			 return;
+		 
+		 try {
+			 if(!validateUser(userEmailId, oldPassword)) {
+				 logger.info("Either EmailId or Password is wrong, try again!!");
+				 return;
+			 }
+		 } catch (UserNotFoundException e) {
+			 throw e;
 		 }
 
 		 if(userDaoOperation.updatePassword(userEmailId, newPassword)) {
@@ -74,11 +79,16 @@ public class UserService implements UserInterface {
 	 * @param emailId
 	 * @param password
 	 * @return
+	 * @throws UserNotFoundException
 	 */
 	@Override
-	public boolean validateUser(String emailId, String password) {
+	public boolean validateUser(String emailId, String password) throws UserNotFoundException {
 		
-		return userDaoOperation.verifyCredentials(emailId, password);
+		try {
+			return userDaoOperation.verifyCredentials(emailId, password);
+		} catch (UserNotFoundException e) {
+			throw e;
+		}
 	}
 	
 	/**

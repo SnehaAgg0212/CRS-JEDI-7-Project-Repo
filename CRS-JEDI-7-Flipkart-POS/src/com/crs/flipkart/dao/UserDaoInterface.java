@@ -1,5 +1,7 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.exceptions.UserNotFoundException;
+
 public interface UserDaoInterface {
 
 	/**
@@ -7,8 +9,9 @@ public interface UserDaoInterface {
 	 * @param userEmailId
 	 * @param password
 	 * @return
+	 * @throws UserNotFoundException 
 	 */
-	boolean verifyCredentials(String userEmailId, String password);
+	boolean verifyCredentials(String userEmailId, String password) throws UserNotFoundException;
 
 	/**
 	 * 
