@@ -103,7 +103,7 @@ public class CRSApplicationMenu {
 		int studentId = studentService.getStudentId(userId);
 		boolean isApproved = studentService.isApproved(studentId);
 		boolean login = false;
-		if(role == "STUDENT") {
+		if(role.equals("STUDENT")) {
 			if(isApproved) {
 				login = userService.validateUser(userEmailId, userPassword);
 			}else {

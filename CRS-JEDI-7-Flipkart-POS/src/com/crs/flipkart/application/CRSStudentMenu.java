@@ -25,7 +25,7 @@ public class CRSStudentMenu {
 	static StudentInterface studentInterface = new StudentService();
 	static int invoiceId;
  	static double fee;
-	
+	static boolean registered;
 	/**
 	 * Method to Create Main Menu
 	 */
@@ -125,6 +125,7 @@ public class CRSStudentMenu {
 
  	 			System.out.println();
  	 			System.out.println("Registration Successful");
+ 	 			registered = true;
  	 		}
  		}else {
  			System.out.println("You are not yet Approved!");
@@ -140,24 +141,29 @@ public class CRSStudentMenu {
 		// TODO Auto-generated method stub
 		
 		boolean isApproved = studentInterface.isApproved(studentId);
-		if(isApproved) {
-			Vector<Course> availableCourse = viewAvailableCourse(studentId);
-	 		if(availableCourse == null) {
-	 			return;
-	 		}
+		if(registered) {
+			if(isApproved) {
+				Vector<Course> availableCourse = viewAvailableCourse(studentId);
+		 		if(availableCourse == null) {
+		 			return;
+		 		}
 
-	 		System.out.println("Enter the CourseID to ADD: ");
-	 		int courseId = sc.nextInt();
+		 		System.out.println("Enter the CourseID to ADD: ");
+		 		int courseId = sc.nextInt();
 
-	 		boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
-	 		if(checkstatus) {
-	 			System.out.println("Course registration of " + courseId + " done successfully.");
-	 		} else {
-	 			System.out.println("Course registration of " + courseId + " is already done.");
+		 		boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
+		 		if(checkstatus) {
+		 			System.out.println("Course registration of " + courseId + " done successfully.");
+		 		} else {
+		 			System.out.println("Course registration of " + courseId + " is already done.");
+		 		}
+			}else {
+	 			System.out.println("You are not yet Approved!");
 	 		}
 		}else {
- 			System.out.println("You are not yet Approved!");
- 		}
+			System.out.println("Registration is still Pending!");
+		}
+		
 		
 	}
 
@@ -169,24 +175,30 @@ public class CRSStudentMenu {
 		// TODO Auto-generated method stub
 		
 		boolean isApproved = studentInterface.isApproved(studentId);
-		if(isApproved) {
-			Vector<Course> availableCourse = viewRegisteredCourse(studentId);
-	 		if(availableCourse == null) {
-	 			return;
-	 		}
+		
+		if(registered) {
+			if(isApproved) {
+				Vector<Course> availableCourse = viewRegisteredCourse(studentId);
+		 		if(availableCourse == null) {
+		 			return;
+		 		}
 
-	 		System.out.println("Enter the CourseID to DROP: ");
-	 		int courseId = sc.nextInt();
+		 		System.out.println("Enter the CourseID to DROP: ");
+		 		int courseId = sc.nextInt();
 
-	 		boolean checkstatus = registrationInterface.dropCourse(courseId, studentId, availableCourse);
-	 		if(checkstatus) {
-	 			System.out.println("Course Deletion of " + courseId + " done successfully.");
-	 		} else {
-	 			System.out.println("Course of " + courseId + " is already deleted.");
+		 		boolean checkstatus = registrationInterface.dropCourse(courseId, studentId, availableCourse);
+		 		if(checkstatus) {
+		 			System.out.println("Course Deletion of " + courseId + " done successfully.");
+		 		} else {
+		 			System.out.println("Course of " + courseId + " is already deleted.");
+		 		}
+			}else {
+	 			System.out.println("You are not yet Approved!");
 	 		}
 		}else {
- 			System.out.println("You are not yet Approved!");
- 		}
+			System.out.println("Registration is still Pending!");
+		}
+		
 		
 	}
 
