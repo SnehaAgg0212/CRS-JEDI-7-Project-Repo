@@ -1,6 +1,7 @@
 package com.crs.flipkart.dao;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
@@ -95,59 +96,85 @@ public interface RegistrationDaoInterface {
 	 * @param studentId
 	 * @param courseId
 	 * @return
+	 * @throws SQLException 
 	 */
-	boolean addCourse(int studentId, int courseId);
+	boolean addCourse(int studentId, int courseId) throws SQLException;
 
 	/**
 	 * 
 	 * @param semester
 	 * @param studentId
 	 * @return
+	 * @throws SQLException 
 	 */
-	boolean semesterRegistration(int semester, int studentId);
+	boolean semesterRegistration(int semester, int studentId) throws SQLException;
 
 	/**
 	 * 
 	 * @param semester
 	 * @param studentId
 	 * @return
+	 * @throws SQLException 
 	 */
-	boolean addSemester(int semester, int studentId);
+	boolean addSemester(int semester, int studentId) throws SQLException;
 
 	/**
 	 * 
 	 * @param studentId
 	 * @param courseId
 	 * @return
+	 * @throws SQLException 
 	 */
-	boolean dropCourse(int studentId, int courseId);
+	boolean dropCourse(int studentId, int courseId) throws SQLException;
 
 	/**
 	 * 
 	 * @param courseId
 	 * @return
+	 * @throws SQLException 
 	 */
-	boolean isSeatAvailable(int courseId);
+	boolean isSeatAvailable(int courseId) throws SQLException;
 
 	/**
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException 
 	 */
-	int totalRegisteredCourses(int studentId);
+	int totalRegisteredCourses(int studentId) throws SQLException;
 
 	/**
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException 
 	 */
-	Vector<Course> viewCourses(int studentId);
+	Vector<Course> viewCourses(int studentId) throws SQLException;
 
 	/**
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException 
 	 */
-	Vector<Course> viewRegisteredCourses(int studentId);
+	Vector<Course> viewRegisteredCourses(int studentId) throws SQLException;
+
+	/**
+	 * Method checks if the student is registered for that course
+	 * @param courseCode
+	 * @param studentId
+	 * @return Students registration status
+	 * @throws SQLException 
+	 */
+	boolean isRegistered(String courseCode, String studentId) throws SQLException;
+
+	/**
+	 * Method checks if the student is registered for that course
+	 * @param courseId
+	 * @param studentId
+	 * @return Students registration status
+	 * @throws SQLException 
+	 */
+	boolean checkCourse(int courseId, int studentId) throws SQLException;
 
 }

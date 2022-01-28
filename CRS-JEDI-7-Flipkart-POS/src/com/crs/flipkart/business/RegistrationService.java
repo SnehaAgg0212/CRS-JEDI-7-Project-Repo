@@ -4,6 +4,7 @@
 package com.crs.flipkart.business;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
@@ -12,6 +13,9 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.dao.RegistrationDaoInterface;
 import com.crs.flipkart.dao.RegistrationDaoOperation;
+import com.flipkart.exceptions.CourseLimitExceededException;
+import com.flipkart.exceptions.CourseNotFoundException;
+import com.flipkart.exceptions.SeatsNotAvailableException;
 
 /**
  * @author devanshugarg
@@ -47,21 +51,23 @@ public class RegistrationService implements RegistrationInterface {
 	RegistrationDaoInterface registrationDaoOperation = RegistrationDaoOperation.getInstance();
 
 	@Override
-	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) {
+	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) throws CourseLimitExceededException, SeatsNotAvailableException, SQLException {
 		
 		if(registrationDaoOperation.totalRegisteredCourses(studentId) >= 6) {
- 			logger.info("More than 6 courses are registered!");
- 			return false;
+ 			throw new CourseLimitExceededException(6);
+ 			
  		}else if(!registrationDaoOperation.isSeatAvailable(courseId)) {
- 			logger.info("No Seats available for this CourseId!");
- 			return false;
+ 			throw new SeatsNotAvailableException();
+ 			
  		}
  		return registrationDaoOperation.addCourse(studentId, courseId);
 	}
 	
 	@Override
-	public boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) {
-		
+	public boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) throws SQLException, CourseNotFoundException {
+		if(!registrationDaoOperation.checkCourse(courseId, studentId)) {
+			throw new CourseNotFoundException(courseId);
+		}
 		return registrationDaoOperation.dropCourse(studentId, courseId);
 	}
 		
@@ -72,12 +78,18 @@ public class RegistrationService implements RegistrationInterface {
 	}
 	
 	@Override
+	public int totalRegisteredCourses(int studentId) throws SQLException {
+		
+		return registrationDaoOperation.totalRegisteredCourses(studentId);
+	}
+	
+	@Override
 	public void setRegistrationStatus(int studentId) {
 
 	}
 	
 	@Override
-	public Vector<Course> viewRegisteredCourses(int studentId){
+	public Vector<Course> viewRegisteredCourses(int studentId) throws SQLException{
 		
 		return registrationDaoOperation.viewRegisteredCourses(studentId);
 	}
@@ -89,7 +101,7 @@ public class RegistrationService implements RegistrationInterface {
 	}
 	
 	@Override
-	public Vector<Course> viewCourses(int studentId){
+	public Vector<Course> viewCourses(int studentId) throws SQLException{
 		
 		return registrationDaoOperation.viewCourses(studentId);
 	}

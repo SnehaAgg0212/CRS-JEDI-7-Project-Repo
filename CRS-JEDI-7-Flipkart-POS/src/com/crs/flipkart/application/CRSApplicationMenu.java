@@ -3,6 +3,7 @@
  */
 package com.crs.flipkart.application;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -20,6 +21,9 @@ import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.utils.Utils;
+import com.flipkart.exceptions.CourseLimitExceededException;
+import com.flipkart.exceptions.CourseNotFoundException;
+import com.flipkart.exceptions.SeatsNotAvailableException;
 
 /**
  * @author devanshugarg
@@ -97,8 +101,12 @@ public class CRSApplicationMenu {
 	
 	/**
 	 * User Login
+	 * @throws CourseNotFoundException 
+	 * @throws SQLException 
+	 * @throws SeatsNotAvailableException 
+	 * @throws CourseLimitExceededException 
 	 */
-	private static void userLogin() {
+	private static void userLogin() throws CourseLimitExceededException, SeatsNotAvailableException, SQLException, CourseNotFoundException {
 		
 		System.out.println("-----------------Login------------------");
 		

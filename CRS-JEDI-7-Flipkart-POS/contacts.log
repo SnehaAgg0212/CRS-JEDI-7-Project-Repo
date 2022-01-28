@@ -1,0 +1,3 @@
+12:19:43,238  INFO RegistrationService,main:53 - More than 6 courses are registered!
+18:24:02,389 ERROR RegistrationDaoOperation,main:507 - class com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException
+18:24:02,393 ERROR RegistrationDaoOperation,main:508 - Unknown column 'courseCode' in 'field list'

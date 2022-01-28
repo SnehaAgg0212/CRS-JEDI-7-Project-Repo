@@ -305,8 +305,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public boolean addCourse(int studentId, int courseId) {
-
+	public boolean addCourse(int studentId, int courseId) throws SQLException {
+		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -323,6 +324,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			return true;
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		}finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return false;
  	}
@@ -334,8 +338,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public boolean semesterRegistration(int semester, int studentId) {
+	public boolean semesterRegistration(int semester, int studentId) throws SQLException {
 
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -349,6 +354,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		}finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return false;
  	}
@@ -360,8 +368,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public boolean addSemester(int semester, int studentId) {
+	public boolean addSemester(int semester, int studentId) throws SQLException {
 
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -374,6 +383,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			return true;
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		}finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return false;
  	}
@@ -385,8 +397,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public boolean dropCourse(int studentId, int courseId) {
+	public boolean dropCourse(int studentId, int courseId) throws SQLException {
 
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -403,6 +416,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			return true;
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		}finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return false;
  	}
@@ -413,8 +429,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public boolean isSeatAvailable(int courseId) {
+	public boolean isSeatAvailable(int courseId) throws SQLException {
 		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -427,6 +444,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		}finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return true;
  	}
@@ -437,8 +457,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public int totalRegisteredCourses(int studentId) {
+	public int totalRegisteredCourses(int studentId) throws SQLException {
 		
+		Connection connection = DBUtils.getConnection();
  		int totalcourse = 0;
  		statement = null;
  		
@@ -453,9 +474,46 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			return totalcourse;
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		}finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return totalcourse;
  	}
+	
+	/**
+	 * Method checks if the student is registered for that course
+	 * @param courseCode
+	 * @param studentId
+	 * @return Students registration status
+	 * @throws SQLException 
+	 */
+	@Override
+	public boolean checkCourse(int courseId, int studentId) throws SQLException{
+		
+		Connection connection = DBUtils.getConnection();
+		
+		try{
+			String sql = SQLQueriesConstant.CHECK_COURSE;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, courseId);
+			statement.setInt(2, studentId);
+			ResultSet result = statement.executeQuery();
+			
+			while(result.next()){
+				return true;
+			}
+		}catch(Exception e){
+			logger.error(e.getClass());
+			logger.error(e.getMessage());
+		}finally{
+			statement.close();
+			connection.close();
+		}
+		
+		return false;
+		
+	}
 	
 	/**
 	 * 
@@ -463,8 +521,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public Vector<Course> viewCourses(int studentId) {
+	public Vector<Course> viewCourses(int studentId) throws SQLException {
 
+		Connection connection = DBUtils.getConnection();
  		Vector<Course> availableCourses = new Vector<>();
  		statement = null;
  		
@@ -484,6 +543,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		}finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return availableCourses;
  	}
@@ -494,8 +556,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public Vector<Course> viewRegisteredCourses(int studentId) {
-
+	public Vector<Course> viewRegisteredCourses(int studentId) throws SQLException{
+		
+		Connection connection = DBUtils.getConnection();
  		Vector<Course> availableCourses = new Vector<>();
  		statement = null;
  		
@@ -515,7 +578,16 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		}finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return availableCourses;
  	}
+
+	@Override
+	public boolean isRegistered(String courseCode, String studentId) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

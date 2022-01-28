@@ -1,10 +1,14 @@
 package com.crs.flipkart.business;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
+import com.flipkart.exceptions.CourseLimitExceededException;
+import com.flipkart.exceptions.CourseNotFoundException;
+import com.flipkart.exceptions.SeatsNotAvailableException;
 
 public interface RegistrationInterface {
 
@@ -13,16 +17,18 @@ public interface RegistrationInterface {
 	 * @param studentId
 	 * @param availableCourses
 	 * @return
+	 * @throws SQLException 
 	 */
-	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses);
+	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses) throws CourseLimitExceededException, SeatsNotAvailableException, SQLException;;
 
 	/**
 	 * @param courseId
 	 * @param studentId
 	 * @param registeredCourseList
 	 * @return
+	 * @throws SQLException 
 	 */
-	boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList);
+	boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) throws SQLException, CourseNotFoundException;
 
 	/**
 	 * @param studentId
@@ -38,14 +44,16 @@ public interface RegistrationInterface {
 	/**
 	 * @param studentId
 	 * @return
+	 * @throws SQLException 
 	 */
-	Vector<Course> viewRegisteredCourses(int studentId);
+	Vector<Course> viewRegisteredCourses(int studentId) throws SQLException;
 
 	/**
 	 * @param studentId
 	 * @return
+	 * @throws SQLException 
 	 */
-	Vector<Course> viewCourses(int studentId);
+	Vector<Course> viewCourses(int studentId) throws SQLException;
 
 	/**
 	 * @param studentId
@@ -113,5 +121,7 @@ public interface RegistrationInterface {
 	 * @return
 	 */
 	boolean isGenerated(int studentId);
+
+	int totalRegisteredCourses(int studentId) throws SQLException;
 
 }
