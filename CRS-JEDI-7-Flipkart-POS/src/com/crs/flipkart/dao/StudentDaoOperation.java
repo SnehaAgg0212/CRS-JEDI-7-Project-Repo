@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.utils.DBUtils;
@@ -19,15 +21,33 @@ import com.crs.flipkart.utils.DBUtils;
  */
 public class StudentDaoOperation implements StudentDaoInterface {
 
+	private static volatile StudentDaoOperation instance = null;
+	private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
 	Connection connection = DBUtils.getConnection();
  	private PreparedStatement statement = null;
  	
  	/**
 	 * Default Constructor
 	 */
-	public StudentDaoOperation()
+	private StudentDaoOperation()
 	{
 
+	}
+	
+	/**
+	 * Method to make StudentDaoOperation Singleton
+	 * @return
+	 */
+	public static StudentDaoOperation getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(StudentDaoOperation.class) {
+				
+				instance = new StudentDaoOperation();
+			}
+		}
+		return instance;
 	}
 	
 	/**
@@ -67,7 +87,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
  				}
  			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 		return studentId;
 	}
@@ -92,7 +112,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
  				studentId = resultSet.getInt(1);
  			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 		return studentId;
 	}
@@ -116,7 +136,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
  				return resultSet.getBoolean(1);
  			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 		return false;
 	}

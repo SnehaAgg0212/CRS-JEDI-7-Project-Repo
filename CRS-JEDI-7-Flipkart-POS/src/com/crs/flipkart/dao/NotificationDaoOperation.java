@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.utils.DBUtils;
 
@@ -19,15 +21,33 @@ import com.crs.flipkart.utils.DBUtils;
  */
 public class NotificationDaoOperation implements NotificationDaoInterface {
 
+	private static volatile NotificationDaoOperation instance = null;
+	private static Logger logger = Logger.getLogger(NotificationDaoOperation.class);
 	Connection connection = DBUtils.getConnection();
 	private PreparedStatement statement = null;
 	
 	/**
 	 * Default Constructor
 	 */
-	public NotificationDaoOperation()
+	private NotificationDaoOperation()
 	{
 
+	}
+	
+	/**
+	 * Method to make NotificationDaoOperation Singleton
+	 * @return
+	 */
+	public static NotificationDaoOperation getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(NotificationDaoOperation.class) {
+				
+				instance = new NotificationDaoOperation();
+			}
+		}
+		return instance;
 	}
 	
 	/**

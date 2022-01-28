@@ -3,6 +3,8 @@
  */
 package com.crs.flipkart.dao;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,14 +27,32 @@ import com.crs.flipkart.utils.DBUtils;
  */
 public class AdminDaoOperation implements AdminDaoInterface {
 	
+	private static volatile AdminDaoOperation instance = null;
+	private static Logger logger = Logger.getLogger(AdminDaoOperation.class);
 	private PreparedStatement statement = null;
 	Connection connection = DBUtils.getConnection();
 	
 	/**
 	 * Default Constructor
 	 */
-	public AdminDaoOperation() {
+	private AdminDaoOperation() {
 		
+	}
+	
+	/**
+	 * Method to make AdminDaoOperation Singleton
+	 * @return
+	 */
+	public static AdminDaoOperation getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(AdminDaoOperation.class) {
+				
+				instance = new AdminDaoOperation();
+			}
+		}
+		return instance;
 	}
 	
 	/**
@@ -56,14 +76,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setString(7, user.getGender().toString());
 			statement.setString(8, user.getAddress());
 			int row = statement.executeUpdate();
-			System.out.println(row + " user added.");
+			logger.info(row + " user added.");
 			if (row == 0) {
-				System.out.println("User with User Id " + user.getUserId() + " not added.");
+				logger.info("User with User Id " + user.getUserId() + " not added.");
 			} else {
-				System.out.println("User with User Id " + user.getUserId() + " added.");
+				logger.info("User with User Id " + user.getUserId() + " added.");
 			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 	}
 	
@@ -86,14 +106,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setString(3, professor.getDepartment());
 			statement.setString(4, professor.getDesignation());
 			int row = statement.executeUpdate();
-			System.out.println(row + " professor added.");
+			logger.info(row + " professor added.");
 			if (row == 0) {
-				System.out.println("Professor with Professor Id " + professor.getProfessorId() + " already exists.");
+				logger.info("Professor with Professor Id " + professor.getProfessorId() + " already exists.");
 			} else {
-				System.out.println("Professor with Professor Id " + professor.getProfessorId() + " added.");
+				logger.info("Professor with Professor Id " + professor.getProfessorId() + " added.");
 			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 	}
 	
@@ -121,9 +141,9 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				professor.setDesignation(resultSet.getString(5));
 				professorList.add(professor);
 			}
-			System.out.println("Total Number of Professors in the Institute: " + professorList.size());
+			logger.info("Total Number of Professors in the Institute: " + professorList.size());
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 		return professorList;
 	}
@@ -142,14 +162,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, professorId);
 			int row = statement.executeUpdate();
-			System.out.println(row + " professor deleted.");
+			logger.info(row + " professor deleted.");
 			if (row == 0) {
-				System.out.println("Professor with Professor Id " + professorId + " does not exists.");
+				logger.info("Professor with Professor Id " + professorId + " does not exists.");
 			} else {
-				System.out.println("Professor with Professor Id " + professorId + " deleted.");
+				logger.info("Professor with Professor Id " + professorId + " deleted.");
 			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 	}
 	
@@ -167,14 +187,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, studentId);
 			int row = statement.executeUpdate();
-			System.out.println(row + "student approved.");
+			logger.info(row + "student approved.");
 			if (row == 0) {
-				System.out.println("Student with Student Id " + studentId + " does not exists.");
+				logger.info("Student with Student Id " + studentId + " does not exists.");
 			} else {
-				System.out.println("Student with Student Id " + studentId + " is approved.");
+				logger.info("Student with Student Id " + studentId + " is approved.");
 			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 	}
 	
@@ -206,7 +226,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				grades.add(gradeCard);
 			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 		return grades;
 	}
@@ -229,14 +249,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
  			statement.setDouble(4, course.getCourseFee());
  			statement.setInt(5, course.getCourseSeats());
 			int row = statement.executeUpdate();
-			System.out.println(row + " course added.");
+			logger.info(row + " course added.");
 			if (row == 0) {
-				System.out.println("Course with Course Code " + course.getCourseId() + " already exists.");
+				logger.info("Course with Course Code " + course.getCourseId() + " already exists.");
 			} else {
-				System.out.println("Course with Course Code " + course.getCourseId() + " added.");
+				logger.info("Course with Course Code " + course.getCourseId() + " added.");
 			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 	}
 	
@@ -264,9 +284,9 @@ public class AdminDaoOperation implements AdminDaoInterface {
  				course.setCourseSeats(resultSet.getInt(5));
 				courseList.add(course);
 			}
-			System.out.println("Total Number of Courses: " + courseList.size());
+			logger.info("Total Number of Courses: " + courseList.size());
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 		return courseList;
 	}
@@ -285,14 +305,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, courseId);
 			int row = statement.executeUpdate();
-			System.out.println(row + " course deleted.");
+			logger.info(row + " course deleted.");
 			if (row == 0) {
-				System.out.println("Course with Course Id " + courseId + " does not exists.");
+				logger.info("Course with Course Id " + courseId + " does not exists.");
 			} else {
-				System.out.println("Course with Course Id " + courseId + " deleted.");
+				logger.info("Course with Course Id " + courseId + " deleted.");
 			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 	}
 	
@@ -309,9 +329,9 @@ public class AdminDaoOperation implements AdminDaoInterface {
  			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS; // TODO: isGenerated field not present in any table
  			statement = connection.prepareStatement(sql);
  			statement.setInt(1, studentId);
- 			System.out.println("Student with Student Id " + studentId +"'s GradeCard is generated.");
+ 			logger.info("Student with Student Id " + studentId +"'s GradeCard is generated.");
  		} catch (SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  	}
 	

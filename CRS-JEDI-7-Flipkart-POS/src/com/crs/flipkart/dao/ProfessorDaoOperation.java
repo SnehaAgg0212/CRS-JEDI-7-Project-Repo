@@ -5,6 +5,8 @@ package com.crs.flipkart.dao;
 
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,15 +23,33 @@ import com.crs.flipkart.utils.DBUtils;
  */
 public class ProfessorDaoOperation implements ProfessorDaoInterface {
 
+	private static volatile ProfessorDaoOperation instance = null;
+	private static Logger logger = Logger.getLogger(UserDaoOperation.class);
 	Connection connection = DBUtils.getConnection();
 	private PreparedStatement statement = null;
 	
 	/**
 	 * Default Constructor
 	 */
-	public ProfessorDaoOperation()
+	private ProfessorDaoOperation()
 	{
 
+	}
+	
+	/**
+	 * Method to make ProfessorDaoOperation Singleton
+	 * @return
+	 */
+	public static ProfessorDaoOperation getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(ProfessorDaoOperation.class) {
+				
+				instance = new ProfessorDaoOperation();
+			}
+		}
+		return instance;
 	}
 	
 	/**
@@ -56,7 +76,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  				return true;
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return false;
 	}
@@ -83,7 +103,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  				return true;
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return false;
  	}
@@ -106,7 +126,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  			}
  			return true;
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
 
  		return false;
@@ -137,7 +157,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  				enrolledStudents.add(enrolledStudent);
  			}
  		} catch(SQLException e) {
- 			System.out.println("Couldn't find Enrolled Students: " + e.getMessage());
+ 			logger.error("Couldn't find Enrolled Students: " + e.getMessage());
  		}
  		return enrolledStudents;
 	}
@@ -168,7 +188,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
   				availableCourses.add(course);
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return availableCourses;
  	}
@@ -198,7 +218,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  				courseList.add(course);
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return courseList;
 	}
@@ -224,7 +244,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  				professorName = resultSet.getString(1);
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return professorName;
 	}
@@ -249,7 +269,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  				professorId = resultSet.getInt(1);
  			}
 		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 		}
 		return professorId;
 	}

@@ -4,6 +4,9 @@
 package com.crs.flipkart.dao;
 
 import java.util.Vector;
+
+import org.apache.log4j.Logger;
+
 import java.sql.Date;
 
 import java.sql.Connection;
@@ -23,8 +26,33 @@ import com.crs.flipkart.utils.Utils;
  */
 public class RegistrationDaoOperation implements RegistrationDaoInterface {
 
+	private static volatile RegistrationDaoOperation instance = null;
+	private static Logger logger = Logger.getLogger(RegistrationDaoOperation.class);
 	Connection connection = DBUtils.getConnection();
 	private PreparedStatement statement = null;
+	
+	/**
+	 * Default Constructor
+	 */
+	private RegistrationDaoOperation() {
+		
+	}
+	
+	/**
+	 * Method to make RegistrationDaoOperation Singleton
+	 * @return
+	 */
+	public static RegistrationDaoOperation getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(RegistrationDaoOperation.class){
+				
+				instance = new RegistrationDaoOperation();
+			}
+		}
+		return instance;
+	}
 	
 	/**
 	 * 
@@ -46,7 +74,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 				fee += resultSet.getDouble("courseFee");
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return fee;
 	}
@@ -70,7 +98,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 				return true;
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());	
 		}
 		return false;
 	}
@@ -94,7 +122,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 				return true;
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());	
 		}
 		return false;
 	}
@@ -127,7 +155,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.setDate(7,expiryDate);
 			statement.executeUpdate();
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());	
 		}
 	}
 
@@ -161,7 +189,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.setDate(8,chequeDate);
 			statement.executeUpdate();
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());	
 		}
 	}
  
@@ -185,7 +213,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.setInt(3, invoiceId);
 			statement.executeUpdate();
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());	
 		}
 	}
 
@@ -209,7 +237,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.setBoolean(4, true);
 			statement.executeUpdate();
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());	
 		}
 	}
 
@@ -232,7 +260,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 				return true;
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());				
+			logger.error(e.getMessage());				
 		}
 		return false;
 	}
@@ -265,7 +293,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 				grades.add(gradeCard);				
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());				
+			logger.error(e.getMessage());				
 		}
 		return grades;
 	}
@@ -294,7 +322,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			statement.executeUpdate();
  			return true;
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return false;
  	}
@@ -320,7 +348,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  				return true;
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return false;
  	}
@@ -345,7 +373,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			statement.executeUpdate();
  			return true;
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return false;
  	}
@@ -374,7 +402,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			statement.executeUpdate();
  			return true;
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return false;
  	}
@@ -398,7 +426,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  				return resultSet.getInt("courseSeats") > 0;
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return true;
  	}
@@ -424,7 +452,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  			return totalcourse;
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return totalcourse;
  	}
@@ -455,7 +483,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
   				availableCourses.add(course);
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return availableCourses;
  	}
@@ -486,7 +514,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
   				availableCourses.add(course);
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return availableCourses;
  	}

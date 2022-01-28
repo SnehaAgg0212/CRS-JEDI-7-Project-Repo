@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.utils.DBUtils;
 
@@ -17,14 +19,32 @@ import com.crs.flipkart.utils.DBUtils;
  */
 public class UserDaoOperation implements UserDaoInterface {
 
+	private static volatile UserDaoOperation instance = null;
+	private static Logger logger = Logger.getLogger(UserDaoOperation.class);
 	Connection connection = DBUtils.getConnection();
 	private PreparedStatement statement = null;
 	
 	/**
 	 * Default Constructor
 	 */
-	public UserDaoOperation() {
+	private UserDaoOperation() {
 		
+	}
+	
+	/**
+	 * Method to make UserDaoOperation Singleton
+	 * @return
+	 */
+	public static UserDaoOperation getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(UserDaoOperation.class) {
+				
+				instance = new UserDaoOperation();
+			}
+		}
+		return instance;
 	}
 	
 	/**
@@ -50,7 +70,7 @@ public class UserDaoOperation implements UserDaoInterface {
  				return true;
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return false;
  	}
@@ -76,7 +96,7 @@ public class UserDaoOperation implements UserDaoInterface {
  				return true;
  			}
  		} catch(SQLException e) {
- 			System.out.println("Error: "+ e.getMessage());
+ 			logger.error("Error: "+ e.getMessage());
  		}
  		return false;
  	}
@@ -101,7 +121,7 @@ public class UserDaoOperation implements UserDaoInterface {
  				role = resultSet.getString("role");
  			}	
  		} catch(Exception e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return role;
  	}
@@ -126,7 +146,7 @@ public class UserDaoOperation implements UserDaoInterface {
  				userId = resultSet.getInt("userId");
  			}
  		} catch (SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			logger.error("Error: " + e.getMessage());
  		}
  		return userId;
  	}
