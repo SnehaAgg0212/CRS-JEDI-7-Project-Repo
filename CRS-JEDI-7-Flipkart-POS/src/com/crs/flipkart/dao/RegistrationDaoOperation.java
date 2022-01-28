@@ -60,7 +60,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public double calculateFee(int studentId) {
+	public double calculateFee(int studentId)throws SQLException {
 
 		statement = null;
 		double fee = 0.0;
@@ -85,7 +85,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public boolean getRegistrationStatus(int studentId) {
+	public boolean getRegistrationStatus(int studentId) throws SQLException {
 		
 		statement = null;
 
@@ -109,7 +109,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public boolean getPaymentStatus(int studentId) {
+	public boolean getPaymentStatus(int studentId) throws SQLException {
 		
 		statement = null;
 
@@ -139,7 +139,8 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param expiryDate
 	 */
 	@Override
-	public void paymentByCard(int studentId, int invoiceId, String cardType, String cardNumber, String cardHolderName, int cvv, String bankName, Date expiryDate) {
+	public void paymentByCard(int studentId, int invoiceId, String cardType, String cardNumber, String cardHolderName, int cvv, String bankName, Date expiryDate) throws SQLException 
+	{
 
 		statement = null;
 
@@ -172,7 +173,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param chequeDate
 	 */
 	@Override
-	public void paymentByCheque(int studentId, int invoiceId, int chequeNo, String bankAccountHolderName, String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) {
+	public void paymentByCheque(int studentId, int invoiceId, int chequeNo, String bankAccountHolderName, String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) throws SQLException {
 
 		statement = null;
 
@@ -201,7 +202,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param bankName
 	 */
 	@Override
-	public void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) {
+	public void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) throws SQLException {
 		
 		statement = null;
 		
@@ -224,7 +225,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param amount
 	 */
 	@Override
-	public void setPaymentStatus(int studentId, int invoiceId, double amount) {
+	public void setPaymentStatus(int studentId, int invoiceId, double amount) throws SQLException {
 		
 		statement = null;
 		
@@ -247,7 +248,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public boolean isGenerated(int studentId) {
+	public boolean isGenerated(int studentId) throws SQLException {
 
 		statement = null;
 
@@ -272,7 +273,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public Vector<GradeCard> viewGradeCard(int studentId,int semesterId) {
+	public Vector<GradeCard> viewGradeCard(int studentId,int semesterId) throws SQLException {
 
 		Vector<GradeCard> grades = new Vector<>();
 
