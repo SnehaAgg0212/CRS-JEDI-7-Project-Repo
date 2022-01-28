@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.UUID;
 
 import com.crs.flipkart.constants.NotificationTypeConstant;
+import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.utils.DBUtils;
 
 /**
@@ -25,75 +26,53 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	/**
 	 * Default Constructor
 	 */
+	
 	public NotificationDaoOperation()
 	{
 
 	}
 	
-	/**
-	 * 
-	 * @param type
-	 * @param studentId
-	 * @param modeOfPayment
-	 * @param amount
-	 * @return
-	 */
+
 	@Override
-	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount) {
+	public void sendPaymentNotification(String type, int studentId, String modeOfPayment, double amount,
+			int referenceId, int notificationId) {
+		// TODO Auto-generated method stub
+		statement=null;
+		String notificationContent="Mode Of Payment is "+modeOfPayment+ "\n" + "Payment is Successful"; 
+		try {
+			String sql = SQLQueriesConstant.ADD_PAYMENT_NOTIFICATION;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, notificationId);
+			statement.setInt(2, studentId);
+			statement.setString(3,"Payment");
+			statement.setInt(4, referenceId);
+			statement.setString(5, notificationContent);
+		    statement.executeUpdate();
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
 		
-		int notificationId = 0;
-		return notificationId;
 	}
-	
-	/**
-	 * 
-	 * @param type
-	 * @param studentId
-	 * @return
-	 */
+
+
 	@Override
-	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId) {
+	public void sendRegistrationNotification(String type, int studentId,int notificationId) {
+		// TODO Auto-generated method stub
+		statement=null;
+		String notificationContent="Registration is Successful"; 
+		try {
+			String sql = SQLQueriesConstant.ADD_REGISTRATION_NOTIFICATION;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, notificationId);
+			statement.setInt(2, studentId);
+			statement.setString(3,"Registration");
+			statement.setString(4, notificationContent);
+		    statement.executeUpdate();
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
 		
-		int notificationId = 0;
-		return notificationId;
-	}
-	
-	/**
-	 * 
-	 * @param type
-	 * @param studentId
-	 * @return
-	 */
-	@Override
-	public int sendApprovalNotification(NotificationTypeConstant type, int studentId) {
-		
-		int notificationId = 0;
-		return notificationId;
-	}
-	
-	/**
-	 * 
-	 * @param studentId
-	 * @param modeOfPayment
-	 * @param amount
-	 * @return
-	 */
-	@Override
-	public UUID addPayment(int studentId, int modeOfPayment, double amount) {
-		
-		UUID referenceId;
-		referenceId = UUID.randomUUID();
-		return referenceId;
-	}
-	
-	/**
-	 * 
-	 * @param notificationId
-	 * @return
-	 */
-	@Override
-	public int getReferenceId(int notificationId) {
-		
-		return 0;
 	}
 }

@@ -10,25 +10,25 @@ public interface NotificationInterface {
 	 * @param modeOfPayment
 	 * @param amount
 	 */
-	void sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount);
+	void sendPaymentNotification(String type, int studentId, String modeOfPayment, double amount,int referenceId);
 
 	/**
 	 * @param notificationId
 	 * @return
 	 */
-	String getReferenceId(int notificationId);
+//	String getReferenceId(int notificationId);
 
 	/**
 	 * @param type
 	 * @param studentId
 	 */
-	void sendApprovalNotification(NotificationTypeConstant type, int studentId);
+//	void sendApprovalNotification(String type, int studentId);
 
 	/**
 	 * 
 	 * @param type
 	 * @param studentId
 	 */
-	void sendRegistrationNotification(NotificationTypeConstant type, int studentId);
+	void sendRegistrationNotification(String type, int studentId);
 
 }
