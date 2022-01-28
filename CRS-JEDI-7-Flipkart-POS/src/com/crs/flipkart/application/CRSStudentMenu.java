@@ -134,6 +134,8 @@ public class CRSStudentMenu {
 			 				} else {
 			 					System.out.println("Course registration of " + courseId + " is already done.");
 			 				}
+		 				} catch (CourseNotFoundException e) {
+		 					System.out.println("Error: " + e.getMessage());
 		 				} catch (CourseLimitExceededException e) {
 		 					System.out.println("Error: " + e.getMessage());
 		 				} catch (SeatNotAvailableException e) {
@@ -181,6 +183,8 @@ public class CRSStudentMenu {
 			 		} else {
 			 			System.out.println("Course registration of " + courseId + " is already done.");
 			 		}
+		 		} catch (CourseNotFoundException e) {
+		 			System.out.println("Error: " +e.getMessage());
 		 		} catch (CourseLimitExceededException e) {
  					System.out.println("Error: " + e.getMessage());
  				} catch (SeatNotAvailableException e) {

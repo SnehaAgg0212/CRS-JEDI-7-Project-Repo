@@ -14,6 +14,7 @@ import com.crs.flipkart.dao.RegistrationDaoOperation;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.SeatNotAvailableException;
+import com.crs.flipkart.validator.StudentValidator;
 
 /**
  * @author devanshugarg
@@ -48,12 +49,16 @@ public class RegistrationService implements RegistrationInterface {
 	RegistrationDaoInterface registrationDaoOperation = RegistrationDaoOperation.getInstance();
 
 	@Override
-	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException {
+	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException {
 		
 		if(registrationDaoOperation.totalRegisteredCourses(studentId) >= 6) {
 			throw new CourseLimitExceededException(6);
- 		}else if(!registrationDaoOperation.isSeatAvailable(courseId)) {
+		} else if (registrationDaoOperation.isRegistered(courseId, studentId)) {
+			return false;
+ 		} else if (!registrationDaoOperation.isSeatAvailable(courseId)) {
  			throw new SeatNotAvailableException(courseId);
+ 		} else if (!StudentValidator.isValidCourseCode(courseId, availableCourses)) {
+ 			throw new CourseNotFoundException(courseId);
  		}
  		return registrationDaoOperation.addCourse(studentId, courseId);
 	}
@@ -61,7 +66,7 @@ public class RegistrationService implements RegistrationInterface {
 	@Override
 	public boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) throws SQLException, CourseNotFoundException {
 		
-		if(!registrationDaoOperation.checkCourse(courseId, studentId)) {
+		if(!StudentValidator.isRegistered(courseId, studentId, registeredCourseList)) {
  			throw new CourseNotFoundException(courseId);
  		}
 		return registrationDaoOperation.dropCourse(studentId, courseId);

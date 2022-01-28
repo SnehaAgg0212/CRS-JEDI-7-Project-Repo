@@ -20,8 +20,9 @@ public interface RegistrationInterface {
 	 * @throws SQLException 
 	 * @throws SeatNotAvailableException 
 	 * @throws CourseLimitExceededException 
+	 * @throws CourseNotFoundException 
 	 */
-	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException;
+	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException;
 
 	/**
 	 * @param courseId

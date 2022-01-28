@@ -12,6 +12,7 @@ import com.crs.flipkart.bean.EnrolledStudent;
 import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
+import com.crs.flipkart.validator.ProfessorValidator;
 
 /**
  * @author devanshugarg
@@ -144,8 +145,8 @@ public class CRSProfessorMenu {
 			enrolledStudents.forEach ((obj) -> {
 				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
 			});
-	//		Vector<Course> coursesEnrolled = new Vector<Course>();
-	//		coursesEnrolled	= professorService.viewCourses(professorId);
+			Vector<Course> coursesEnrolled = new Vector<Course>();
+			coursesEnrolled	= professorService.viewCourses(professorId);
 			System.out.println("----------------Add Grade--------------");
 			System.out.printf("Enter Student Id: ");
 			studentId = sc.nextInt();
@@ -155,8 +156,12 @@ public class CRSProfessorMenu {
 			grade = sc.nextDouble();
 			System.out.println("Enter Semester Id: ");
 			semesterId = sc.nextInt();
-			professorService.addGrade(studentId, courseCode, grade, semesterId);
-			System.out.println("Grade added successfully for " + studentId);
+			if (ProfessorValidator.isValidStudent(enrolledStudents, studentId) && ProfessorValidator.isValidCourse(coursesEnrolled, courseCode)) {
+				professorService.addGrade(studentId, courseCode, grade, semesterId);
+				System.out.println("Grade added successfully for " + studentId);
+			} else {
+				System.out.println("Grade cannot be added for " + studentId);
+			}
  		} catch (SQLException e) {
  			System.out.println("Error: " + e.getMessage());
  		}

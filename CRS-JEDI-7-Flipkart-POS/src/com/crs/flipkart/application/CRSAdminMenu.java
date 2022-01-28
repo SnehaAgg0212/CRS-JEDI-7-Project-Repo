@@ -280,7 +280,7 @@ public class CRSAdminMenu {
 	    course.setCourseSeats(noOfSeats);
 	    
 	    try {
-	    	adminServices.addCourse(course);
+	    	adminServices.addCourse(course, viewCoursesInCatalog());
 	    } catch (CourseAlreadyExistsException e) {
 	    	System.out.println("Error: " + e.getMessage());
 	    }
@@ -289,7 +289,7 @@ public class CRSAdminMenu {
 	/**
 	 * View Courses in Catalogue
 	 */
-	private static void viewCoursesInCatalog() {
+	private static Vector<Course> viewCoursesInCatalog() {
 		
 		System.out.println("-------------Viewing Courses In Catalog-------------");
 		System.out.println();
@@ -304,6 +304,8 @@ public class CRSAdminMenu {
 		}
 		
 		System.out.println();
+		
+		return CourseList;
 	}
 	
 	/**
@@ -317,7 +319,7 @@ public class CRSAdminMenu {
 	    int courseId = sc.nextInt();
 	    
 	    try {
-	    	adminServices.deleteCourse(courseId);
+	    	adminServices.deleteCourse(courseId, viewCoursesInCatalog());
 	    } catch (CourseNotDeletedException e) {
 	    	System.out.println("Error: " + e.getMessage());
 	    } catch (CourseNotFoundException e) {

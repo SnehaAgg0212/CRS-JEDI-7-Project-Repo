@@ -45,19 +45,6 @@ public interface AdminInterface {
 	void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException;
 
 	/**
-	 * @param course
-	 * @throws CourseAlreadyExistsException 
-	 */
-	void addCourse(Course course) throws CourseAlreadyExistsException;
-
-	/**
-	 * @param courseId
-	 * @throws CourseNotDeletedException 
-	 * @throws CourseNotFoundException 
-	 */
-	void deleteCourse(int courseId) throws CourseNotFoundException, CourseNotDeletedException;
-
-	/**
 	 * @param studentId
 	 * @param semesterId
 	 */
@@ -81,5 +68,22 @@ public interface AdminInterface {
 	 * @return
 	 */
 	Vector<Student> viewPendingAdmissions();
+
+	/**
+	 * 
+	 * @param course
+	 * @param courseList
+	 * @throws CourseAlreadyExistsException
+	 */
+	void addCourse(Course course, Vector<Course> courseList) throws CourseAlreadyExistsException;
+
+	/**
+	 * 
+	 * @param courseId
+	 * @param courseList
+	 * @throws CourseNotFoundException
+	 * @throws CourseNotDeletedException
+	 */
+	void deleteCourse(int courseId, Vector<Course> courseList) throws CourseNotFoundException, CourseNotDeletedException;
 
 }
