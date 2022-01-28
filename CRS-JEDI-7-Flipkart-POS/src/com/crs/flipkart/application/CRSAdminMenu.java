@@ -16,6 +16,7 @@ import com.crs.flipkart.business.NotificationService;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 
 /**
  * @author LENOVO
@@ -133,8 +134,18 @@ public class CRSAdminMenu {
  		System.out.println("Enter the Student Id: ");
  		int studentId = sc.nextInt();
 
- 		adminServices.approveStudentRegistration(studentId, pendingStudents);
-		notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
+ 		try {
+ 			
+ 			adminServices.approveStudentRegistration(studentId, pendingStudents);
+ 			System.out.println("Student with studentId: "+ studentId + " has been approved.");
+ 			notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
+ 			 
+ 		} catch (StudentNotFoundForApprovalException ex) {
+ 			
+ 			System.out.println(ex.getMessage());
+ 			
+ 		}
+
 	}
 	
 	/**

@@ -18,6 +18,7 @@ import com.crs.flipkart.bean.User;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.constants.SQLQueriesConstant;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 
 import java.util.Vector;
 
@@ -180,7 +181,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 * @param studentId
 	 */
 	@Override
-	public void approveStudentRegistration(int studentId) {
+	public void approveStudentRegistration(int studentId) throws StudentNotFoundForApprovalException {
 		
 		statement = null;
 		
@@ -190,11 +191,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setInt(1, studentId);
 			int row = statement.executeUpdate();
 			logger.info(row + " student approved.");
+			
 			if (row == 0) {
-				logger.info("Student with Student Id " + studentId + " does not exists.");
-			} else {
-				logger.info("Student with Student Id " + studentId + " is approved.");
+				throw new StudentNotFoundForApprovalException(studentId);
 			}
+			
+			logger.info("Student with Student Id " + studentId + " is approved.");
+			
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}

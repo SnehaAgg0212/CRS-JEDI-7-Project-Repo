@@ -1,6 +1,7 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 
 public interface StudentInterface {
 
@@ -34,6 +35,6 @@ public interface StudentInterface {
 	 * @param student
 	 * @return
 	 */
-	int register(Student student);
+	int register(Student student) throws StudentNotRegisteredException;
 
 }

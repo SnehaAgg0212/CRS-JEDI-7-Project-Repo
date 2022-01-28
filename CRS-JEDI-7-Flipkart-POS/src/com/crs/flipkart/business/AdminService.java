@@ -17,6 +17,7 @@ import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 import com.crs.flipkart.utils.Utils;
 
 /**
@@ -83,21 +84,28 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public void approveStudentRegistration(int studentId, Vector<Student> pendingStudents) {
+	public void approveStudentRegistration(int studentId, Vector<Student> pendingStudents) throws StudentNotFoundForApprovalException {
 		
-		Boolean isValidUnapprovedStudent = false;
- 		for(Student student : pendingStudents) {
- 			if(studentId == student.getStudentId()) {
- 				isValidUnapprovedStudent = true;
- 				break;
- 			}
- 		}
-
- 		if(!isValidUnapprovedStudent) {
- 			System.out.println("Student not found.");
- 			return;
- 		}
-		adminDaoOperation.approveStudentRegistration(studentId);
+		try {
+			
+			Boolean isValidUnapprovedStudent = false;
+	 		for(Student student : pendingStudents) {
+	 			if(studentId == student.getStudentId()) {
+	 				isValidUnapprovedStudent = true;
+	 				break;
+	 			}
+	 		}
+		
+	 		if(!isValidUnapprovedStudent) {
+	 			throw new StudentNotFoundForApprovalException(studentId);
+	 		}
+	 		adminDaoOperation.approveStudentRegistration(studentId);
+		} catch (StudentNotFoundForApprovalException ex) {
+			
+			throw ex;
+			
+		}
+		
 	}
 
 	@Override

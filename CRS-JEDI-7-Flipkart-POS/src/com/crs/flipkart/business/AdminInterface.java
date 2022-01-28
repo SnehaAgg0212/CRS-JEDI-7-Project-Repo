@@ -5,6 +5,7 @@ import java.util.Vector;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 
 /**
  * @author devanshugarg
@@ -58,7 +59,7 @@ public interface AdminInterface {
 	 * @param studentId
 	 * @param pendingStudents
 	 */
-	void approveStudentRegistration(int studentId, Vector<Student> pendingStudents);
+	void approveStudentRegistration(int studentId, Vector<Student> pendingStudents) throws StudentNotFoundForApprovalException;
 
 	/**
 	 * 

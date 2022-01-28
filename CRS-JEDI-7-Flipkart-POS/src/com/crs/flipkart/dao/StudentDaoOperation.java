@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.SQLQueriesConstant;
+import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.utils.DBUtils;
 
 /**
@@ -54,9 +55,10 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	 * Add Student to Database
 	 * @param student
 	 * @return
+	 * @throws StudentNotRegisteredException
 	 */
 	@Override
-	public int addStudent(Student student) {
+	public int addStudent(Student student) throws StudentNotRegisteredException {
 		
 		statement = null;
 		int studentId = 0;
@@ -87,9 +89,16 @@ public class StudentDaoOperation implements StudentDaoInterface {
  					studentId = resultSet.getInt(1);
  				}
  			}
-		} catch (SQLException e) {
-			logger.error("Error: " + e.getMessage());
+		} catch (StudentNotRegisteredException ex) {
+			throw new StudentNotRegisteredException(ex.getMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				logger.error("Error: " + e.getMessage());
+			}
 		}
+		
 		return studentId;
 	}
 	

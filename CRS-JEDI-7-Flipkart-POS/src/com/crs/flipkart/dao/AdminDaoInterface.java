@@ -7,6 +7,7 @@ import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 
 public interface AdminDaoInterface {
 
@@ -32,7 +33,7 @@ public interface AdminDaoInterface {
 	 * 
 	 * @param studentId
 	 */
-	void approveStudentRegistration(int studentId);
+	void approveStudentRegistration(int studentId) throws StudentNotFoundForApprovalException;
 
 	/**
 	 * 
