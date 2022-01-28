@@ -59,7 +59,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int referenceId, double amount, int modeOfPayment) {
+	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int referenceId, double amount, int modeOfPayment) throws SQLException {
 		
 		statement = null;
 		int notificationId = Utils.generateId();
@@ -88,7 +88,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId) {
+	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId) throws SQLException {
 		
 		statement = null;
 		int notificationId = Utils.generateId();
@@ -117,7 +117,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public int sendApprovalNotification(NotificationTypeConstant type, int studentId) {
+	public int sendApprovalNotification(NotificationTypeConstant type, int studentId) throws SQLException {
 		
 		statement = null;
 		int notificationId = Utils.generateId();

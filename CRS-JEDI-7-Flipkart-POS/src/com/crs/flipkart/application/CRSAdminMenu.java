@@ -3,6 +3,7 @@
  */
 package com.crs.flipkart.application;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -143,8 +144,13 @@ public class CRSAdminMenu {
  		
  		try {
 	 		adminServices.approveStudentRegistration(studentId, pendingStudents);
-			int notificationId = notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
-			System.out.println("Notification Id: " + notificationId);
+	 		
+	 		try {
+				int notificationId = notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
+				System.out.println("Notification Id: " + notificationId);
+	 		} catch (SQLException e) {
+	 			System.out.println("Error: " + e.getMessage());
+	 		}
  		} catch (StudentNotFoundForApprovalException e) {
  			System.out.println("Error: " + e.getMessage());
  		}

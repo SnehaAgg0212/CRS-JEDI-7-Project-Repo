@@ -3,7 +3,7 @@
  */
 package com.crs.flipkart.business;
 
-import org.apache.log4j.Logger;
+import java.sql.SQLException;
 
 import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.dao.NotificationDaoInterface;
@@ -42,19 +42,19 @@ public class NotificationService implements NotificationInterface {
 	NotificationDaoInterface notificationDaoOperation = NotificationDaoOperation.getInstance();
 
 	@Override
-	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount, int referenceId) {
+	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount, int referenceId) throws SQLException {
 		
 		return notificationDaoOperation.sendPaymentNotification(type, studentId, referenceId, amount, modeOfPayment);
 	}
     
     @Override
-	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId){
+	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId) throws SQLException {
 
     	return notificationDaoOperation.sendRegistrationNotification(type, studentId);
     }
 
     @Override
-	public int sendApprovalNotification(NotificationTypeConstant type, int studentId){
+	public int sendApprovalNotification(NotificationTypeConstant type, int studentId) throws SQLException {
 
     	return notificationDaoOperation.sendApprovalNotification(type, studentId);
     }
