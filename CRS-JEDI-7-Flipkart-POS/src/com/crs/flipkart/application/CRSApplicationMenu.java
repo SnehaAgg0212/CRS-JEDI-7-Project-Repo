@@ -19,6 +19,7 @@ import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
+import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.utils.Utils;
 
 /**
@@ -156,56 +157,60 @@ public class CRSApplicationMenu {
 	 */
 	private static void registerStudent() {
 		
-		System.out.println("---------------Student Registration-------------");
+		try {
+			System.out.println("---------------Student Registration-------------");
+			
+			int userId = Utils.generateId();
+	//		int studentId = Utils.generateId();
+			
+			String studentName, studentEmailId, studentPassword, studentPhoneNo, studentBranch, studentAddress;
+			int studentBatch, studentGender;
+			GenderConstant gender;
+			
+			Student student = new Student();
+			
+			System.out.println("Enter Student Name: ");
+			studentName = sc.nextLine();
+			student.setUserName(studentName);
+			
+			System.out.println("Enter Student Email ID: ");
+			studentEmailId = sc.nextLine();
+			student.setUserEmailId(studentEmailId);
+			
+			System.out.println("Enter Student Password: ");
+			studentPassword = sc.nextLine();
+			student.setUserPassword(studentPassword);
+			
+			System.out.println("Enter Student Gender: \t 1. Male \t 2.Female \t 3.Other");
+			studentGender = sc.nextInt();
+			gender = GenderConstant.getName(studentGender);
+			student.setGender(gender);
+			
+			System.out.println("Enter Student Branch: ");
+			studentBranch = sc.nextLine();
+			student.setBranchName(studentBranch);
+			
+			System.out.println("Enter Student Batch (Graduation Year): ");
+			studentBatch = sc.nextInt();
+			student.setBatch(studentBatch);
+			
+			System.out.println("Enter Student Address: ");
+			studentAddress = sc.nextLine();
+			student.setAddress(studentAddress);
+			
+			System.out.println("Enter Student Phone Number: ");
+			studentPhoneNo = sc.nextLine();
+			student.setPhoneNo(studentPhoneNo);
+			
+			student.setUserId(userId);
+			student.setRole(RoleConstant.STUDENT);
 		
-		int userId = Utils.generateId();
-//		int studentId = Utils.generateId();
-		
-		String studentName, studentEmailId, studentPassword, studentPhoneNo, studentBranch, studentAddress;
-		int studentBatch, studentGender;
-		GenderConstant gender;
-		
-		Student student = new Student();
-		
-		System.out.println("Enter Student Name: ");
-		studentName = sc.nextLine();
-		student.setUserName(studentName);
-		
-		System.out.println("Enter Student Email ID: ");
-		studentEmailId = sc.nextLine();
-		student.setUserEmailId(studentEmailId);
-		
-		System.out.println("Enter Student Password: ");
-		studentPassword = sc.nextLine();
-		student.setUserPassword(studentPassword);
-		
-		System.out.println("Enter Student Gender: \t 1: Male \t 2.Female \t 3.Other");
-		studentGender = sc.nextInt();
-		gender = GenderConstant.getName(studentGender);
-		student.setGender(gender);
-		
-		System.out.println("Enter Student Branch: ");
-		studentBranch = sc.nextLine();
-		student.setBranchName(studentBranch);
-		
-		System.out.println("Enter Student Batch (Graduation Year): ");
-		studentBatch = sc.nextInt();
-		student.setBatch(studentBatch);
-		
-		System.out.println("Enter Student Address: ");
-		studentAddress = sc.nextLine();
-		student.setAddress(studentAddress);
-		
-		System.out.println("Enter Student Phone Number: ");
-		studentPhoneNo = sc.nextLine();
-		student.setPhoneNo(studentPhoneNo);
-		
-		student.setUserId(userId);
-		student.setRole(RoleConstant.STUDENT);
-		
-//		int studentId = studentService.register(studentName, studentEmailId, studentPassword, userId, studentPhoneNo, gender, studentAddress, studentBranch, studentBatch);
-		int studentId = studentService.register(student);
-		notificationService.sendRegistrationNotification(NotificationTypeConstant.REGISTRATION, studentId);
+			int studentId = studentService.register(student);
+			notificationService.sendRegistrationNotification(NotificationTypeConstant.REGISTRATION, studentId);
+			
+		} catch (StudentNotRegisteredException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 	
 	/**

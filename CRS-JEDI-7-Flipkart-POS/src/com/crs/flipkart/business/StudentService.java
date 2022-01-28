@@ -14,6 +14,7 @@ import com.crs.flipkart.dao.RegistrationDaoInterface;
 import com.crs.flipkart.dao.RegistrationDaoOperation;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.dao.StudentDaoOperation;
+import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.utils.Utils;
 
 /**
@@ -53,13 +54,17 @@ public class StudentService implements StudentInterface {
 	public static final Student student = new Student("userName",  "student@gmail.com",  "student",  RoleConstant.STUDENT,  101,  "phoneNo", GenderConstant.MALE,  "address", "branchName", 13, 2022, true);
 
 	@Override
-	public int register(Student student) {
+	public int register(Student student) throws StudentNotRegisteredException {
 
  		int studentId = Utils.generateId();
 
- 		student.setUserId(studentId);
+ 		student.setStudentId(studentId);
  		
- 		studentId = studentDaoOperation.addStudent(student);
+ 		try {
+ 			studentId = studentDaoOperation.addStudent(student);
+ 		} catch (StudentNotRegisteredException e) {
+ 			throw e;
+ 		}
 
  		return studentId;
 	}

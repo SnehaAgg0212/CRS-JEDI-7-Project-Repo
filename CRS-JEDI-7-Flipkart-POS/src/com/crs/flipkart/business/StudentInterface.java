@@ -3,6 +3,7 @@ package com.crs.flipkart.business;
 import java.sql.SQLException;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 
 public interface StudentInterface {
 
@@ -36,7 +37,8 @@ public interface StudentInterface {
 	 * 
 	 * @param student
 	 * @return
+	 * @throws StudentNotRegisteredException 
 	 */
-	int register(Student student);
+	int register(Student student) throws StudentNotRegisteredException;
 
 }

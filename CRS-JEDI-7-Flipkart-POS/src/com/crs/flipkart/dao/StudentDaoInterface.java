@@ -1,6 +1,7 @@
 package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 
 public interface StudentDaoInterface {
 
@@ -8,8 +9,9 @@ public interface StudentDaoInterface {
 	 * Add Student to Database
 	 * @param student
 	 * @return
+	 * @throws StudentNotRegisteredException 
 	 */
-	int addStudent(Student student);
+	int addStudent(Student student) throws StudentNotRegisteredException;
 
 	/**
 	 * Retrieve Student Id from User Id
