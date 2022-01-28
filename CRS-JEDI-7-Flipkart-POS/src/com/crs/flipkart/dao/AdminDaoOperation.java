@@ -306,7 +306,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
  		statement = null;
 
  		try {
- 			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS;
+ 			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS; // TODO: isGenerated field not present in any table
  			statement = connection.prepareStatement(sql);
  			statement.setInt(1, studentId);
  			System.out.println("Student with Student Id " + studentId +"'s GradeCard is generated.");

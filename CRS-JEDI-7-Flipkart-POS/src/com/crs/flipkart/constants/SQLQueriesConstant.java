@@ -61,4 +61,6 @@ public class SQLQueriesConstant {
  	public static final String VERIFY_CREDENTIALS = "select userPassword from user where userEmailId = ?";
  	public static final String GET_ROLE = "select role from user where userEmailId = ?";
  	public static final String GET_USER_ID = "select userId from user where userEmailId = ?";
+ 	
+ 	public static final String INSERT_NOTIFICATION = "insert into notification(studentId, notificationType, notificationId, referenceId, notificationContent) values(?, ?, ?, ?, ?);";
 }
