@@ -1,0 +1,13 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "/Users/anirudhagupta/Downloads/mysql-connector-java-8.0.28/mysql-connector-java-8.0.28.jar",
+            "/Users/anirudhagupta/Downloads/log4j-1.2.11.jar"
+        ],
+        "exclude": [
+            "/Users/devanshugarg/Downloads/log4j-1.2.17.jar",
+            "/Users/devanshugarg/Downloads/mysql-connector-java-8.0.28/mysql-connector-java-8.0.28.jar"
+        ]
+    }
+}

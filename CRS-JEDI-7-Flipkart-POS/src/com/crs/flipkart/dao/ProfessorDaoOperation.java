@@ -11,10 +11,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.EnrolledStudent;
 import com.crs.flipkart.constants.SQLQueriesConstant;
+import com.crs.flipkart.exceptions.GradeCannotBeAddedException;
 import com.crs.flipkart.utils.DBUtils;
 
 /**
@@ -128,7 +128,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
  		}
-
  		return false;
  	}
 

@@ -4,6 +4,7 @@
 package com.crs.flipkart.application;
 
 import java.util.Vector;
+
 import java.util.Scanner;
 
 import com.crs.flipkart.bean.Course;
@@ -11,6 +12,7 @@ import com.crs.flipkart.bean.EnrolledStudent;
 import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
+import com.crs.flipkart.exceptions.GradeCannotBeAddedException;
 
 /**
  * @author devanshugarg
@@ -82,11 +84,14 @@ public class CRSProfessorMenu {
 	private static void chooseCourses(int professorId) {
 		// TODO Auto-generated method stub
 		
-		Vector<Course> allCourses = professorService.viewAvailableCourses();
+		try{Vector<Course> allCourses = professorService.viewAvailableCourses();
  		System.out.println(String.format("%20s %20s","COURSE ID","COURSE NAME"));
- 		for(Course course : allCourses) {
+ 		/*for(Course course : allCourses) {
  			System.out.println(String.format("%20s %20s",course.getCourseId(),course.getCourseName()));
- 		}
+ 		}*/
+		 allCourses.forEach((course)->{
+			System.out.println(String.format("%20s %20s",course.getCourseId(),course.getCourseName()));
+		 });
 
  		System.out.println();
  		System.out.println("Enter the Course you want to teach: ");
@@ -98,6 +103,9 @@ public class CRSProfessorMenu {
  		} else {
  			System.out.println("Professor has already registered.");
  		}
+	}catch(Exception ex){
+		System.out.println("Error occured! "+ ex.getMessage());
+	}
 	}
 
 	/**
@@ -111,9 +119,12 @@ public class CRSProfessorMenu {
  		try {
  			Vector<EnrolledStudent> enrolledStudents = new Vector<EnrolledStudent>();
  			enrolledStudents = professorService.viewEnrolledStudents(professorId);
- 			for (EnrolledStudent obj: enrolledStudents) {
+ 			/*for(EnrolledStudent obj:enrolledStudents){
+				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
+			 }*/
+			 enrolledStudents.forEach ((obj)-> {
  				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
- 			}
+ 			});
  		} catch(Exception e) {
  			System.out.println(e.getMessage() + "Something went wrong, please try again later!");
  		}
@@ -128,15 +139,16 @@ public class CRSProfessorMenu {
 		
 		int courseCode, studentId, semesterId;
  		double grade;
-
+		boolean isValidCourse=false, isValidStudent = false;
+		try	{
 		Vector<EnrolledStudent> enrolledStudents = new Vector<EnrolledStudent>();
 		enrolledStudents = professorService.viewEnrolledStudents(professorId);
 		System.out.println(String.format("%20s %20s %20s","COURSE CODE", "COURSE NAME", "Student ID"));
-		for (EnrolledStudent obj: enrolledStudents) {
+
+		enrolledStudents.forEach ((obj)-> {
 			System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
-		}
-//		Vector<Course> coursesEnrolled = new Vector<Course>();
-//		coursesEnrolled	= professorService.viewCourses(professorId);
+		});
+		Vector<Course> coursesEnrolled = professorService.viewCourses(professorId);
 		System.out.println("----------------Add Grade--------------");
 		System.out.printf("Enter Student Id: ");
 		studentId = sc.nextInt();
@@ -146,8 +158,38 @@ public class CRSProfessorMenu {
 		grade = sc.nextDouble();
 		System.out.println("Enter Semester Id: ");
 		semesterId = sc.nextInt();
+
+		// <--- Check if the entered Course is correct ---->
+		for(int i=0;i< coursesEnrolled.size();i++)
+		{
+			if(coursesEnrolled.get(i).getCourseId() == courseCode)
+				isValidCourse = true;
+		}
+		if(!isValidCourse)
+			throw new GradeCannotBeAddedException("This Course is not taught by professor!"+ professorId);
+
+		// <---- Check if the entered student is correct --->
+		for(int i=0;i< enrolledStudents.size();i++)
+		{
+			if(enrolledStudents.get(i).getStudentId() == studentId)
+				isValidStudent = true;
+		}
+		if(!isValidStudent)
+			throw new GradeCannotBeAddedException("This Student is not taught by professor!"+ professorId);
+		///////////////////////
+		
 		professorService.addGrade(studentId, courseCode, grade, semesterId);
 		System.out.println("Grade added successfully for " + studentId);
+	}
+		//<------ Add this exception after Drop wizards ----->
+
+		/*catch(GradeCannotBeAddedException e){
+			System.out.println("Grade cannot be added for"+e.getStudentId());
+		}*/
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -160,9 +202,9 @@ public class CRSProfessorMenu {
 		try {
  			Vector<Course> coursesEnrolled = professorService.viewCourses(professorId);
  			System.out.println(String.format("%20s %20s %20s", "COURSE ID", "COURSE NAME", "No. of Students" ));
- 			for(Course obj: coursesEnrolled) {
+ 			coursesEnrolled.forEach((obj)-> {
  				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), 10 - obj.getCourseSeats()));
- 			}		
+ 			});		
  		} catch(Exception e) {
  			System.out.println("Something went wrong!" + e.getMessage());
  		}

@@ -1,0 +1,4 @@
+16:15:27,226 ERROR UserDaoOperation,main:261 - Error: No operations allowed after connection closed.
+16:15:30,401 ERROR UserDaoOperation,main:261 - Error: No operations allowed after connection closed.
+16:15:33,452 ERROR UserDaoOperation,main:184 - Couldn't find Enrolled Students: No operations allowed after connection closed.
+16:15:33,454 ERROR UserDaoOperation,main:261 - Error: No operations allowed after connection closed.
