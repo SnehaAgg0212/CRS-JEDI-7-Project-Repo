@@ -168,4 +168,22 @@ public interface RegistrationDaoInterface {
 	 */
 	Vector<Course> viewRegisteredCourses(int studentId) throws SQLException;
 
+	/**
+	 * 
+	 * @param courseCode
+	 * @param studentId
+	 * @return
+	 * @throws SQLException
+	 */
+	boolean isRegistered(String courseCode, String studentId) throws SQLException;
+
+	/**
+	 * 
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 * @throws SQLException
+	 */
+	boolean checkCourse(int courseId, int studentId) throws SQLException;
+
 }

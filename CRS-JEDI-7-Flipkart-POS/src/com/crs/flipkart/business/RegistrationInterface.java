@@ -6,6 +6,9 @@ import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
+import com.crs.flipkart.exceptions.CourseLimitExceededException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.SeatNotAvailableException;
 
 public interface RegistrationInterface {
 
@@ -15,8 +18,10 @@ public interface RegistrationInterface {
 	 * @param availableCourses
 	 * @return
 	 * @throws SQLException 
+	 * @throws SeatNotAvailableException 
+	 * @throws CourseLimitExceededException 
 	 */
-	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses) throws SQLException;
+	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException;
 
 	/**
 	 * @param courseId
@@ -24,8 +29,9 @@ public interface RegistrationInterface {
 	 * @param registeredCourseList
 	 * @return
 	 * @throws SQLException 
+	 * @throws CourseNotFoundException 
 	 */
-	boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) throws SQLException;
+	boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) throws SQLException, CourseNotFoundException;
 
 	/**
 	 * @param studentId

@@ -519,6 +519,38 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	
 	/**
 	 * 
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean checkCourse(int courseId, int studentId) throws SQLException {
+
+ 		statement = null;
+
+ 		try{
+ 			String sql = SQLQueriesConstant.CHECK_COURSE;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, courseId);
+ 			statement.setInt(2, studentId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()){
+ 				return true;
+ 			}
+ 		} catch(SQLException e) {
+ 			logger.error(e.getClass());
+ 			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
+ 		return false;
+
+ 	}
+	
+	/**
+	 * 
 	 * @param studentId
 	 * @return
 	 * @throws SQLException
@@ -586,4 +618,18 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  		}
  		return availableCourses;
  	}
+	
+	/**
+	 * 
+	 * @param courseCode
+	 * @param studentId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean isRegistered(String courseCode, String studentId) throws SQLException {
+ 		// TODO Auto-generated method stub
+		
+ 		return false;
+	}
 }

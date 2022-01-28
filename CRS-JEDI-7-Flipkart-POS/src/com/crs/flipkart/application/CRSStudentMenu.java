@@ -17,6 +17,9 @@ import com.crs.flipkart.business.RegistrationService;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.constants.NotificationTypeConstant;
+import com.crs.flipkart.exceptions.CourseLimitExceededException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.SeatNotAvailableException;
 import com.crs.flipkart.utils.Utils;
 
 /**
@@ -131,6 +134,10 @@ public class CRSStudentMenu {
 			 				} else {
 			 					System.out.println("Course registration of " + courseId + " is already done.");
 			 				}
+		 				} catch (CourseLimitExceededException e) {
+		 					System.out.println("Error: " + e.getMessage());
+		 				} catch (SeatNotAvailableException e) {
+		 					System.out.println("Error: " + e.getMessage());
 		 				} catch (SQLException e) {
 		 					System.out.println("Error: " + e.getMessage());
 		 				}
@@ -174,6 +181,10 @@ public class CRSStudentMenu {
 			 		} else {
 			 			System.out.println("Course registration of " + courseId + " is already done.");
 			 		}
+		 		} catch (CourseLimitExceededException e) {
+ 					System.out.println("Error: " + e.getMessage());
+ 				} catch (SeatNotAvailableException e) {
+ 					System.out.println("Error: " + e.getMessage());
 		 		} catch (SQLException e) {
 		 			System.out.println("Error: " + e.getMessage());
 		 		}
@@ -212,6 +223,8 @@ public class CRSStudentMenu {
 			 		} else {
 			 			System.out.println("Course of " + courseId + " is already deleted.");
 			 		}
+		 		} catch (CourseNotFoundException e) {
+		 			System.out.println("Error: " + e.getMessage());
 		 		} catch (SQLException e) {
 		 			System.out.println("Error: " + e.getMessage());
 		 		}

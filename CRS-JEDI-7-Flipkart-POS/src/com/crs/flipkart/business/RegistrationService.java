@@ -7,12 +7,13 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
-
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.dao.RegistrationDaoInterface;
 import com.crs.flipkart.dao.RegistrationDaoOperation;
+import com.crs.flipkart.exceptions.CourseLimitExceededException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.SeatNotAvailableException;
 
 /**
  * @author devanshugarg
@@ -21,7 +22,6 @@ import com.crs.flipkart.dao.RegistrationDaoOperation;
 public class RegistrationService implements RegistrationInterface {
 	
 	private static volatile RegistrationService instance = null;
-	private static Logger logger = Logger.getLogger(RegistrationService.class);
 	
 	/**
 	 * Default Constructor
@@ -48,21 +48,22 @@ public class RegistrationService implements RegistrationInterface {
 	RegistrationDaoInterface registrationDaoOperation = RegistrationDaoOperation.getInstance();
 
 	@Override
-	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) throws SQLException {
+	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException {
 		
 		if(registrationDaoOperation.totalRegisteredCourses(studentId) >= 6) {
- 			logger.info("More than 6 courses are registered!");
- 			return false;
+			throw new CourseLimitExceededException(6);
  		}else if(!registrationDaoOperation.isSeatAvailable(courseId)) {
- 			logger.info("No Seats available for this CourseId!");
- 			return false;
+ 			throw new SeatNotAvailableException(courseId);
  		}
  		return registrationDaoOperation.addCourse(studentId, courseId);
 	}
 	
 	@Override
-	public boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) throws SQLException {
+	public boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) throws SQLException, CourseNotFoundException {
 		
+		if(!registrationDaoOperation.checkCourse(courseId, studentId)) {
+ 			throw new CourseNotFoundException(courseId);
+ 		}
 		return registrationDaoOperation.dropCourse(studentId, courseId);
 	}
 		
