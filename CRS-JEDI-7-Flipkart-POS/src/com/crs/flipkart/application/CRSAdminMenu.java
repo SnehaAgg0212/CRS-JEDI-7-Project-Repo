@@ -164,6 +164,7 @@ public class CRSAdminMenu {
 		Professor professor = new Professor();
 		
 		System.out.println("---------------Professor Registration Panel-------------");
+		sc.nextLine();
 	    
 	    System.out.print("Enter Professor Name: ");
 	    String professorName = sc.nextLine();
@@ -192,6 +193,7 @@ public class CRSAdminMenu {
 	    System.out.print("Enter Professor Gender: \t 1: Male \t 2.Female \t 3.Other");
 	    int gender = sc.nextInt();
 	    professor.setGender(GenderConstant.getName(gender));
+	    sc.nextLine();
 	    
 	    System.out.print("Enter Professor Address: ");
 	    String address = sc.nextLine();
@@ -259,6 +261,7 @@ public class CRSAdminMenu {
 		System.out.print("Enter Course Code: ");
 	    int courseId = sc.nextInt();
 	    course.setCourseId(courseId);
+	    sc.nextLine();
 		
 		System.out.print("Enter Course Name: ");
 	    String courseName = sc.next();
@@ -337,6 +340,7 @@ public class CRSAdminMenu {
 		
 		try {
 			adminServices.generateGradeCard(studentId, semester);
+			adminServices.setIsGenerateGrade(studentId);
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}

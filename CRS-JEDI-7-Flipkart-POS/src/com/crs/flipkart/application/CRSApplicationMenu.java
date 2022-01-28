@@ -179,6 +179,7 @@ public class CRSApplicationMenu {
 			GenderConstant gender;
 			
 			Student student = new Student();
+			sc.nextLine();
 			
 			System.out.println("Enter Student Name: ");
 			studentName = sc.next();
@@ -204,6 +205,8 @@ public class CRSApplicationMenu {
 			System.out.println("Enter Student Batch (Graduation Year): ");
 			studentBatch = sc.nextInt();
 			student.setBatch(studentBatch);
+			
+			sc.nextLine();
 			
 			System.out.println("Enter Student Address: ");
 			studentAddress = sc.next();
