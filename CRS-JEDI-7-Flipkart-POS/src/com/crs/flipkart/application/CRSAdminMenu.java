@@ -22,8 +22,8 @@ import com.crs.flipkart.constants.RoleConstant;
  */
 public class CRSAdminMenu {
 	
-	static AdminInterface adminServices = new AdminService();
-	static NotificationInterface notificationService = new NotificationService();
+	static AdminInterface adminServices = AdminService.getInstance();
+	static NotificationInterface notificationService = NotificationService.getInstance();
 	static Scanner sc = new Scanner(System.in);
 
 	/**

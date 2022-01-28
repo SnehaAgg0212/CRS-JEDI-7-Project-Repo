@@ -26,10 +26,10 @@ import com.crs.flipkart.constants.RoleConstant;
 public class CRSApplicationMenu {
 
 	CRSApplicationMenu crsApplicationMenu = new CRSApplicationMenu();
-	static UserInterface userService = new UserService();
-	static StudentInterface studentService = new StudentService();
-	static ProfessorInterface professorService = new ProfessorService();
-	static NotificationInterface notificationService = new NotificationService();
+	static UserInterface userService = UserService.getInstance();
+	static StudentInterface studentService = StudentService.getInstance();
+	static ProfessorInterface professorService = ProfessorService.getInstance();
+	static NotificationInterface notificationService = NotificationService.getInstance();
 	static Scanner sc = new Scanner(System.in);
 	static boolean loggedin = false;
 	

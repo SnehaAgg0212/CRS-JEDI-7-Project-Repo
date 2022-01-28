@@ -24,9 +24,9 @@ import com.crs.flipkart.constants.NotificationTypeConstant;
 public class CRSStudentMenu {
 
 	static Scanner sc = new Scanner(System.in);
-	static RegistrationInterface registrationInterface = new RegistrationService();
-	static StudentInterface studentInterface = new StudentService();
-	static NotificationInterface notificationInterface = new NotificationService();
+	static RegistrationInterface registrationInterface = RegistrationService.getInstance();
+	static StudentInterface studentInterface = StudentService.getInstance();
+	static NotificationInterface notificationInterface = NotificationService.getInstance();
  	static double fee;
  	static int invoiceId;
 	

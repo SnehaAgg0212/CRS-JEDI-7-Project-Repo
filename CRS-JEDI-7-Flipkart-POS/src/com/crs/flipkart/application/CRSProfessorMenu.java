@@ -23,8 +23,8 @@ import com.crs.flipkart.business.ProfessorService;
 public class CRSProfessorMenu {
 
 	static Scanner sc = new Scanner(System.in);
-	static ProfessorInterface professorService = new ProfessorService();
- 	static AdminService adminservice = new AdminService();
+	static ProfessorInterface professorService = ProfessorService.getInstance();
+ 	static AdminService adminservice = AdminService.getInstance();
 	
 	/**
 	 * Method to Create Main Menu
