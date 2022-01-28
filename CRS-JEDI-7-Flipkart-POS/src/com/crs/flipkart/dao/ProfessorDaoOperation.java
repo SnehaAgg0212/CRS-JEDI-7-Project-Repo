@@ -57,9 +57,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * @param studentId
 	 * @param courseCode
 	 * @param grade
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean addGrade(int studentId, int courseId, double gpa, int semesterId) {
+	public boolean addGrade(int studentId, int courseId, double gpa, int semesterId) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		statement = null;
@@ -86,9 +87,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * @param professorId
 	 * @param courseSelectedId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean addCourse(int professorId, int courseSelectedId) {
+	public boolean addCourse(int professorId, int courseSelectedId) throws SQLException {
  		// TODO Auto-generated method stub
 		
 		statement = null;
@@ -112,9 +114,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * 
 	 * @param professorId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean checkSelectedCourse(int professorId) {
+	public boolean checkSelectedCourse(int professorId) throws SQLException {
 
  		try {
  			String sql = SQLQueriesConstant.CHECK_SELECTED_COURSE;
@@ -136,9 +139,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * 
 	 * @param professorId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public Vector<EnrolledStudent> getEnrolledStudents(int professorId) {
+	public Vector<EnrolledStudent> getEnrolledStudents(int professorId) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		statement = null;
@@ -165,9 +169,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	/**
 	 * 
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public Vector<Course> viewAvailableCourses() {
+	public Vector<Course> viewAvailableCourses() throws SQLException {
  		// TODO Auto-generated method stub
 		
  		statement = null;
@@ -197,9 +202,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * 
 	 * @param professorId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public Vector<Course> getCoursesByProfessor(int professorId) {
+	public Vector<Course> getCoursesByProfessor(int professorId) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		statement = null;
@@ -227,9 +233,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * 
 	 * @param professorId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public String getProfessorById(int professorId) {
+	public String getProfessorById(int professorId) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		String professorName = null;
@@ -253,9 +260,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * Retrieve Professor Id from User Id
 	 * @param userId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public int getProfessorId(int userId) {
+	public int getProfessorId(int userId) throws SQLException {
 		
 		statement = null;
 		int professorId = 0;

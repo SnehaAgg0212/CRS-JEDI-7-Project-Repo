@@ -3,6 +3,8 @@
  */
 package com.crs.flipkart.application;
 
+import java.sql.SQLException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -142,10 +144,14 @@ public class CRSApplicationMenu {
 					}
 					break;
 				case PROFESSOR: 
-					int professorId = professorService.getProfessorId(userId);
-					System.out.println(formattedDate + " Login Successful.");
-					CRSProfessorMenu.createProfessorMenu(professorId);
-					break;
+					try {
+						int professorId = professorService.getProfessorId(userId);
+						System.out.println(formattedDate + " Login Successful.");
+						CRSProfessorMenu.createProfessorMenu(professorId);
+						break;
+					} catch (SQLException e) {
+						System.out.println("Error: " + e.getMessage());
+					}
 				}
 			}
 			else {

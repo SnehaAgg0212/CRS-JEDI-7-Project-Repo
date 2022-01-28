@@ -1,5 +1,6 @@
 package com.crs.flipkart.business;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import com.crs.flipkart.bean.*;
@@ -45,13 +46,14 @@ public class ProfessorService implements ProfessorInterface {
 	 * @param gpa
 	 * @param semesterId
 	 * @return
+	 * @throws SQLException 
 	 */
 	@Override
-	public boolean addGrade(int studentId, int courseCode, double gpa, int semesterId) {
+	public boolean addGrade(int studentId, int courseCode, double gpa, int semesterId) throws SQLException {
 		
 		try {
 			professorDaoOperation.addGrade(studentId, courseCode, gpa, semesterId);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			throw e;
 		}
 		return true;
@@ -61,15 +63,16 @@ public class ProfessorService implements ProfessorInterface {
 	 * 
 	 * @param professorId
 	 * @return
+	 * @throws SQLException 
 	 */
 	@Override
-	public Vector<EnrolledStudent> viewEnrolledStudents(int professorId) {
+	public Vector<EnrolledStudent> viewEnrolledStudents(int professorId) throws SQLException {
 
 		Vector<EnrolledStudent> enrolledStudents = new Vector<>();
 		
 		try {
 			enrolledStudents = professorDaoOperation.getEnrolledStudents(professorId);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			throw e;
 		}
 		return enrolledStudents;
@@ -79,15 +82,16 @@ public class ProfessorService implements ProfessorInterface {
 	 * 
 	 * @param professorId
 	 * @return
+	 * @throws SQLException 
 	 */
 	@Override
-	public Vector<Course> viewCourses(int professorId) {
+	public Vector<Course> viewCourses(int professorId) throws SQLException {
 
 		Vector<Course> coursesOffered = new Vector<>();
 		
 		try {
 			coursesOffered = professorDaoOperation.getCoursesByProfessor(professorId);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			throw e;
 		}
 		return coursesOffered;
@@ -96,15 +100,16 @@ public class ProfessorService implements ProfessorInterface {
 	/**
 	 * 
 	 * @return
+	 * @throws SQLException 
 	 */
 	@Override
-	public Vector<Course> viewAvailableCourses() {
+	public Vector<Course> viewAvailableCourses() throws SQLException {
 
  		Vector<Course> availableCourses = new Vector<>();
 
  		try {
  			availableCourses = professorDaoOperation.viewAvailableCourses();
- 		} catch (Exception e) {
+ 		} catch (SQLException e) {
  			throw e;
  		}
  		return availableCourses;
@@ -114,9 +119,10 @@ public class ProfessorService implements ProfessorInterface {
 	 * 
 	 * @param professorId
 	 * @return
+	 * @throws SQLException 
 	 */
 	@Override
-	public String getProfessorById(int professorId) {
+	public String getProfessorById(int professorId) throws SQLException {
 	
 		return professorDaoOperation.getProfessorById(professorId);
 	}
@@ -126,16 +132,17 @@ public class ProfessorService implements ProfessorInterface {
 	 * @param professorId
 	 * @param courseSelectedId
 	 * @return
+	 * @throws SQLException 
 	 */
 	@Override
-	public boolean addCourse(int professorId, int courseSelectedId) {
+	public boolean addCourse(int professorId, int courseSelectedId) throws SQLException {
 
  		try {
  			if(!professorDaoOperation.checkSelectedCourse(professorId)) {
  				return false;
  			}
  			return professorDaoOperation.addCourse(professorId, courseSelectedId);
- 		} catch (Exception e) {
+ 		} catch (SQLException e) {
  			throw e;
  		}
  	}
@@ -144,9 +151,10 @@ public class ProfessorService implements ProfessorInterface {
 	 * 
 	 * @param userId
 	 * @return
+	 * @throws SQLException 
 	 */
 	@Override
-	public int getProfessorId(int userId) {
+	public int getProfessorId(int userId) throws SQLException {
 	
 		return professorDaoOperation.getProfessorId(userId);
 	}
