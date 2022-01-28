@@ -6,6 +6,8 @@ package com.crs.flipkart.business;
 import java.sql.Date;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.dao.RegistrationDaoInterface;
@@ -17,16 +19,41 @@ import com.crs.flipkart.dao.RegistrationDaoOperation;
  */
 public class RegistrationService implements RegistrationInterface {
 	
-	RegistrationDaoInterface registrationDaoOperation = new RegistrationDaoOperation();
+	private static volatile RegistrationService instance = null;
+	private static Logger logger = Logger.getLogger(RegistrationService.class);
+	
+	/**
+	 * Default Constructor
+	 */
+	private RegistrationService() {
+		
+	}
+	
+	/**
+	 * Method to make RegistrationService Singleton
+	 */
+	public static RegistrationService getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(RegistrationService.class) {
+				
+				instance = new RegistrationService();
+			}
+		}
+		return instance;
+	}
+	
+	RegistrationDaoInterface registrationDaoOperation = RegistrationDaoOperation.getInstance();
 
 	@Override
 	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) {
 		
 		if(registrationDaoOperation.totalRegisteredCourses(studentId) >= 6) {
- 			System.out.println("More than 6 courses are registered!");
+ 			logger.info("More than 6 courses are registered!");
  			return false;
  		}else if(!registrationDaoOperation.isSeatAvailable(courseId)) {
- 			System.out.println("No Seats available for this CourseId!");
+ 			logger.info("No Seats available for this CourseId!");
  			return false;
  		}
  		return registrationDaoOperation.addCourse(studentId, courseId);

@@ -3,6 +3,8 @@
  */
 package com.crs.flipkart.business;
 
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.dao.UserDaoInterface;
 import com.crs.flipkart.dao.UserDaoOperation;
 
@@ -13,26 +15,51 @@ import com.crs.flipkart.dao.UserDaoOperation;
 
 public class UserService implements UserInterface {
 	
-	UserDaoInterface userDaoOperation = new UserDaoOperation();
+	private static volatile UserService instance = null;
+	private static Logger logger = Logger.getLogger(UserService.class);
+	
+	/**
+	 * Default Constructor
+	 */
+	private UserService() {
+		
+	}
+	
+	/**
+	 * Method to make UserService Singleton
+	 */
+	public static UserService getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(UserService.class) {
+				
+				instance = new UserService();
+			}
+		}
+		return instance;
+	}
+	
+	UserDaoInterface userDaoOperation = UserDaoOperation.getInstance();
 	
 	@Override
 	public void updatePassword(String userEmailId, String oldPassword, String newPassword,String confirmNewPassword){
 		
 		 if(!newPassword.equals(confirmNewPassword)) {
-			 System.out.println(newPassword + " " + confirmNewPassword);
-			 System.out.println("New password and Confirm New Password are different!!");
+			 logger.info(newPassword + " " + confirmNewPassword);
+			 logger.info("New password and Confirm New Password are different!!");
 			 return;
 		 }
 
 		 if(!validateUser(userEmailId,oldPassword)) {
-			 System.out.println("Either EmailId or Password is wrong, try again!!");
+			 logger.info("Either EmailId or Password is wrong, try again!!");
 			 return;
 		 }
 
 		 if(userDaoOperation.updatePassword(userEmailId, newPassword)) {
-			 System.out.println("Password updated successfully!");
+			 logger.info("Password updated successfully!");
 		 } else {
-			 System.out.println("Something went wrong, please try again!");
+			 logger.info("Something went wrong, please try again!");
 		 }
 	}
 	

@@ -1,8 +1,8 @@
 package com.crs.flipkart.business;
 
 import java.util.*;
-import com.crs.flipkart.bean.*;
 
+import com.crs.flipkart.bean.*;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
 import com.crs.flipkart.dao.ProfessorDaoOperation;
 /**
@@ -12,7 +12,31 @@ import com.crs.flipkart.dao.ProfessorDaoOperation;
 
 public class ProfessorService implements ProfessorInterface {
 	
-	ProfessorDaoInterface professorDaoOperation = new ProfessorDaoOperation();
+	private static volatile ProfessorService instance = null;
+	
+	/**
+	 * Default Constructor
+	 */
+	private ProfessorService() {
+		
+	}
+	
+	/**
+	 * Method to make ProfessorService Singleton
+	 */
+	public static ProfessorService getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(ProfessorService.class) {
+				
+				instance = new ProfessorService();
+			}
+		}
+		return instance;
+	}
+	
+	ProfessorDaoInterface professorDaoOperation = ProfessorDaoOperation.getInstance();
 	
 	/**
 	 * 

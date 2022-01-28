@@ -3,6 +3,8 @@
  */
 package com.crs.flipkart.business;
 
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
@@ -17,8 +19,33 @@ import com.crs.flipkart.dao.StudentDaoOperation;
  */
 public class StudentService implements StudentInterface {
 	
-	StudentDaoInterface studentDaoOperation = new StudentDaoOperation();
-	RegistrationDaoInterface registrationDaoOperation = new RegistrationDaoOperation();
+	private static volatile StudentService instance = null;
+	private static Logger logger = Logger.getLogger(StudentService.class);
+	
+	/**
+	 * Default Constructor
+	 */
+	private StudentService() {
+		
+	}
+	
+	/**
+	 * Method to make StudentService Singleton
+	 */
+	public static StudentService getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(StudentService.class) {
+				
+				instance = new StudentService();
+			}
+		}
+		return instance;
+	}
+	
+	StudentDaoInterface studentDaoOperation = StudentDaoOperation.getInstance();
+	RegistrationDaoInterface registrationDaoOperation = RegistrationDaoOperation.getInstance();
 	
 	public static final Student student = new Student("userName",  "student@gmail.com",  "student",  RoleConstant.STUDENT,  101,  "phoneNo", GenderConstant.MALE,  "address", "branchName", 13, 2022, true);
 
@@ -31,7 +58,7 @@ public class StudentService implements StudentInterface {
 
  		int studentId = 0;
 
- 		System.out.println("Your account has been created and pending for Approval by the Admin.");
+ 		logger.info("Your account has been created and pending for Approval by the Admin.");
  		studentId = studentDaoOperation.addStudent(student);
 
  		return studentId;
@@ -62,13 +89,13 @@ public class StudentService implements StudentInterface {
  		if(!check) {
  			boolean checkstatus = registrationDaoOperation.addSemester(semester, studentId);
  			if(checkstatus) {
- 				System.out.println("Semester Registration is done Successfully.");
+ 				logger.info("Semester Registration is done Successfully.");
  				return true;
  			} else {
- 				System.out.println("Semseter Registration is Failed, Please try again!");
+ 				logger.info("Semseter Registration is Failed, Please try again!");
  			}
  		} else {
- 			System.out.println("Registration of the semester is already done!");
+ 			logger.info("Registration of the semester is already done!");
  		}
  		return false;
  	}

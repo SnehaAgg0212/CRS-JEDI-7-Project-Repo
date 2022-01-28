@@ -6,6 +6,8 @@ package com.crs.flipkart.business;
 import java.util.Scanner;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
 import com.crs.flipkart.bean.Admin;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
@@ -22,7 +24,32 @@ import com.crs.flipkart.dao.AdminDaoOperation;
  */
 public class AdminService implements AdminInterface {
 	
-	AdminDaoInterface adminDaoOperation = new AdminDaoOperation();
+	private static volatile AdminService instance = null;
+	private static Logger logger = Logger.getLogger(AdminService.class);
+	
+	/**
+	 * Default Constructor
+	 */
+	private AdminService() {
+		
+	}
+	
+	/**
+	 * Method to make AdminService Singleton
+	 */
+	public static AdminService getInstance() {
+		
+		if(instance == null) {
+			
+			synchronized(AdminService.class) {
+				
+				instance = new AdminService();
+			}
+		}
+		return instance;
+	}
+	
+	AdminDaoInterface adminDaoOperation = AdminDaoOperation.getInstance();
 	
 	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  RoleConstant.ADMIN,  101,  "phoneNo", GenderConstant.MALE,  "address",  "dateOfJoining");
 	
@@ -81,7 +108,7 @@ public class AdminService implements AdminInterface {
 		grades = adminDaoOperation.generateGradeCard(studentId, semesterId);
 		
 		if (grades.isEmpty()) {
-			System.out.println("You haven't registered for any course.");
+			logger.info("You haven't registered for any course.");
 			return;
 		}
 		
@@ -89,14 +116,14 @@ public class AdminService implements AdminInterface {
 		
 		for(GradeCard course_grade : grades) {
 			
-			System.out.println("CourseId: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
+			logger.info("CourseId: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
 			
 			overallgpa += course_grade.getGpa();
 		}
 		
 		overallgpa /= (double)grades.size();
 		
-		System.out.println("Overall GPA: " + overallgpa);
+		logger.info("Overall GPA: " + overallgpa);
 
 	}
 
