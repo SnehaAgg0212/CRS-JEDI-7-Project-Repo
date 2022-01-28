@@ -5,6 +5,14 @@ import java.util.Vector;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
+import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorNotAddedException;
+import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
+import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
+import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 
 /**
  * @author devanshugarg
@@ -24,23 +32,30 @@ public interface AdminInterface {
 
 	/**
 	 * @param professor
+	 * @throws UserIdAlreadyInUseException 
+	 * @throws ProfessorNotAddedException 
 	 */
-	void addProfessor(Professor professor);
+	void addProfessor(Professor professor) throws ProfessorNotAddedException, UserIdAlreadyInUseException;
 
 	/**
 	 * @param professorId
+	 * @throws ProfessorNotDeletedException 
+	 * @throws ProfessorNotFoundException 
 	 */
-	void deleteProfessor(int professorId);
+	void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException;
 
 	/**
 	 * @param course
+	 * @throws CourseAlreadyExistsException 
 	 */
-	void addCourse(Course course);
+	void addCourse(Course course) throws CourseAlreadyExistsException;
 
 	/**
 	 * @param courseId
+	 * @throws CourseNotDeletedException 
+	 * @throws CourseNotFoundException 
 	 */
-	void deleteCourse(int courseId);
+	void deleteCourse(int courseId) throws CourseNotFoundException, CourseNotDeletedException;
 
 	/**
 	 * @param studentId
@@ -57,8 +72,9 @@ public interface AdminInterface {
 	 * 
 	 * @param studentId
 	 * @param pendingStudents
+	 * @throws StudentNotFoundForApprovalException 
 	 */
-	void approveStudentRegistration(int studentId, Vector<Student> pendingStudents);
+	void approveStudentRegistration(int studentId, Vector<Student> pendingStudents) throws StudentNotFoundForApprovalException;
 
 	/**
 	 * 

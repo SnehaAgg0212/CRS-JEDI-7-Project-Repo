@@ -18,6 +18,15 @@ import com.crs.flipkart.bean.User;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.constants.SQLQueriesConstant;
+import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
+import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
+import com.crs.flipkart.exceptions.ProfessorNotAddedException;
+import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
+import com.crs.flipkart.exceptions.UserNotAddedException;
+import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 
 import java.util.Vector;
 
@@ -60,9 +69,11 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	/**
 	 * 
 	 * @param user
+	 * @throws UserNotAddedException
+	 * @throws UserIdAlreadyInUseException
 	 */
 	@Override
-	public void addUser(User user) {
+	public void addUser(User user) throws UserNotAddedException, UserIdAlreadyInUseException {
 		
 		statement = null;
 		
@@ -80,23 +91,34 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			int row = statement.executeUpdate();
 			logger.info(row + " user added.");
 			if (row == 0) {
-				logger.info("User with User Id " + user.getUserId() + " not added.");
+				throw new UserNotAddedException(user.getUserId()); 
 			} else {
 				logger.info("User with User Id " + user.getUserId() + " added.");
 			}
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
+			throw new UserIdAlreadyInUseException(user.getUserId());
 		}
 	}
 	
 	/**
 	 * 
 	 * @param professor
+	 * @throws UserIdAlreadyInUseException
+	 * @throws ProfessorNotAddedException
 	 */
 	@Override
-	public void addProfessor(Professor professor) {
+	public void addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException {
 		
-		this.addUser(professor);
+		try {
+			this.addUser(professor);
+		} catch (UserNotAddedException e) {
+			logger.error("Error: " + e.getMessage());
+			throw new ProfessorNotAddedException(professor.getUserId());
+		} catch (UserIdAlreadyInUseException e) {
+			logger.error("Error: " + e.getMessage());
+			throw e;
+		}
 		
 		statement = null;
 		
@@ -111,11 +133,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			logger.info(row + " professor added.");
 			if (row == 0) {
 				logger.info("Professor with Professor Id " + professor.getProfessorId() + " already exists.");
+				throw new ProfessorNotAddedException(professor.getUserId());
 			} else {
 				logger.info("Professor with Professor Id " + professor.getProfessorId() + " added.");
 			}
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
+			throw new UserIdAlreadyInUseException(professor.getUserId());
 		}
 	}
 	
@@ -153,9 +177,11 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	/**
 	 * 
 	 * @param professorId
+	 * @throws ProfessorNotFoundException
+	 * @throws ProfessorNotDeletedException
 	 */
 	@Override
-	public void deleteProfessor(int professorId) {
+	public void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException {
 	
 		statement = null;
 		
@@ -178,9 +204,10 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	/**
 	 * 
 	 * @param studentId
+	 * @throws StudentNotFoundForApprovalException
 	 */
 	@Override
-	public void approveStudentRegistration(int studentId) {
+	public void approveStudentRegistration(int studentId) throws StudentNotFoundForApprovalException {
 		
 		statement = null;
 		
@@ -191,7 +218,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			int row = statement.executeUpdate();
 			logger.info(row + " student approved.");
 			if (row == 0) {
-				logger.info("Student with Student Id " + studentId + " does not exists.");
+				throw new StudentNotFoundForApprovalException(studentId);
 			} else {
 				logger.info("Student with Student Id " + studentId + " is approved.");
 			}
@@ -268,9 +295,10 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	/**
 	 * 
 	 * @param course
+	 * @throws CourseExistsAlreadyException
 	 */
 	@Override
-	public void addCourse(Course course) {
+	public void addCourse(Course course) throws CourseAlreadyExistsException {
 		
 		statement = null;
 		
@@ -285,12 +313,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			int row = statement.executeUpdate();
 			logger.info(row + " course added.");
 			if (row == 0) {
-				logger.info("Course with Course Code " + course.getCourseId() + " already exists.");
+				throw new CourseAlreadyExistsException(course.getCourseId());
 			} else {
 				logger.info("Course with Course Code " + course.getCourseId() + " added.");
 			}
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
+			throw new CourseAlreadyExistsException(course.getCourseId());
 		}
 	}
 	
@@ -328,9 +357,11 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	/**
 	 * 
 	 * @param courseId
+	 * @throws CourseNotFoundException
+	 * @throws CourseNotDeletedException
 	 */
 	@Override
-	public void deleteCourse(int courseId) {
+	public void deleteCourse(int courseId) throws CourseNotFoundException, CourseNotDeletedException {
 	
 		statement = null;
 		
@@ -341,12 +372,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			int row = statement.executeUpdate();
 			logger.info(row + " course deleted.");
 			if (row == 0) {
-				logger.info("Course with Course Id " + courseId + " does not exists.");
+				throw new CourseNotFoundException(courseId);
 			} else {
 				logger.info("Course with Course Id " + courseId + " deleted.");
 			}
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
+			throw new CourseNotDeletedException(courseId);
 		}
 	}
 	

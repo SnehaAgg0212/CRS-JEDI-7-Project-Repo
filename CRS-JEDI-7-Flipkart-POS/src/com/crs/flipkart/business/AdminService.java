@@ -8,15 +8,20 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
-import com.crs.flipkart.bean.Admin;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
-import com.crs.flipkart.constants.GenderConstant;
-import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
+import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
+import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorNotAddedException;
+import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
+import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
+import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 import com.crs.flipkart.utils.Utils;
 
 /**
@@ -59,7 +64,7 @@ public class AdminService implements AdminInterface {
     Vector<Course> CourseList = new Vector<>();
 
     @Override
-	public void addProfessor(Professor professor) {
+	public void addProfessor(Professor professor) throws ProfessorNotAddedException, UserIdAlreadyInUseException {
 
     	int profId = Utils.generateId();
     	int userId = Utils.generateId();
@@ -67,7 +72,13 @@ public class AdminService implements AdminInterface {
 	    professor.setProfessorId(profId);
 	    professor.setUserId(userId);
 
-	    adminDaoOperation.addProfessor(professor);
+	    try {
+	    	adminDaoOperation.addProfessor(professor);
+	    } catch (ProfessorNotAddedException e) {
+	    	throw e;
+	    } catch (UserIdAlreadyInUseException e) {
+	    	throw e;
+	    }
     }
 
 	@Override
@@ -77,13 +88,19 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public void deleteProfessor(int professorId) {
+	public void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException {
 
-		adminDaoOperation.deleteProfessor(professorId);
+		try {
+			adminDaoOperation.deleteProfessor(professorId);
+		} catch (ProfessorNotFoundException e) {
+			throw e;
+		} catch (ProfessorNotDeletedException e) {
+			throw e;
+		}
 	}
 
 	@Override
-	public void approveStudentRegistration(int studentId, Vector<Student> pendingStudents) {
+	public void approveStudentRegistration(int studentId, Vector<Student> pendingStudents) throws StudentNotFoundForApprovalException {
 		
 		Boolean isValidUnapprovedStudent = false;
  		for(Student student : pendingStudents) {
@@ -97,7 +114,12 @@ public class AdminService implements AdminInterface {
  			System.out.println("Student not found.");
  			return;
  		}
-		adminDaoOperation.approveStudentRegistration(studentId);
+ 		
+ 		try {
+ 			adminDaoOperation.approveStudentRegistration(studentId);
+ 		} catch (StudentNotFoundForApprovalException e) {
+ 			throw e;
+ 		}
 	}
 
 	@Override
@@ -128,9 +150,13 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public void addCourse(Course course) {
+	public void addCourse(Course course) throws CourseAlreadyExistsException {
 
-		adminDaoOperation.addCourse(course);
+		try {
+			adminDaoOperation.addCourse(course);
+		} catch (CourseAlreadyExistsException e) {
+			throw e;
+		}
 	}
 
 	@Override
@@ -140,9 +166,15 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public void deleteCourse(int courseId) {
+	public void deleteCourse(int courseId) throws CourseNotFoundException, CourseNotDeletedException {
 
-		adminDaoOperation.deleteCourse(courseId);
+		try {
+			adminDaoOperation.deleteCourse(courseId);
+		} catch (CourseNotFoundException e) {
+			throw e;
+		} catch (CourseNotDeletedException e) {
+			throw e;
+		}
 	}
 	
 	@Override

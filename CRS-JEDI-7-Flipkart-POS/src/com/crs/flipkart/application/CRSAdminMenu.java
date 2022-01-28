@@ -16,6 +16,14 @@ import com.crs.flipkart.business.NotificationService;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
+import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
+import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorNotAddedException;
+import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
+import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
+import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 
 /**
  * @author LENOVO
@@ -132,9 +140,13 @@ public class CRSAdminMenu {
 
  		System.out.println("Enter the Student Id: ");
  		int studentId = sc.nextInt();
-
- 		adminServices.approveStudentRegistration(studentId, pendingStudents);
-		notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
+ 		
+ 		try {
+	 		adminServices.approveStudentRegistration(studentId, pendingStudents);
+			notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
+ 		} catch (StudentNotFoundForApprovalException e) {
+ 			System.out.println("Error: " + e.getMessage());
+ 		}
 	}
 	
 	/**
@@ -180,7 +192,13 @@ public class CRSAdminMenu {
 	    
 	    professor.setRole(RoleConstant.stringToRole("PROFESSOR"));
 	    
-	    adminServices.addProfessor(professor);
+	    try {
+	    	adminServices.addProfessor(professor);
+	    } catch (ProfessorNotAddedException e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    } catch (UserIdAlreadyInUseException e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    }
 	}
 	
 	/**
@@ -213,7 +231,13 @@ public class CRSAdminMenu {
 	    System.out.println("Enter Professor ID: ");
 	    int professorId = sc.nextInt();
 	    
-	    adminServices.deleteProfessor(professorId);
+	    try {
+	    	adminServices.deleteProfessor(professorId);
+	    } catch (ProfessorNotDeletedException e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    } catch (ProfessorNotFoundException e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    }
 	}
 	
 	/**
@@ -245,7 +269,11 @@ public class CRSAdminMenu {
 	    int noOfSeats = sc.nextInt();
 	    course.setCourseSeats(noOfSeats);
 	    
-	    adminServices.addCourse(course);
+	    try {
+	    	adminServices.addCourse(course);
+	    } catch (CourseAlreadyExistsException e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    }
 	}
 	
 	/**
@@ -278,7 +306,13 @@ public class CRSAdminMenu {
 		System.out.println("Enter Course Code: ");
 	    int courseId = sc.nextInt();
 	    
-	    adminServices.deleteCourse(courseId);
+	    try {
+	    	adminServices.deleteCourse(courseId);
+	    } catch (CourseNotDeletedException e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    } catch (CourseNotFoundException e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    }
 	}
 	
 	/**

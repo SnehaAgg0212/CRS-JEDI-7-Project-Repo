@@ -7,14 +7,25 @@ import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
+import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
+import com.crs.flipkart.exceptions.CourseNotDeletedException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorNotAddedException;
+import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
+import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
+import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
+import com.crs.flipkart.exceptions.UserNotAddedException;
 
 public interface AdminDaoInterface {
 
 	/**
 	 * 
 	 * @param professor
+	 * @throws ProfessorNotAddedException 
+	 * @throws UserIdAlreadyInUseException 
 	 */
-	void addProfessor(Professor professor);
+	void addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException;
 
 	/**
 	 * 
@@ -25,14 +36,17 @@ public interface AdminDaoInterface {
 	/**
 	 * 
 	 * @param professorId
+	 * @throws ProfessorNotDeletedException 
+	 * @throws ProfessorNotFoundException 
 	 */
-	void deleteProfessor(int professorId);
+	void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException;
 
 	/**
 	 * 
 	 * @param studentId
+	 * @throws StudentNotFoundForApprovalException 
 	 */
-	void approveStudentRegistration(int studentId);
+	void approveStudentRegistration(int studentId) throws StudentNotFoundForApprovalException;
 
 	/**
 	 * 
@@ -45,8 +59,9 @@ public interface AdminDaoInterface {
 	/**
 	 * 
 	 * @param course
+	 * @throws CourseAlreadyExistsException 
 	 */
-	void addCourse(Course course);
+	void addCourse(Course course) throws CourseAlreadyExistsException;
 
 	/**
 	 * 
@@ -57,14 +72,18 @@ public interface AdminDaoInterface {
 	/**
 	 * 
 	 * @param courseId
+	 * @throws CourseNotDeletedException 
+	 * @throws CourseNotFoundException 
 	 */
-	void deleteCourse(int courseId);
+	void deleteCourse(int courseId) throws CourseNotFoundException, CourseNotDeletedException;
 
 	/**
 	 * 
 	 * @param user
+	 * @throws UserIdAlreadyInUseException 
+	 * @throws UserNotAddedException 
 	 */
-	void addUser(User user);
+	void addUser(User user) throws UserNotAddedException, UserIdAlreadyInUseException;
 
 	/**
 	 * 
