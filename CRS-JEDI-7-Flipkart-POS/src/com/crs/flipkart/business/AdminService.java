@@ -17,6 +17,7 @@ import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author LENOVO
@@ -51,20 +52,7 @@ public class AdminService implements AdminInterface {
 	
 	AdminDaoInterface adminDaoOperation = AdminDaoOperation.getInstance();
 	
-	public static final Admin admin = new Admin("userName",  "admin@gmail.com",  "admin",  RoleConstant.ADMIN,  101,  "phoneNo", GenderConstant.MALE,  "address",  "dateOfJoining");
-	
 	Scanner sc = new Scanner(System.in);
-
-    static int profId = 100;
-    static int userId = 1000;
-
-    private void profIdincrementor() {
-        profId ++;
-    }
-
-    private void userIdincrementor() {
-        userId ++;
-    }
 
     Vector<Student> StudentList = new Vector<>();
     Vector<Professor> ProfessorList = new Vector<>();
@@ -73,11 +61,11 @@ public class AdminService implements AdminInterface {
     @Override
 	public void addProfessor(Professor professor) {
 
+    	int profId = Utils.generateId();
+    	int userId = Utils.generateId();
+    	
 	    professor.setProfessorId(profId);
 	    professor.setUserId(userId);
-
-	    profIdincrementor();
-	    userIdincrementor();
 
 	    adminDaoOperation.addProfessor(professor);
     }
@@ -95,8 +83,20 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public void approveStudentRegistration(int studentId) {
+	public void approveStudentRegistration(int studentId, Vector<Student> pendingStudents) {
+		
+		Boolean isValidUnapprovedStudent = false;
+ 		for(Student student : pendingStudents) {
+ 			if(studentId == student.getStudentId()) {
+ 				isValidUnapprovedStudent = true;
+ 				break;
+ 			}
+ 		}
 
+ 		if(!isValidUnapprovedStudent) {
+ 			System.out.println("Student not found.");
+ 			return;
+ 		}
 		adminDaoOperation.approveStudentRegistration(studentId);
 	}
 
@@ -149,6 +149,16 @@ public class AdminService implements AdminInterface {
 	public void setIsGenerateGrade(int studentId) {
 		
  		adminDaoOperation.setIsGenerateGrade(studentId);
+ 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@Override
+	public Vector<Student> viewPendingAdmissions() {
+		
+ 		return adminDaoOperation.viewPendingAdmissions();
  	}
 
 //	@Override

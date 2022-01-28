@@ -1,23 +1,8 @@
 package com.crs.flipkart.business;
 
-import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.bean.Student;
 
 public interface StudentInterface {
-
-	/**
-	 * @param userName
-	 * @param userEmailId
-	 * @param userPassword
-	 * @param userId
-	 * @param phoneNo
-	 * @param gender
-	 * @param address
-	 * @param branch
-	 * @param batch
-	 * @return
-	 */
-	int register(String userName, String userEmailId, String userPassword, int userId, String phoneNo, GenderConstant gender,
-			String address, String branch, int batch);
 
 	/**
 	 * @param userId
@@ -43,5 +28,12 @@ public interface StudentInterface {
 	 * @return
 	 */
 	boolean semesterRegistration(int semester, int studentId);
+
+	/**
+	 * 
+	 * @param student
+	 * @return
+	 */
+	int register(Student student);
 
 }

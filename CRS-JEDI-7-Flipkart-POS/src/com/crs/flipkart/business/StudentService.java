@@ -12,6 +12,7 @@ import com.crs.flipkart.dao.RegistrationDaoInterface;
 import com.crs.flipkart.dao.RegistrationDaoOperation;
 import com.crs.flipkart.dao.StudentDaoInterface;
 import com.crs.flipkart.dao.StudentDaoOperation;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author devanshugarg, iamshambhavi
@@ -50,15 +51,12 @@ public class StudentService implements StudentInterface {
 	public static final Student student = new Student("userName",  "student@gmail.com",  "student",  RoleConstant.STUDENT,  101,  "phoneNo", GenderConstant.MALE,  "address", "branchName", 13, 2022, true);
 
 	@Override
-	public int register(String userName, String userEmailId, String userPassword, int userId, String phoneNo,
-			GenderConstant gender, String address, String branch, int batch) {
-				
-		Student student = new Student(userName, userEmailId, userPassword, RoleConstant.STUDENT, 
- 				userId, phoneNo, gender, address, branch, userId, batch, false);
+	public int register(Student student) {
 
- 		int studentId = 0;
+ 		int studentId = Utils.generateId();
 
- 		logger.info("Your account has been created and pending for Approval by the Admin.");
+ 		student.setUserId(studentId);
+ 		
  		studentId = studentDaoOperation.addStudent(student);
 
  		return studentId;
@@ -89,13 +87,10 @@ public class StudentService implements StudentInterface {
  		if(!check) {
  			boolean checkstatus = registrationDaoOperation.addSemester(semester, studentId);
  			if(checkstatus) {
- 				logger.info("Semester Registration is done Successfully.");
  				return true;
  			} else {
  				logger.info("Semseter Registration is Failed, Please try again!");
  			}
- 		} else {
- 			logger.info("Registration of the semester is already done!");
  		}
  		return false;
  	}

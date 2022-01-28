@@ -17,7 +17,7 @@ public class SQLQueriesConstant {
 	public static final String VIEW_PROFESSOR_QUERY = "select professorId, userName, gender, department, designation from Professor P natural join User U where P.userId = U.userId";
 	public static final String DELETE_PROFESSOR_QUERY = "delete from Professor where professorId = ?";
 	public static final String ADD_COURSE_QUERY = "insert into Course(courseId, courseName, courseDescription, courseFee, courseSeats) values (?, ?, ?, ?, ?)";
-	public static final String VIEW_COURSE_QUERY = "select courseCode, courseName, courseDescription, courseFee, courseSeats from Course";
+	public static final String VIEW_COURSE_QUERY = "select courseId, courseName, courseDescription, courseFee, courseSeats from Course";
 	public static final String DELETE_COURSE_QUERY = "delete from Course where courseId = ?";
 	public static final String APPROVE_STUDENT_QUERY = "update Student set isApproved = 1 where studentId = ?";
 	public static final String GET_STUDENT_ID = "select studentId from student where userId = ?";
@@ -25,7 +25,7 @@ public class SQLQueriesConstant {
 	public static final String IS_APPROVED = "select isApproved from student where studentId = ?";
 	public static final String VIEW_COURSES_GRADE = "select courseId, gpa from gradecard where studentId = ? and semesterId = ?";
 	
-	public static final String ADD_STUDENT_QUERY = "insert into Student(userId, branchName, batch) values (?, ?, ?)";
+	public static final String ADD_STUDENT_QUERY = "insert into Student(userId, branchName, batch, studentId) values (?, ?, ?, ?)";
 	
 	public static final String GET_REGISTERED_COURSE_FEE = "select courseFee from course where courseId IN (select courseId from registeredcourse where studentId = ?)";
  	public static final String PAYMENT_STATUS = "select status from payment where studentId = ?";
@@ -59,8 +59,10 @@ public class SQLQueriesConstant {
 
  	public static final String UPDATE_PASSWORD = "update user set userPassword=? where userEmailId = ?";
  	public static final String VERIFY_CREDENTIALS = "select userPassword from user where userEmailId = ?";
- 	public static final String GET_ROLE = "select role from user where userEmailId = ?";
+ 	public static final String GET_ROLE = "select userId, role from user where userEmailId = ?";
  	public static final String GET_USER_ID = "select userId from user where userEmailId = ?";
  	
  	public static final String INSERT_NOTIFICATION = "insert into notification(studentId, notificationType, notificationId, referenceId, notificationContent) values(?, ?, ?, ?, ?);";
+ 	
+ 	public static final String VIEW_PENDING_ADMISSION_QUERY = "select user.userId, user.userName, user.userPassword, user.role, user.gender, user.address, studentId from user inner join student where isApproved = 0 and student.userId = user.userId";
 }

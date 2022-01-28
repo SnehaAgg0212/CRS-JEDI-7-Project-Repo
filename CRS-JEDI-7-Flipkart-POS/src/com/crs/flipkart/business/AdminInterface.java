@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
 
 /**
  * @author devanshugarg
@@ -15,11 +16,6 @@ public interface AdminInterface {
 	 * @return
 	 */
 	Vector<Professor> viewProfessor();
-	
-	/**
-	 * @param studentId
-	 */
-	void approveStudentRegistration(int studentId);
 
 	/**
 	 * @return
@@ -56,5 +52,18 @@ public interface AdminInterface {
 	 * @param studentId
 	 */
 	void setIsGenerateGrade(int studentId);
+
+	/**
+	 * 
+	 * @param studentId
+	 * @param pendingStudents
+	 */
+	void approveStudentRegistration(int studentId, Vector<Student> pendingStudents);
+
+	/**
+	 * 
+	 * @return
+	 */
+	Vector<Student> viewPendingAdmissions();
 
 }

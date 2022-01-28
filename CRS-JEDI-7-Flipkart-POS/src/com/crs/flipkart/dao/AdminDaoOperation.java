@@ -13,8 +13,10 @@ import java.sql.SQLException;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.constants.SQLQueriesConstant;
 
 import java.util.Vector;
@@ -187,7 +189,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, studentId);
 			int row = statement.executeUpdate();
-			logger.info(row + "student approved.");
+			logger.info(row + " student approved.");
 			if (row == 0) {
 				logger.info("Student with Student Id " + studentId + " does not exists.");
 			} else {
@@ -197,6 +199,38 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			logger.error("Error: " + e.getMessage());
 		}
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@Override
+	public Vector<Student> viewPendingAdmissions() {
+
+ 		statement = null;
+ 		Vector<Student> pendingStudents = new Vector<>();
+ 		
+ 		try {
+ 			String sql = SQLQueriesConstant.VIEW_PENDING_ADMISSION_QUERY;
+ 			statement = connection.prepareStatement(sql);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()) {
+ 				Student student = new Student();
+ 				student.setUserId(resultSet.getInt(1));
+ 				student.setUserName(resultSet.getString(2));
+ 				student.setUserPassword(resultSet.getString(3));
+ 				student.setRole(RoleConstant.stringToRole(resultSet.getString(4)));
+ 				student.setGender(GenderConstant.stringToGender(resultSet.getString(5)));
+ 				student.setAddress(resultSet.getString(6));
+ 				student.setStudentId(resultSet.getInt(7));
+ 				pendingStudents.add(student);
+ 			}
+ 			logger.info(pendingStudents.size() + " students have approval pending.");
+ 		} catch(SQLException e) {
+ 			logger.error("Error " + e.getMessage());
+ 		}
+ 		return pendingStudents;
+ 	}
 	
 	/**
 	 * 
