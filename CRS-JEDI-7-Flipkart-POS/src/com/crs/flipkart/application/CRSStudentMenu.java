@@ -4,6 +4,7 @@
 package com.crs.flipkart.application;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 import java.util.Scanner;
 
@@ -107,32 +108,40 @@ public class CRSStudentMenu {
  		boolean isApproved = studentInterface.isApproved(studentId);
  		
  		if(isApproved) {
-	 		boolean check = studentInterface.semesterRegistration(semester, studentId);
-	 		if(check) {
-	 			int totalCourses = 1;
-	 			while(totalCourses < 7) {
-	 				
-	 				Vector<Course> courseList = viewAvailableCourse(studentId);
-	 				if(courseList == null) {
-	 					return;
-	 				}
-	
-	 				System.out.println("Enter Course Id " + totalCourses + ": ");
-	 				int courseId = sc.nextInt();
-	
-	 				boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
-	 				if(checkstatus) {
-	 					System.out.println("Course registration of " + courseId + " done successfully.");
-	 					totalCourses++;
-	 				} else {
-	 					System.out.println("Course registration of " + courseId + " is already done.");
-	 				}
-	 			}
-	
-	 			System.out.println();
-	 			System.out.println("Registration Successful");
-	 			is_registered = true;
-	 		}
+ 			try {
+		 		boolean check = studentInterface.semesterRegistration(semester, studentId);
+		 		if(check) {
+		 			int totalCourses = 1;
+		 			while(totalCourses < 7) {
+		 				
+		 				Vector<Course> courseList = viewAvailableCourse(studentId);
+		 				if(courseList == null) {
+		 					return;
+		 				}
+		
+		 				System.out.println("Enter Course Id " + totalCourses + ": ");
+		 				int courseId = sc.nextInt();
+		 				
+		 				try {
+			 				boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
+			 				if(checkstatus) {
+			 					System.out.println("Course registration of " + courseId + " done successfully.");
+			 					totalCourses++;
+			 				} else {
+			 					System.out.println("Course registration of " + courseId + " is already done.");
+			 				}
+		 				} catch (SQLException e) {
+		 					System.out.println("Error: " + e.getMessage());
+		 				}
+		 			}
+		
+		 			System.out.println();
+		 			System.out.println("Registration Successful");
+		 			is_registered = true;
+		 		}
+ 			} catch (SQLException e) {
+ 				System.out.println("Error: " + e.getMessage());
+ 			}
  		} else {
  			System.out.println("You have not been approved yet.");
  		}
@@ -156,12 +165,16 @@ public class CRSStudentMenu {
 
 		 		System.out.println("Enter the CourseID to ADD: ");
 		 		int courseId = sc.nextInt();
-
-		 		boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
-		 		if(checkstatus) {
-		 			System.out.println("Course registration of " + courseId + " done successfully.");
-		 		} else {
-		 			System.out.println("Course registration of " + courseId + " is already done.");
+		 		
+		 		try {
+			 		boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
+			 		if(checkstatus) {
+			 			System.out.println("Course registration of " + courseId + " done successfully.");
+			 		} else {
+			 			System.out.println("Course registration of " + courseId + " is already done.");
+			 		}
+		 		} catch (SQLException e) {
+		 			System.out.println("Error: " + e.getMessage());
 		 		}
 			} else {
 				System.out.println("You have not been approved yet.");
@@ -190,12 +203,16 @@ public class CRSStudentMenu {
 
 		 		System.out.println("Enter the CourseID to DROP: ");
 		 		int courseId = sc.nextInt();
-
-		 		boolean checkstatus = registrationInterface.dropCourse(courseId, studentId, availableCourse);
-		 		if(checkstatus) {
-		 			System.out.println("Course Deletion of " + courseId + " done successfully.");
-		 		} else {
-		 			System.out.println("Course of " + courseId + " is already deleted.");
+		 		
+		 		try {
+			 		boolean checkstatus = registrationInterface.dropCourse(courseId, studentId, availableCourse);
+			 		if(checkstatus) {
+			 			System.out.println("Course Deletion of " + courseId + " done successfully.");
+			 		} else {
+			 			System.out.println("Course of " + courseId + " is already deleted.");
+			 		}
+		 		} catch (SQLException e) {
+		 			System.out.println("Error: " + e.getMessage());
 		 		}
 			} else {
 				System.out.println("You have not been approved yet.");
@@ -216,21 +233,25 @@ public class CRSStudentMenu {
 		
 		if (isApproved) {
 		
-	 		availableCourses = registrationInterface.viewCourses(studentId);
-
-	 		if(availableCourses.isEmpty()) {
-	 			System.out.println("No Courses are available right now!");
-	 			return null;
-	 		}
-
-	 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
- 	 		System.out.println();
- 	 		
- 	 		for(Course course : availableCourses) {
- 	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
- 	 		}
- 	 		
- 	 		System.out.println();
+			try {
+		 		availableCourses = registrationInterface.viewCourses(studentId);
+	
+		 		if(availableCourses.isEmpty()) {
+		 			System.out.println("No Courses are available right now!");
+		 			return null;
+		 		}
+	
+		 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
+	 	 		System.out.println();
+	 	 		
+	 	 		for(Course course : availableCourses) {
+	 	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+	 	 		}
+	 	 		
+	 	 		System.out.println();
+			} catch (SQLException e) {
+				System.out.println("Error: " + e.getMessage());
+			}
 		} else {
 			System.out.println("You have not been approved yet.");
 		}
@@ -248,22 +269,26 @@ public class CRSStudentMenu {
 		boolean isApproved = studentInterface.isApproved(studentId);
 		
 		if (isApproved) {
-		
-			registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
-
-	 		if(registeredCourses.isEmpty()) {
-	 			System.out.println("No Courses are Registered!");
-	 			return null;
-	 		}
-
-	 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
- 	 		System.out.println();
- 	 		
- 	 		for(Course course : registeredCourses) {
- 	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
- 	 		}
- 	 		
- 	 		System.out.println();	
+					
+			try {
+				registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
+	
+		 		if(registeredCourses.isEmpty()) {
+		 			System.out.println("No Courses are Registered!");
+		 			return null;
+		 		}
+	
+		 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
+	 	 		System.out.println();
+	 	 		
+	 	 		for(Course course : registeredCourses) {
+	 	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+	 	 		}
+	 	 		
+	 	 		System.out.println();	
+			} catch (SQLException e) {
+				System.out.println("Error: " + e.getMessage());
+			}
 		} else {
 			System.out.println("You have not been approved yet.");
 		}
@@ -277,34 +302,42 @@ public class CRSStudentMenu {
 	 */
 	private static void viewGradeCard(int studentId, int semesterId) {
 		// TODO Auto-generated method stub
-		 
-		boolean isGenerated = registrationInterface.isGenerated(studentId);
-
-		if(!isGenerated) {
-
-			System.out.println("GradeCard is not generated yet.");
-		}
-		else {
-
-			Vector<GradeCard> grades = registrationInterface.viewGradeCard(studentId, semesterId);
-
-			if(grades.isEmpty()) {
-				System.out.println("\"You haven't registered for any course.");
-				return;
+		
+		try {
+			boolean isGenerated = registrationInterface.isGenerated(studentId);
+	
+			if(!isGenerated) {
+	
+				System.out.println("GradeCard is not generated yet.");
 			}
-			
-			double overallgpa = 0.0;
-
-			for(GradeCard course_grade : grades) {
-
-				System.out.println("Course Code: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
-
-				overallgpa += course_grade.getGpa();
+			else {
+	
+				try {
+					Vector<GradeCard> grades = registrationInterface.viewGradeCard(studentId, semesterId);
+		
+					if(grades.isEmpty()) {
+						System.out.println("\"You haven't registered for any course.");
+						return;
+					}
+					
+					double overallgpa = 0.0;
+		
+					for(GradeCard course_grade : grades) {
+		
+						System.out.println("Course Code: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
+		
+						overallgpa += course_grade.getGpa();
+					}
+		
+					overallgpa /= (double)grades.size();
+		
+					System.out.println("Overall GPA: " + overallgpa);
+				} catch (SQLException e) {
+					System.out.println("Error: " + e.getMessage());
+				}
 			}
-
-			overallgpa /= (double)grades.size();
-
-			System.out.println("Overall GPA: " + overallgpa);
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
 		}
 	}
 
@@ -314,131 +347,145 @@ public class CRSStudentMenu {
 	 */
 	private static void makePayment(int studentId) {
 		// TODO Auto-generated method stub
-		
-		fee = registrationInterface.calculateFee(studentId);
-
- 		boolean isapprove = true;
- 		boolean ispaid = false;
-
- 		isapprove = registrationInterface.getRegistrationStatus(studentId);
- 		ispaid = registrationInterface.getPaymentStatus(studentId);
-
- 		if(!isapprove) {
- 			System.out.println("You have not registered yet.");
- 		}
- 		else if(ispaid) {
- 			System.out.println("You have already paid the fees.");
- 		}
- 		else if(isapprove && !ispaid) {
- 			System.out.println("Total Fees = " + fee);
- 			System.out.println("Want to continue Fee Payment(y/n): ");
- 			String ch = sc.next();
-
- 			if(ch.equals("y"))
- 			{
- 				System.out.println("Modes of Payment: ");
- 				System.out.println("1. Card");
- 				System.out.println("2. Cheque");
- 				System.out.println("3. NetBanking");
-
- 				System.out.println("Select Mode of Payment: ");
- 				int selected_mode = sc.nextInt();
-
- 				// TODO: invoiceId Generation
-
- 				switch(selected_mode) {
-
- 				case 1:
- 					paymentByCard(studentId);
- 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
- 					break;
- 				case 2:
- 					paymentByCheque(studentId);					
- 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
- 					break;
- 				case 3:
- 					paymentByNetBanking(studentId);
- 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
- 					break;
- 				default:
- 					System.out.println("Invalid Input!");
- 					break;
- 				}
- 			}
- 		}
+		try {
+			fee = registrationInterface.calculateFee(studentId);
+	
+	 		boolean isapprove = true;
+	 		boolean ispaid = false;
+	
+	 		isapprove = registrationInterface.getRegistrationStatus(studentId);
+	 		ispaid = registrationInterface.getPaymentStatus(studentId);
+	
+	 		if(!isapprove) {
+	 			System.out.println("You have not registered yet.");
+	 		}
+	 		else if(ispaid) {
+	 			System.out.println("You have already paid the fees.");
+	 		}
+	 		else if(isapprove && !ispaid) {
+	 			System.out.println("Total Fees = " + fee);
+	 			System.out.println("Want to continue Fee Payment(y/n): ");
+	 			String ch = sc.next();
+	
+	 			if(ch.equals("y"))
+	 			{
+	 				System.out.println("Modes of Payment: ");
+	 				System.out.println("1. Card");
+	 				System.out.println("2. Cheque");
+	 				System.out.println("3. NetBanking");
+	
+	 				System.out.println("Select Mode of Payment: ");
+	 				int selected_mode = sc.nextInt();
+	
+	 				// TODO: invoiceId Generation
+	
+	 				switch(selected_mode) {
+	
+	 				case 1:
+	 					paymentByCard(studentId);
+	 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
+	 					break;
+	 				case 2:
+	 					paymentByCheque(studentId);					
+	 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
+	 					break;
+	 				case 3:
+	 					paymentByNetBanking(studentId);
+	 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
+	 					break;
+	 				default:
+	 					System.out.println("Invalid Input!");
+	 					break;
+	 				}
+	 			}
+	 		}
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 
 	private static void paymentByCard(int studentId) {
 		// TODO Auto-generated method stub
-		
-		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
-
- 		System.out.println("Enter Card Type: ");
- 		String cardType = sc.next();
-
- 		System.out.println("Enter Card Number: ");
- 		String cardNumber = sc.next();
-
- 		System.out.println("Enter Card Holder Name: ");
- 		String cardHolderName = sc.next();
-
- 		System.out.println("Enter CVV: ");
- 		int cvv = sc.nextInt();
-
- 		System.out.println("Enter Bank Name: ");
- 		String bankName = sc.next();
- 
- 		System.out.println("Enter Expiry Date (yyyy-mm-dd): ");
- 		String date = sc.next();
-
- 		Date expiryDate = Date.valueOf(date);
-
- 		registrationInterface.paymentByCard(studentId, invoiceId, cardType, cardNumber, cardHolderName, cvv, bankName, expiryDate);	
+		try {
+			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+	
+	 		System.out.println("Enter Card Type: ");
+	 		String cardType = sc.next();
+	
+	 		System.out.println("Enter Card Number: ");
+	 		String cardNumber = sc.next();
+	
+	 		System.out.println("Enter Card Holder Name: ");
+	 		String cardHolderName = sc.next();
+	
+	 		System.out.println("Enter CVV: ");
+	 		int cvv = sc.nextInt();
+	
+	 		System.out.println("Enter Bank Name: ");
+	 		String bankName = sc.next();
+	 
+	 		System.out.println("Enter Expiry Date (yyyy-mm-dd): ");
+	 		String date = sc.next();
+	
+	 		Date expiryDate = Date.valueOf(date);
+	
+	 		registrationInterface.paymentByCard(studentId, invoiceId, cardType, cardNumber, cardHolderName, cvv, bankName, expiryDate);
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 
 	private static void paymentByCheque(int studentId) {
 		// TODO Auto-generated method stub
 		
-		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
-
- 		System.out.println("Enter Cheque Number: ");
- 		int chequeNo = sc.nextInt();
-
- 		System.out.println("Enter Bank Account Holder Name: ");
- 		String bankAccountHolderName = sc.next();
-
- 		System.out.println("Enter Bank Account Number: ");
- 		String bankAccountNumber = sc.next();
-
- 		System.out.println("Enter IFSC: ");
- 		String ifsc = sc.next();
-
- 		System.out.println("Enter Bank Name: ");
- 		String bankName = sc.next();
-
- 		System.out.println("Enter Bank Branch Name: ");
- 		String bankBranchName = sc.next();
-
- 		System.out.println("Enter Cheque Date (yyyy-mm-dd): ");
- 		String date = sc.next();
-
- 		Date chequeDate = Date.valueOf(date);
-
- 		registrationInterface.paymentByCheque(studentId, invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate);
+		try {
+			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+	
+	 		System.out.println("Enter Cheque Number: ");
+	 		int chequeNo = sc.nextInt();
+	
+	 		System.out.println("Enter Bank Account Holder Name: ");
+	 		String bankAccountHolderName = sc.next();
+	
+	 		System.out.println("Enter Bank Account Number: ");
+	 		String bankAccountNumber = sc.next();
+	
+	 		System.out.println("Enter IFSC: ");
+	 		String ifsc = sc.next();
+	
+	 		System.out.println("Enter Bank Name: ");
+	 		String bankName = sc.next();
+	
+	 		System.out.println("Enter Bank Branch Name: ");
+	 		String bankBranchName = sc.next();
+	
+	 		System.out.println("Enter Cheque Date (yyyy-mm-dd): ");
+	 		String date = sc.next();
+	
+	 		Date chequeDate = Date.valueOf(date);
+	
+	 		registrationInterface.paymentByCheque(studentId, invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate);
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 
 	private static void paymentByNetBanking(int studentId) {
 		// TODO Auto-generated method stub
 		
-		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
-
- 		System.out.println("Enter Bank Account Holder Name: ");
- 		String bankAccountHolderName = sc.next();
-
- 		System.out.println("Enter Bank Name: ");
- 		String bankName = sc.next();
-
- 		registrationInterface.paymentByNetBanking(studentId, invoiceId, bankAccountHolderName, bankName);
+		try {
+			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+	
+	 		System.out.println("Enter Bank Account Holder Name: ");
+	 		String bankAccountHolderName = sc.next();
+	
+	 		System.out.println("Enter Bank Name: ");
+	 		String bankName = sc.next();
+	
+	 		registrationInterface.paymentByNetBanking(studentId, invoiceId, bankAccountHolderName, bankName);
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 
 }

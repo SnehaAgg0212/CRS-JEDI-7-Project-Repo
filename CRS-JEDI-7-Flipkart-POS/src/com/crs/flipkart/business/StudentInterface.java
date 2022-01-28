@@ -1,5 +1,7 @@
 package com.crs.flipkart.business;
 
+import java.sql.SQLException;
+
 import com.crs.flipkart.bean.Student;
 
 public interface StudentInterface {
@@ -26,8 +28,9 @@ public interface StudentInterface {
 	 * @param semester
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
-	boolean semesterRegistration(int semester, int studentId);
+	boolean semesterRegistration(int semester, int studentId) throws SQLException;
 
 	/**
 	 * 

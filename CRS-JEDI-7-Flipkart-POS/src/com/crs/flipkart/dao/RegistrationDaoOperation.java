@@ -58,9 +58,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public double calculateFee(int studentId) {
+	public double calculateFee(int studentId) throws SQLException {
 
 		statement = null;
 		double fee = 0.0;
@@ -75,7 +76,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			}
 		} catch(SQLException e) {
 			logger.error(e.getMessage());
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 		return fee;
 	}
 
@@ -83,9 +87,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean getRegistrationStatus(int studentId) {
+	public boolean getRegistrationStatus(int studentId) throws SQLException {
 		
 		statement = null;
 
@@ -99,7 +104,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			}
 		} catch (SQLException e) {
 			logger.error(e.getMessage());	
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 		return false;
 	}
 
@@ -107,9 +115,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean getPaymentStatus(int studentId) {
+	public boolean getPaymentStatus(int studentId) throws SQLException {
 		
 		statement = null;
 
@@ -123,7 +132,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			}
 		} catch(SQLException e) {
 			logger.error(e.getMessage());	
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 		return false;
 	}
 
@@ -137,9 +149,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param cvv
 	 * @param bankName
 	 * @param expiryDate
+	 * @throws SQLException
 	 */
 	@Override
-	public void paymentByCard(int studentId, int invoiceId, String cardType, String cardNumber, String cardHolderName, int cvv, String bankName, Date expiryDate) {
+	public void paymentByCard(int studentId, int invoiceId, String cardType, String cardNumber, String cardHolderName, int cvv, String bankName, Date expiryDate) throws SQLException {
 
 		statement = null;
 
@@ -156,7 +169,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			logger.error(e.getMessage());	
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 	}
 
 	/**
@@ -170,9 +186,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param bankName
 	 * @param bankBranchName
 	 * @param chequeDate
+	 * @throws SQLException
 	 */
 	@Override
-	public void paymentByCheque(int studentId, int invoiceId, int chequeNo, String bankAccountHolderName, String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) {
+	public void paymentByCheque(int studentId, int invoiceId, int chequeNo, String bankAccountHolderName, String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) throws SQLException {
 
 		statement = null;
 
@@ -190,7 +207,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			logger.error(e.getMessage());	
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 	}
  
 	/**
@@ -199,9 +219,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param invoiceId
 	 * @param bankAccountHolderName
 	 * @param bankName
+	 * @throws SQLException
 	 */
 	@Override
-	public void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) {
+	public void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) throws SQLException {
 		
 		statement = null;
 		
@@ -214,7 +235,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			logger.error(e.getMessage());	
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 	}
 
 	/**
@@ -222,9 +246,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param studentId
 	 * @param invoiceId
 	 * @param amount
+	 * @throws SQLException
 	 */
 	@Override
-	public void setPaymentStatus(int studentId, int invoiceId, double amount) {
+	public void setPaymentStatus(int studentId, int invoiceId, double amount) throws SQLException {
 		
 		statement = null;
 		
@@ -238,16 +263,20 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			logger.error(e.getMessage());	
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 	}
 
 	/**
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean isGenerated(int studentId) {
+	public boolean isGenerated(int studentId) throws SQLException {
 
 		statement = null;
 
@@ -261,7 +290,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			}
 		} catch(SQLException e) {
 			logger.error(e.getMessage());				
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 		return false;
 	}
 
@@ -270,9 +302,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param studentId
 	 * @param semesterId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public Vector<GradeCard> viewGradeCard(int studentId,int semesterId) {
+	public Vector<GradeCard> viewGradeCard(int studentId,int semesterId) throws SQLException {
 
 		Vector<GradeCard> grades = new Vector<>();
 
@@ -294,7 +327,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 			}
 		} catch(SQLException e) {
 			logger.error(e.getMessage());				
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 		return grades;
 	}
 	
@@ -303,9 +339,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param studentId
 	 * @param courseId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean addCourse(int studentId, int courseId) {
+	public boolean addCourse(int studentId, int courseId) throws SQLException {
 
 		statement = null;
 		
@@ -323,6 +360,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			return true;
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return false;
  	}
@@ -332,9 +372,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param semester
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean semesterRegistration(int semester, int studentId) {
+	public boolean semesterRegistration(int semester, int studentId) throws SQLException {
 
 		statement = null;
 		
@@ -349,6 +390,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return false;
  	}
@@ -358,9 +402,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param semester
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean addSemester(int semester, int studentId) {
+	public boolean addSemester(int semester, int studentId) throws SQLException {
 
 		statement = null;
 		
@@ -374,6 +419,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			return true;
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return false;
  	}
@@ -383,9 +431,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @param studentId
 	 * @param courseId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean dropCourse(int studentId, int courseId) {
+	public boolean dropCourse(int studentId, int courseId) throws SQLException {
 
 		statement = null;
 		
@@ -403,6 +452,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			return true;
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return false;
  	}
@@ -411,9 +463,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * 
 	 * @param courseId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public boolean isSeatAvailable(int courseId) {
+	public boolean isSeatAvailable(int courseId) throws SQLException {
 		
 		statement = null;
 		
@@ -427,6 +480,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return true;
  	}
@@ -435,9 +491,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public int totalRegisteredCourses(int studentId) {
+	public int totalRegisteredCourses(int studentId) throws SQLException {
 		
  		int totalcourse = 0;
  		statement = null;
@@ -453,6 +510,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			return totalcourse;
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return totalcourse;
  	}
@@ -461,9 +521,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public Vector<Course> viewCourses(int studentId) {
+	public Vector<Course> viewCourses(int studentId) throws SQLException {
 
  		Vector<Course> availableCourses = new Vector<>();
  		statement = null;
@@ -484,6 +545,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return availableCourses;
  	}
@@ -492,9 +556,10 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * 
 	 * @param studentId
 	 * @return
+	 * @throws SQLException
 	 */
 	@Override
-	public Vector<Course> viewRegisteredCourses(int studentId) {
+	public Vector<Course> viewRegisteredCourses(int studentId) throws SQLException {
 
  		Vector<Course> availableCourses = new Vector<>();
  		statement = null;
@@ -515,6 +580,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  			}
  		} catch(SQLException e) {
  			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
  		}
  		return availableCourses;
  	}

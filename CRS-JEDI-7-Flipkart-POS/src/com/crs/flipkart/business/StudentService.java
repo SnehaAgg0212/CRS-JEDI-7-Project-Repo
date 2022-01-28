@@ -5,6 +5,8 @@ package com.crs.flipkart.business;
 
 import org.apache.log4j.Logger;
 
+import java.sql.SQLException;
+
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
@@ -81,10 +83,10 @@ public class StudentService implements StudentInterface {
  	}
 	
 	@Override
-	public boolean semesterRegistration(int semester, int studentId) {
+	public boolean semesterRegistration(int semester, int studentId) throws SQLException {
 		
- 		boolean check = registrationDaoOperation.semesterRegistration(semester, studentId);
- 		if(!check) {
+		boolean check = registrationDaoOperation.semesterRegistration(semester, studentId);
+		if(!check) {
  			boolean checkstatus = registrationDaoOperation.addSemester(semester, studentId);
  			if(checkstatus) {
  				return true;
