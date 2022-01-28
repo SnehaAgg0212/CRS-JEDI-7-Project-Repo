@@ -65,4 +65,6 @@ public class SQLQueriesConstant {
  	public static final String INSERT_NOTIFICATION = "insert into notification(studentId, notificationType, notificationId, referenceId, notificationContent) values(?, ?, ?, ?, ?);";
  	
  	public static final String VIEW_PENDING_ADMISSION_QUERY = "select user.userId, user.userName, user.userPassword, user.role, user.gender, user.address, studentId from user inner join student where isApproved = 0 and student.userId = user.userId";
+ 	
+ 	public static final String ADD_NOTIFICATION = "insert into notification(notificationId, studentId, notificationType, referenceId, notificationContent) values (?, ?, ?, ?, ?)";
 }

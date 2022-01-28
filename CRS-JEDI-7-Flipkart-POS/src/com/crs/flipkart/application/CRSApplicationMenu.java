@@ -217,7 +217,9 @@ public class CRSApplicationMenu {
 			student.setRole(RoleConstant.STUDENT);
 		
 			int studentId = studentService.register(student);
-			notificationService.sendRegistrationNotification(NotificationTypeConstant.REGISTRATION, studentId);
+			int notificationId = notificationService.sendRegistrationNotification(NotificationTypeConstant.REGISTRATION, studentId);
+			System.out.println("Notification Id: " + notificationId);
+			System.out.println("Keep it for future references.");
 			
 		} catch (StudentNotRegisteredException e) {
 			System.out.println("Error: " + e.getMessage());

@@ -143,7 +143,8 @@ public class CRSAdminMenu {
  		
  		try {
 	 		adminServices.approveStudentRegistration(studentId, pendingStudents);
-			notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
+			int notificationId = notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
+			System.out.println("Notification Id: " + notificationId);
  		} catch (StudentNotFoundForApprovalException e) {
  			System.out.println("Error: " + e.getMessage());
  		}

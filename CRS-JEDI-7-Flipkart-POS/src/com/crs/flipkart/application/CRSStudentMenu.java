@@ -17,6 +17,7 @@ import com.crs.flipkart.business.RegistrationService;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.constants.NotificationTypeConstant;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author devanshugarg
@@ -316,7 +317,7 @@ public class CRSStudentMenu {
 					Vector<GradeCard> grades = registrationInterface.viewGradeCard(studentId, semesterId);
 		
 					if(grades.isEmpty()) {
-						System.out.println("\"You haven't registered for any course.");
+						System.out.println("You haven't registered for any course.");
 						return;
 					}
 					
@@ -352,6 +353,7 @@ public class CRSStudentMenu {
 	
 	 		boolean isapprove = true;
 	 		boolean ispaid = false;
+	 		int notificationId = 0;
 	
 	 		isapprove = registrationInterface.getRegistrationStatus(studentId);
 	 		ispaid = registrationInterface.getPaymentStatus(studentId);
@@ -377,21 +379,27 @@ public class CRSStudentMenu {
 	 				System.out.println("Select Mode of Payment: ");
 	 				int selected_mode = sc.nextInt();
 	
-	 				// TODO: invoiceId Generation
+	 				invoiceId = Utils.generateId();
 	
 	 				switch(selected_mode) {
 	
 	 				case 1:
 	 					paymentByCard(studentId);
-	 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
+	 					notificationId = notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee, invoiceId);
+	 					System.out.println("Notification Id: " + notificationId);
+	 					System.out.println("Keep it safe for future references.");
 	 					break;
 	 				case 2:
 	 					paymentByCheque(studentId);					
-	 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
+	 					notificationId = notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee, invoiceId);
+	 					System.out.println("Notification Id: " + notificationId);
+	 					System.out.println("Keep it safe for future references.");
 	 					break;
 	 				case 3:
 	 					paymentByNetBanking(studentId);
-	 					notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee);
+	 					notificationId = notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, studentId, selected_mode, fee, invoiceId);
+	 					System.out.println("Notification Id: " + notificationId);
+	 					System.out.println("Keep it safe for future references.");
 	 					break;
 	 				default:
 	 					System.out.println("Invalid Input!");

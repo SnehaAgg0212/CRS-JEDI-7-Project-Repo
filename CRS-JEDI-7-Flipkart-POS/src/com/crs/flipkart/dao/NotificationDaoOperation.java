@@ -5,15 +5,15 @@ package com.crs.flipkart.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
 import com.crs.flipkart.constants.NotificationTypeConstant;
+import com.crs.flipkart.constants.PaymentModeConstant;
+import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.utils.DBUtils;
+import com.crs.flipkart.utils.Utils;
 
 /**
  * @author devanshugarg
@@ -59,9 +59,25 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 * @return
 	 */
 	@Override
-	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount) {
+	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int referenceId, double amount, int modeOfPayment) {
 		
-		int notificationId = 0;
+		statement = null;
+		int notificationId = Utils.generateId();
+		
+		try {
+			String sql = SQLQueriesConstant.ADD_NOTIFICATION;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, notificationId);
+ 			statement.setInt(2, studentId);
+ 			statement.setString(3, type.toString());
+ 			statement.setInt(4, referenceId);
+ 			statement.setString(5, "Payment is successful of Amount - Rs. " + amount + " through " + PaymentModeConstant.getPaymentMode(modeOfPayment).toString() + ".");
+ 		    statement.executeUpdate();
+ 		    logger.info("Payment is successful of Amount - Rs. " + amount + " through " + PaymentModeConstant.getPaymentMode(modeOfPayment).toString() + ".");
+		} catch (SQLException e) {
+			logger.error("Error: " + e.getMessage());
+		}
+		
 		return notificationId;
 	}
 	
@@ -74,7 +90,23 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	@Override
 	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId) {
 		
-		int notificationId = 0;
+		statement = null;
+		int notificationId = Utils.generateId();
+		
+		try {
+			String sql = SQLQueriesConstant.ADD_NOTIFICATION;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, notificationId);
+ 			statement.setInt(2, studentId);
+ 			statement.setString(3, type.toString());
+ 			statement.setInt(4, 0);
+ 			statement.setString(5, "Registration is successful for Student Id: " + studentId);
+ 		    statement.executeUpdate();
+ 		    logger.info("Registration is successful for Student Id: " + studentId);
+		} catch (SQLException e) {
+			logger.error("Error: " + e.getMessage());
+		}
+		
 		return notificationId;
 	}
 	
@@ -87,33 +119,24 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	@Override
 	public int sendApprovalNotification(NotificationTypeConstant type, int studentId) {
 		
-		int notificationId = 0;
+		statement = null;
+		int notificationId = Utils.generateId();
+		
+		try {
+			String sql = SQLQueriesConstant.ADD_NOTIFICATION;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, notificationId);
+ 			statement.setInt(2, studentId);
+ 			statement.setString(3, type.toString());
+ 			statement.setInt(4, 0);
+ 			statement.setString(5, "Student with Student Id: " + studentId + " is approved successfully.");
+ 		    statement.executeUpdate();
+ 		    logger.info("Student with Student Id: " + studentId + " is approved successfully.");
+		} catch (SQLException e) {
+			logger.error("Error: " + e.getMessage());
+		}
+		
 		return notificationId;
 	}
 	
-	/**
-	 * 
-	 * @param studentId
-	 * @param modeOfPayment
-	 * @param amount
-	 * @return
-	 */
-	@Override
-	public UUID addPayment(int studentId, int modeOfPayment, double amount) {
-		
-		UUID referenceId;
-		referenceId = UUID.randomUUID();
-		return referenceId;
-	}
-	
-	/**
-	 * 
-	 * @param notificationId
-	 * @return
-	 */
-	@Override
-	public int getReferenceId(int notificationId) {
-		
-		return 0;
-	}
 }

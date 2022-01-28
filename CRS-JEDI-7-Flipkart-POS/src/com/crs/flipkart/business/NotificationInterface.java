@@ -9,26 +9,23 @@ public interface NotificationInterface {
 	 * @param studentId
 	 * @param modeOfPayment
 	 * @param amount
-	 */
-	void sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount);
-
-	/**
-	 * @param notificationId
 	 * @return
 	 */
-	String getReferenceId(int notificationId);
+	int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount, int referenceId);
 
 	/**
 	 * @param type
 	 * @param studentId
+	 * @return
 	 */
-	void sendApprovalNotification(NotificationTypeConstant type, int studentId);
+	int sendApprovalNotification(NotificationTypeConstant type, int studentId);
 
 	/**
 	 * 
 	 * @param type
 	 * @param studentId
+	 * @return
 	 */
-	void sendRegistrationNotification(NotificationTypeConstant type, int studentId);
+	int sendRegistrationNotification(NotificationTypeConstant type, int studentId);
 
 }

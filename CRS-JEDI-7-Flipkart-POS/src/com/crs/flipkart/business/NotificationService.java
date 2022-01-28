@@ -16,7 +16,6 @@ import com.crs.flipkart.dao.NotificationDaoOperation;
 public class NotificationService implements NotificationInterface {
 	
 	private static volatile NotificationService instance = null;
-	private static Logger logger = Logger.getLogger(NotificationService.class);
 	
 	/**
 	 * Default Constructor
@@ -43,23 +42,20 @@ public class NotificationService implements NotificationInterface {
 	NotificationDaoInterface notificationDaoOperation = NotificationDaoOperation.getInstance();
 
 	@Override
-	public void sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount) {
+	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount, int referenceId) {
 		
-	}
-	
-    @Override
-	public String getReferenceId(int notificationId) {
-		
-    	return null;
+		return notificationDaoOperation.sendPaymentNotification(type, studentId, referenceId, amount, modeOfPayment);
 	}
     
     @Override
-	public void sendRegistrationNotification(NotificationTypeConstant type, int studentId){
+	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId){
 
+    	return notificationDaoOperation.sendRegistrationNotification(type, studentId);
     }
 
     @Override
-	public void sendApprovalNotification(NotificationTypeConstant type, int studentId){
+	public int sendApprovalNotification(NotificationTypeConstant type, int studentId){
 
+    	return notificationDaoOperation.sendApprovalNotification(type, studentId);
     }
 }

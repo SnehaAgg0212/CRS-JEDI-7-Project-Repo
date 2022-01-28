@@ -12,6 +12,17 @@ public enum PaymentModeConstant {
 	CARD, CHEQUE, NET_BANKING;
 	
 	/**
+	 * Method to Return Payment Type in String
+	 * @return Payment Type in String
+	 */
+	@Override
+	public String toString() {
+		
+		final String name = name();
+		return name;
+	}
+	
+	/**
 	 * Method to get Payment Mode depending upon User Input
 	 * @param val_input
 	 * @return Payment Mode
