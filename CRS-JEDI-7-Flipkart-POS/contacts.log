@@ -1,0 +1,21 @@
+12:19:43,238  INFO RegistrationService,main:53 - More than 6 courses are registered!
+18:24:02,389 ERROR RegistrationDaoOperation,main:507 - class com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException
+18:24:02,393 ERROR RegistrationDaoOperation,main:508 - Unknown column 'courseCode' in 'field list'
+11:35:00,928 ERROR StudentDaoOperation,main:148 - Error: No operations allowed after connection closed.
+12:13:11,006 ERROR RegistrationDaoOperation,main:541 - class com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException
+12:13:11,008 ERROR RegistrationDaoOperation,main:542 - Error: No operations allowed after connection closed.
+12:14:48,530 ERROR RegistrationDaoOperation,main:541 - class com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException
+12:14:48,533 ERROR RegistrationDaoOperation,main:542 - Error: No operations allowed after connection closed.
+12:26:40,985 ERROR RegistrationDaoOperation,main:292 - Unknown column 'isGenerated' in 'field list'
+12:49:10,453 ERROR NotificationDaoOperation,main:78 - Error: No operations allowed after connection closed.
+12:54:01,411 ERROR NotificationDaoOperation,main:78 - Error: Unknown column 'studentId' in 'field list'
+12:56:49,515 ERROR NotificationDaoOperation,main:78 - Error: Data truncation: Data too long for column 'notificationContent' at row 1
+12:58:42,472  INFO NotificationDaoOperation,main:76 - Payment is successful of Amount - Rs. 4030.0 through CARD.
+14:10:24,493  INFO NotificationDaoOperation,main:76 - Payment is successful of Amount - Rs. 4030.0 through CARD.
+14:15:26,513  INFO NotificationDaoOperation,main:76 - Payment is successful of Amount - Rs. 4080.0 through CHEQUE.
+14:19:09,630 ERROR NotificationDaoOperation,main:110 - Error: Cannot add or update a child row: a foreign key constraint fails (`test/notification`, CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`studentId`) REFERENCES `student` (`studentId`))
+14:22:40,673  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 0
+14:35:11,846  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 0
+14:37:56,261  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 0
+14:39:30,314  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 0
+14:40:44,345  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 1321411508

@@ -57,7 +57,7 @@ public class UserDaoOperation implements UserDaoInterface {
 	 */
 	@Override
 	public boolean verifyCredentials(String userEmailId, String password) throws UserNotFoundException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -85,7 +85,7 @@ public class UserDaoOperation implements UserDaoInterface {
 	 */
  	@Override
 	public boolean updatePassword(String userEmailId, String newPassword) {
- 		
+ 		Connection connection = DBUtils.getConnection();
  		statement = null;
  		
  		try {
@@ -110,7 +110,7 @@ public class UserDaoOperation implements UserDaoInterface {
  	 */
  	@Override
 	public String getRole(String userEmailId) {
- 		
+ 		Connection connection = DBUtils.getConnection();
  		statement = null;
  		String role = "";
  		
@@ -135,7 +135,7 @@ public class UserDaoOperation implements UserDaoInterface {
  	 */
  	@Override
  	public int getUserId(String userEmailId) {
- 		
+ 		Connection connection = DBUtils.getConnection();
  		statement = null;
  		int userId = 0;
  		

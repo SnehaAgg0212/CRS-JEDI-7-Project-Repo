@@ -74,7 +74,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void addUser(User user) throws UserNotAddedException, UserIdAlreadyInUseException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {
@@ -109,7 +109,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException {
-		
+		Connection connection = DBUtils.getConnection();
 		try {
 			this.addUser(professor);
 		} catch (UserNotAddedException e) {
@@ -151,7 +151,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public Vector<Professor> viewProfessor() {
 		
 		statement = null;
-		
+		Connection connection = DBUtils.getConnection();
 		Vector<Professor> professorList = new Vector<>();
 		
 		try {
@@ -182,7 +182,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException {
-	
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {
@@ -208,7 +208,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void approveStudentRegistration(int studentId) throws StudentNotFoundForApprovalException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {
@@ -233,7 +233,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public Vector<Student> viewPendingAdmissions() {
-
+		Connection connection = DBUtils.getConnection();
  		statement = null;
  		Vector<Student> pendingStudents = new Vector<>();
  		
@@ -267,7 +267,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public Vector<GradeCard> generateGradeCard(int studentId, int semesterId) {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		Vector<GradeCard> grades = new Vector<>();
@@ -299,7 +299,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void addCourse(Course course) throws CourseAlreadyExistsException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {
@@ -329,7 +329,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public Vector<Course> viewCourse() {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		Vector<Course> courseList = new Vector<>();
@@ -362,7 +362,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void deleteCourse(int courseId) throws CourseNotFoundException, CourseNotDeletedException {
-	
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {
@@ -388,7 +388,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 */
 	@Override
 	public void setIsGenerateGrade(int studentId) {
-		
+		Connection connection = DBUtils.getConnection();
  		statement = null;
 
  		try {

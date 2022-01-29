@@ -14,8 +14,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.crs.flipkart.bean.CardPayment;
+import com.crs.flipkart.bean.Cheque;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
+import com.crs.flipkart.bean.NetBanking;
 import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.utils.DBUtils;
 import com.crs.flipkart.utils.Utils;
@@ -62,7 +65,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public double calculateFee(int studentId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		double fee = 0.0;
 
@@ -91,7 +94,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public boolean getRegistrationStatus(int studentId) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 
 		try {
@@ -119,7 +122,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public boolean getPaymentStatus(int studentId) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 
 		try {
@@ -152,20 +155,20 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @throws SQLException
 	 */
 	@Override
-	public void paymentByCard(int studentId, int invoiceId, String cardType, String cardNumber, String cardHolderName, int cvv, String bankName, Date expiryDate) throws SQLException {
-
+	public void paymentByCard(CardPayment card) throws SQLException {
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 
 		try {
 			String sql = SQLQueriesConstant.PAYMENT_CARD;
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, invoiceId);
-			statement.setString(2, cardType);
-			statement.setString(3, cardNumber);
-			statement.setString(4, cardHolderName);
-			statement.setInt(5, cvv);
-			statement.setString(6, bankName);
-			statement.setDate(7,expiryDate);
+			statement.setInt(1, card.getInvoiceId());
+			statement.setString(2, card.getCardType());
+			statement.setString(3, card.getCardNumber());
+			statement.setString(4, card.getCardHolderName());
+			statement.setInt(5, card.getCvv());
+			statement.setString(6, card.getBankName());
+			statement.setDate(7, card.getExpiryDate());
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			logger.error(e.getMessage());	
@@ -189,21 +192,21 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @throws SQLException
 	 */
 	@Override
-	public void paymentByCheque(int studentId, int invoiceId, int chequeNo, String bankAccountHolderName, String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) throws SQLException {
-
+	public void paymentByCheque(Cheque cheque) throws SQLException {
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 
 		try {
 			String sql = SQLQueriesConstant.PAYMENT_CHEQUE;
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, invoiceId);
-			statement.setInt(2, chequeNo);
-			statement.setString(3, bankAccountHolderName);
-			statement.setString(4, bankAccountNumber);
-			statement.setString(5, ifsc);
-			statement.setString(6, bankName);
-			statement.setString(7,bankBranchName);
-			statement.setDate(8,chequeDate);
+			statement.setInt(1, cheque.getInvoiceId());
+			statement.setInt(2, cheque.getChequeNo());
+			statement.setString(3, cheque.getBankAccountHolderName());
+			statement.setString(4, cheque.getBankAccountNumber());
+			statement.setString(5, cheque.getIfsc());
+			statement.setString(6, cheque.getBankName());
+			statement.setString(7, cheque.getBankBranchName());
+			statement.setDate(8, cheque.getChequeDate());
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			logger.error(e.getMessage());	
@@ -222,16 +225,16 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 * @throws SQLException
 	 */
 	@Override
-	public void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) throws SQLException {
-		
+	public void paymentByNetBanking(NetBanking netBanking) throws SQLException {
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {
 			String sql = SQLQueriesConstant.PAYMENT_NETBANKING;
 			statement = connection.prepareStatement(sql);
-			statement.setString(1, bankName);
-			statement.setString(2, bankAccountHolderName);
-			statement.setInt(3, invoiceId);
+			statement.setString(1, netBanking.getBankName());
+			statement.setString(2, netBanking.getBankAccountHolderName());
+			statement.setInt(3, netBanking.getInvoiceId());
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			logger.error(e.getMessage());	
@@ -250,7 +253,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public void setPaymentStatus(int studentId, int invoiceId, double amount) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {
@@ -277,7 +280,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public boolean isGenerated(int studentId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 
 		try {
@@ -306,7 +309,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public Vector<GradeCard> viewGradeCard(int studentId,int semesterId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
 		Vector<GradeCard> grades = new Vector<>();
 
 		statement = null;
@@ -343,7 +346,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public boolean addCourse(int studentId, int courseId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -376,7 +379,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public boolean semesterRegistration(int semester, int studentId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -406,7 +409,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public boolean addSemester(int semester, int studentId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -435,7 +438,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public boolean dropCourse(int studentId, int courseId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -467,7 +470,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public boolean isSeatAvailable(int courseId) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -495,7 +498,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public int totalRegisteredCourses(int studentId) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
  		int totalcourse = 0;
  		statement = null;
  		
@@ -517,37 +520,36 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
  		return totalcourse;
  	}
 	
-//	/**
-//	 * 
-//	 * @param courseId
-//	 * @param studentId
-//	 * @return
-//	 * @throws SQLException
-//	 */
-//	@Override
-//	public boolean checkCourse(int courseId, int studentId) throws SQLException {
-//
-// 		statement = null;
-//
-// 		try{
-// 			String sql = SQLQueriesConstant.CHECK_COURSE;
-// 			statement = connection.prepareStatement(sql);
-// 			statement.setInt(1, courseId);
-// 			statement.setInt(2, studentId);
-// 			ResultSet resultSet = statement.executeQuery();
-// 			while(resultSet.next()){
-// 				return true;
-// 			}
-// 		} catch(SQLException e) {
-// 			logger.error(e.getClass());
-// 			logger.error("Error: " + e.getMessage());
-// 		} finally {
-// 			statement.close();
-// 			connection.close();
-// 		}
-// 		return false;
-//
-// 	}
+	/**
+	 * 
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean isSemesterRegistered(int studentId) throws SQLException {
+		Connection connection = DBUtils.getConnection();
+ 		statement = null;
+
+ 		try{
+ 			String sql = SQLQueriesConstant.CHECK_SEMESTER_REGISTRATION;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, studentId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()){
+ 				return true;
+ 			}
+ 		} catch(SQLException e) {
+ 			logger.error(e.getClass());
+ 			logger.error("Error: " + e.getMessage());
+ 		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
+ 		return false;
+
+ 	}
 	
 	/**
 	 * 
@@ -557,7 +559,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public Vector<Course> viewCourses(int studentId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
  		Vector<Course> availableCourses = new Vector<>();
  		statement = null;
  		
@@ -592,7 +594,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	 */
 	@Override
 	public Vector<Course> viewRegisteredCourses(int studentId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
  		Vector<Course> availableCourses = new Vector<>();
  		statement = null;
  		
@@ -629,8 +631,9 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	@Override
 	public boolean isRegistered(int courseId, int studentId) throws SQLException {
  		// TODO Auto-generated method stub
+		Connection connection = DBUtils.getConnection();
 		boolean check = false;
-		
+		statement = null;
 		try
 		{
 			String sql = SQLQueriesConstant.IS_REGISTERED;

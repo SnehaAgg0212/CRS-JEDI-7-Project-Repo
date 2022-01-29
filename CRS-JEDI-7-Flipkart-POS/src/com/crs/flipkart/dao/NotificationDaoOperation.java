@@ -60,7 +60,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 */
 	@Override
 	public int sendPaymentNotification(NotificationTypeConstant type, int studentId, int referenceId, double amount, int modeOfPayment) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		int notificationId = Utils.generateId();
 		
@@ -76,7 +76,10 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
  		    logger.info("Payment is successful of Amount - Rs. " + amount + " through " + PaymentModeConstant.getPaymentMode(modeOfPayment).toString() + ".");
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 		
 		return notificationId;
 	}
@@ -89,7 +92,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 */
 	@Override
 	public int sendRegistrationNotification(NotificationTypeConstant type, int studentId) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		int notificationId = Utils.generateId();
 		
@@ -105,7 +108,10 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
  		    logger.info("Registration is successful for Student Id: " + studentId);
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 		
 		return notificationId;
 	}
@@ -118,7 +124,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
 	 */
 	@Override
 	public int sendApprovalNotification(NotificationTypeConstant type, int studentId) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		int notificationId = Utils.generateId();
 		
@@ -134,7 +140,10 @@ public class NotificationDaoOperation implements NotificationDaoInterface {
  		    logger.info("Student with Student Id: " + studentId + " is approved successfully.");
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
-		}
+		} finally {
+ 			statement.close();
+ 			connection.close();
+ 		}
 		
 		return notificationId;
 	}

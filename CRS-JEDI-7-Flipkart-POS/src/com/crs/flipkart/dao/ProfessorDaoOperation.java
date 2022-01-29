@@ -62,7 +62,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	@Override
 	public boolean addGrade(int studentId, int courseId, double gpa, int semesterId) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {
@@ -92,7 +92,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	@Override
 	public boolean addCourse(int professorId, int courseSelectedId) throws SQLException {
  		// TODO Auto-generated method stub
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
  		try {
@@ -118,7 +118,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 */
 	@Override
 	public boolean checkSelectedCourse(int professorId) throws SQLException {
-
+		Connection connection = DBUtils.getConnection();
  		try {
  			String sql = SQLQueriesConstant.CHECK_SELECTED_COURSE;
  			statement = connection.prepareStatement(sql);
@@ -144,7 +144,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	@Override
 	public Vector<EnrolledStudent> getEnrolledStudents(int professorId) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		Vector<EnrolledStudent> enrolledStudents = new Vector<>();
 		
@@ -174,7 +174,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	@Override
 	public Vector<Course> viewAvailableCourses() throws SQLException {
  		// TODO Auto-generated method stub
-		
+		Connection connection = DBUtils.getConnection();
  		statement = null;
  		Vector<Course> availableCourses = new Vector<>();
  		
@@ -207,7 +207,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	@Override
 	public Vector<Course> getCoursesByProfessor(int professorId) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		Vector<Course> courseList=new Vector<>();
 		
@@ -238,7 +238,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	@Override
 	public String getProfessorById(int professorId) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		Connection connection = DBUtils.getConnection();
 		String professorName = null;
 		statement = null;
 		
@@ -264,7 +264,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 */
 	@Override
 	public int getProfessorId(int userId) throws SQLException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		int professorId = 0;
 		

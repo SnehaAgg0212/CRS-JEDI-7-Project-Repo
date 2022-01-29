@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.GenderConstant;
+import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.dao.RegistrationDaoInterface;
 import com.crs.flipkart.dao.RegistrationDaoOperation;
@@ -51,6 +52,7 @@ public class StudentService implements StudentInterface {
 	StudentDaoInterface studentDaoOperation = StudentDaoOperation.getInstance();
 	RegistrationDaoInterface registrationDaoOperation = RegistrationDaoOperation.getInstance();
 	
+	
 	public static final Student student = new Student("userName",  "student@gmail.com",  "student",  RoleConstant.STUDENT,  101,  "phoneNo", GenderConstant.MALE,  "address", "branchName", 13, 2022, true);
 
 	@Override
@@ -65,6 +67,8 @@ public class StudentService implements StudentInterface {
  		} catch (StudentNotRegisteredException e) {
  			throw e;
  		}
+ 		
+ 		
 
  		return studentId;
 	}

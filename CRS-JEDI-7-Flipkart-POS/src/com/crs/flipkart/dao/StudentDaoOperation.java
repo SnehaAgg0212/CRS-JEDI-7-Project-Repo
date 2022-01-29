@@ -12,6 +12,9 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.NotificationInterface;
+import com.crs.flipkart.business.NotificationService;
+import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.utils.DBUtils;
@@ -26,6 +29,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
 	Connection connection = DBUtils.getConnection();
  	private PreparedStatement statement = null;
+ 	static NotificationInterface notificationService = NotificationService.getInstance();
  	
  	/**
 	 * Default Constructor
@@ -59,9 +63,9 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	 */
 	@Override
 	public int addStudent(Student student) throws StudentNotRegisteredException {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
-		int studentId = 0;
+		int studentId = student.getStudentId();
 		
 		try {
 			String sql = SQLQueriesConstant.ADD_USER_QUERY;
@@ -89,6 +93,14 @@ public class StudentDaoOperation implements StudentDaoInterface {
  					studentId = resultSet.getInt(1);
  				}
  			}
+ 			
+ 			try {
+ 				int notificationId = notificationService.sendRegistrationNotification(NotificationTypeConstant.REGISTRATION, studentId);
+ 				System.out.println("Notification Id: " + notificationId);
+ 				System.out.println("Keep it for future references.");
+ 			} catch (SQLException e) {
+ 				System.out.println("Error: " + e.getMessage());
+ 			}
 		} catch (Exception e) {
 			throw new StudentNotRegisteredException(student.getUserName());
 		} finally {
@@ -98,6 +110,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 				logger.error("Error: " + e.getMessage());
 			}
 		}
+		
+		
 		return studentId;
 	}
 	
@@ -108,7 +122,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	 */
 	@Override
 	public int getStudentId(int userId) {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		int studentId = 0;
 		
@@ -133,7 +147,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	 */
 	@Override
 	public boolean isApproved(int studentId) {
-		
+		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		try {

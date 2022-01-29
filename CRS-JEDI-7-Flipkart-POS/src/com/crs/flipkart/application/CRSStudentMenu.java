@@ -8,8 +8,11 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.Scanner;
 
+import com.crs.flipkart.bean.CardPayment;
+import com.crs.flipkart.bean.Cheque;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
+import com.crs.flipkart.bean.NetBanking;
 import com.crs.flipkart.business.NotificationInterface;
 import com.crs.flipkart.business.NotificationService;
 import com.crs.flipkart.business.RegistrationInterface;
@@ -34,12 +37,11 @@ public class CRSStudentMenu {
 	static NotificationInterface notificationInterface = NotificationService.getInstance();
  	static double fee;
  	static int invoiceId;
- 	static boolean is_registered = false;
 	
 	/**
 	 * Method to Create Main Menu
 	 */
-	public static void createStudentMenu(int studentId)
+	public static void createStudentMenu(int studentId) throws CourseLimitExceededException, SeatNotAvailableException, SQLException, CourseNotFoundException
 	{
 		
 		while(CRSApplicationMenu.loggedin) {
@@ -102,177 +104,189 @@ public class CRSStudentMenu {
 	/**
 	 * Course Registration
 	 * @param studentId
+	 * @throws SQLException 
+	 * @throws SeatsNotAvailableException 
+	 * @throws CourseLimitExceededException 
+	 * @throws CourseNotFoundException 
 	 */
-	private static void registerCourses(int studentId) {
+	private static void registerCourses(int studentId) throws CourseLimitExceededException, SeatNotAvailableException, SQLException, CourseNotFoundException {
 		// TODO Auto-generated method stub
 	
-		System.out.println("Enter the Semester: ");
- 		int semester = sc.nextInt();
+		int semester = 5;
  		
- 		boolean isApproved = studentInterface.isApproved(studentId);
- 		
- 		if(isApproved) {
- 			try {
-		 		boolean check = studentInterface.semesterRegistration(semester, studentId);
-		 		if(check) {
-		 			int totalCourses = 1;
-		 			while(totalCourses < 7) {
-		 				
-		 				Vector<Course> courseList = viewAvailableCourse(studentId);
-		 				if(courseList == null) {
-		 					return;
-		 				}
-		
-		 				System.out.println("Enter Course Id " + totalCourses + ": ");
-		 				int courseId = sc.nextInt();
-		 				
-		 				try {
-			 				boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
-			 				if(checkstatus) {
-			 					System.out.println("Course registration of " + courseId + " done successfully.");
-			 					totalCourses++;
-			 				} else {
-			 					System.out.println("Course registration of " + courseId + " is already done.");
-			 				}
-		 				} catch (CourseNotFoundException e) {
-		 					System.out.println("Error: " + e.getMessage());
-		 				} catch (CourseLimitExceededException e) {
-		 					System.out.println("Error: " + e.getMessage());
-		 				} catch (SeatNotAvailableException e) {
-		 					System.out.println("Error: " + e.getMessage());
-		 				} catch (SQLException e) {
-		 					System.out.println("Error: " + e.getMessage());
-		 				}
-		 			}
-		
-		 			System.out.println();
-		 			System.out.println("Registration Successful");
-		 			is_registered = true;
-		 		}
- 			} catch (SQLException e) {
- 				System.out.println("Error: " + e.getMessage());
+ 		boolean check = studentInterface.semesterRegistration(semester, studentId);
+ 		if(check) {
+ 			int totalCourses = registrationInterface.totalRegisteredCourses(studentId);
+ 			while(totalCourses < 7) {
+ 				
+ 				Vector<Course> courseList = viewAvailableCourse(studentId);
+ 				if(courseList == null) {
+ 					return;
+ 				}
+
+ 				System.out.println("Enter Course Id " + totalCourses + ": ");
+ 				int courseId = sc.nextInt();
+ 				try {
+ 					boolean checkstatus = registrationInterface.addCourse(courseId, studentId, courseList);
+ 	 				if(checkstatus) {
+ 	 					System.out.println("Course registration of " + courseId + " done successfully.");
+ 	 					totalCourses++;
+ 	 				} else {
+ 	 					System.out.println("Course registration of " + courseId + " is already done.");
+ 	 				}
+ 				}catch(SQLException se) {
+ 		 			System.out.println("Error : " + se);
+ 		 			return;
+ 		 		}catch(CourseLimitExceededException se) {
+ 		 			System.out.println("Error : " + se);
+ 		 			return;
+ 		 		}catch(SeatNotAvailableException se) {
+ 		 			System.out.println("Error : " + se);
+ 		 			return;
+ 		 		}
+ 				
  			}
- 		} else {
- 			System.out.println("You have not been approved yet.");
+
+ 			System.out.println();
+ 			System.out.println("Registration Successful");
+ 		}else {
+ 			System.out.println("You have already registered for this Semester");
  		}
-	}
+}
 
 	/**
 	 * Add Course
 	 * @param studentId
+	 * @throws SQLException 
+	 * @throws SeatsNotAvailableException 
+	 * @throws CourseLimitExceededException 
+	 * @throws CourseNotFoundException 
 	 */
-	private static void addCourse(int studentId) {
+	private static void addCourse(int studentId) throws CourseLimitExceededException, SeatNotAvailableException, SQLException, CourseNotFoundException {
 		// TODO Auto-generated method stub
-		if (is_registered) {
-			
-			boolean isApproved = studentInterface.isApproved(studentId);
-			if (isApproved) {
-				
-				Vector<Course> availableCourse = viewAvailableCourse(studentId);
-		 		if(availableCourse == null) {
+		
+		
+		boolean checkStatus = false;
+		try {
+			checkStatus = registrationInterface.isSemesterRegistered(studentId);
+		}catch(SQLException se){
+			System.out.println("Error : " + se);
+		}
+		
+		if(checkStatus) {
+			Vector<Course> availableCourse = viewAvailableCourse(studentId);
+			if(availableCourse == null) {
+				return;
+			}
+		
+			System.out.println("Enter the CourseID to ADD: ");
+			int courseId = sc.nextInt();
+			try {
+				boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
+		 		if(checkstatus) {
+		 			System.out.println("Course registration of " + courseId + " done successfully.");
+		 		} else {
+		 			System.out.println("Course registration of " + courseId + " is already done.");
+		 		}
+			}catch(SQLException se) {
+		 			System.out.println("Error : " + se);
+		 			return;
+		 		}catch(CourseLimitExceededException se) {
+		 			System.out.println("Error : " + se);
+		 			return;
+		 		}catch(SeatNotAvailableException se) {
+		 			System.out.println("Error : " + se);
 		 			return;
 		 		}
-
-		 		System.out.println("Enter the CourseID to ADD: ");
-		 		int courseId = sc.nextInt();
-		 		
-		 		try {
-			 		boolean checkstatus = registrationInterface.addCourse(courseId, studentId, availableCourse);
-			 		if(checkstatus) {
-			 			System.out.println("Course registration of " + courseId + " done successfully.");
-			 		} else {
-			 			System.out.println("Course registration of " + courseId + " is already done.");
-			 		}
-		 		} catch (CourseNotFoundException e) {
-		 			System.out.println("Error: " +e.getMessage());
-		 		} catch (CourseLimitExceededException e) {
- 					System.out.println("Error: " + e.getMessage());
- 				} catch (SeatNotAvailableException e) {
- 					System.out.println("Error: " + e.getMessage());
-		 		} catch (SQLException e) {
-		 			System.out.println("Error: " + e.getMessage());
-		 		}
-			} else {
-				System.out.println("You have not been approved yet.");
-			}
-		} else {
-			System.out.println("Registration is still pending!");
+		}else {
+			System.out.println("Semester Registration is still Pending!!");
 		}
 	}
 
 	/**
 	 * Drop Course
 	 * @param studentId
+	 * @throws CourseNotFoundException 
+	 * @throws SQLException 
 	 */
-	private static void dropCourse(int studentId) {
+	private static void dropCourse(int studentId) throws SQLException, CourseNotFoundException {
 		// TODO Auto-generated method stub
 		
-		if (is_registered) {
-			
-			boolean isApproved = studentInterface.isApproved(studentId);
-			if (isApproved) {
-				
-				Vector<Course> availableCourse = viewRegisteredCourse(studentId);
-		 		if(availableCourse == null) {
-		 			return;
-		 		}
-
-		 		System.out.println("Enter the CourseID to DROP: ");
-		 		int courseId = sc.nextInt();
-		 		
-		 		try {
-			 		boolean checkstatus = registrationInterface.dropCourse(courseId, studentId, availableCourse);
-			 		if(checkstatus) {
-			 			System.out.println("Course Deletion of " + courseId + " done successfully.");
-			 		} else {
-			 			System.out.println("Course of " + courseId + " is already deleted.");
-			 		}
-		 		} catch (CourseNotFoundException e) {
-		 			System.out.println("Error: " + e.getMessage());
-		 		} catch (SQLException e) {
-		 			System.out.println("Error: " + e.getMessage());
-		 		}
-			} else {
-				System.out.println("You have not been approved yet.");
-			}
-		} else {
-			System.out.println("Registration is still pending!");
+		boolean checkStatus = false;
+		try {
+			checkStatus = registrationInterface.isSemesterRegistered(studentId);
+		}catch(SQLException se){
+			System.out.println("Error : " + se);
 		}
+		
+		if(checkStatus) {
+			Vector<Course> availableCourse = viewRegisteredCourse(studentId);
+	 		if(availableCourse == null) {
+	 			return;
+	 		}
+
+	 		System.out.println("Enter the CourseID to DROP: ");
+	 		int courseId = sc.nextInt();
+	 		
+	 		try {
+	 			registrationInterface.dropCourse(courseId, studentId, availableCourse);
+	 			System.out.println("Course Deletion of " + courseId + " done successfully.");
+	 		}catch(CourseNotFoundException error) {
+	 			System.out.println("Error : " + error);
+	 		}catch(SQLException se) {
+	 			System.out.println("Error : " + se);
+	 		}
+		}else {
+			System.out.println("Semester Registration is still Pending!!");
+		}
+
+		
+		
 	}
 
 	/**
 	 * View Course
 	 * @param studentId
+	 * @throws SQLException 
 	 */
-	private static Vector<Course> viewAvailableCourse(int studentId) {
+	private static Vector<Course> viewAvailableCourse(int studentId) throws SQLException {
 		// TODO Auto-generated method stub
-		Vector<Course> availableCourses = null;
-		boolean isApproved = studentInterface.isApproved(studentId);
 		
-		if (isApproved) {
-		
-			try {
-		 		availableCourses = registrationInterface.viewCourses(studentId);
-	
-		 		if(availableCourses.isEmpty()) {
-		 			System.out.println("No Courses are available right now!");
-		 			return null;
-		 		}
-	
-		 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
-	 	 		System.out.println();
-	 	 		
-	 	 		for(Course course : availableCourses) {
-	 	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
-	 	 		}
-	 	 		
-	 	 		System.out.println();
-			} catch (SQLException e) {
-				System.out.println("Error: " + e.getMessage());
-			}
-		} else {
-			System.out.println("You have not been approved yet.");
+		boolean checkStatus = false;
+		try {
+			checkStatus = registrationInterface.isSemesterRegistered(studentId);
+		}catch(SQLException se){
+			System.out.println("Error : " + se);
 		}
+		Vector<Course> availableCourses = null;
+		if(checkStatus) {
+			
+			
+			try {
+				availableCourses = registrationInterface.viewCourses(studentId);
+			}catch(SQLException se) {
+				System.out.println("Error : " + se);
+			}
+			 
+			if(availableCourses.isEmpty()) {
+	 			System.out.println("No Courses are available right now!");
+	 			return null;
+	 		}
+
+	 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
+	 		System.out.println();
+	 		
+	 		availableCourses.forEach((course) -> {
+	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+	 		});
+	 		
+	 		System.out.println();
+		
+			return availableCourses;
+		}else {
+			System.out.println("Semester Registration is still Pending!!");
+		}
+		
 		return availableCourses;
 	}
 
@@ -283,34 +297,43 @@ public class CRSStudentMenu {
 	private static Vector<Course> viewRegisteredCourse(int studentId) {
 		// TODO Auto-generated method stub
 		
-		Vector<Course> registeredCourses = null;
-		boolean isApproved = studentInterface.isApproved(studentId);
+		boolean checkStatus = false;
+		try {
+			checkStatus = registrationInterface.isSemesterRegistered(studentId);
+		}catch(SQLException se){
+			System.out.println("Error : " + se);
+		}
 		
-		if (isApproved) {
-					
+		Vector<Course> registeredCourses = null;
+				
+		if(checkStatus) {
 			try {
 				registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
-	
-		 		if(registeredCourses.isEmpty()) {
-		 			System.out.println("No Courses are Registered!");
-		 			return null;
-		 		}
-	
-		 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
-	 	 		System.out.println();
-	 	 		
-	 	 		for(Course course : registeredCourses) {
-	 	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
-	 	 		}
-	 	 		
-	 	 		System.out.println();	
-			} catch (SQLException e) {
-				System.out.println("Error: " + e.getMessage());
+			}catch(SQLException se){
+				System.out.println("Error: " + se);
 			}
-		} else {
-			System.out.println("You have not been approved yet.");
+			
+			if(registeredCourses.isEmpty()) {
+	 			System.out.println("No Courses are Registered!");
+	 			return null;
+	 		}
+
+	 		System.out.println(String.format("%-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES"));
+	 		System.out.println();
+	 		
+	 		registeredCourses.forEach((course) -> {
+	 			System.out.println(String.format("%-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee()));
+	 		});
+	 		
+	 		
+	 		System.out.println();	
+			
+	 		return registeredCourses;
+		}else {
+			System.out.println("Semester Registration is still Pending!!");
 		}
- 		return registeredCourses;
+		
+		return registeredCourses;
 	}
 
 	/**
@@ -368,20 +391,30 @@ public class CRSStudentMenu {
 		try {
 			fee = registrationInterface.calculateFee(studentId);
 	
-	 		boolean isapprove = true;
+	 		int totalRegistered = registrationInterface.totalRegisteredCourses(studentId);
+	 		if(totalRegistered != 6) {
+	 			System.out.println("You have not registered for 6 courses!!");
+	 			return;
+	 		}
 	 		boolean ispaid = false;
 	 		int notificationId = 0;
 	
-	 		isapprove = registrationInterface.getRegistrationStatus(studentId);
+	 		boolean checkStatus = false;
+			try {
+				checkStatus = registrationInterface.isSemesterRegistered(studentId);
+			}catch(SQLException se){
+				System.out.println("Error : " + se);
+			}
+			
 	 		ispaid = registrationInterface.getPaymentStatus(studentId);
 	
-	 		if(!isapprove) {
+	 		if(!checkStatus) {
 	 			System.out.println("You have not registered yet.");
 	 		}
 	 		else if(ispaid) {
 	 			System.out.println("You have already paid the fees.");
 	 		}
-	 		else if(isapprove && !ispaid) {
+	 		else if(checkStatus && !ispaid) {
 	 			System.out.println("Total Fees = " + fee);
 	 			System.out.println("Want to continue Fee Payment(y/n): ");
 	 			String ch = sc.next();
@@ -432,29 +465,44 @@ public class CRSStudentMenu {
 	private static void paymentByCard(int studentId) {
 		// TODO Auto-generated method stub
 		try {
-			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
-	
+			CardPayment card = new CardPayment();
+			
 	 		System.out.println("Enter Card Type: ");
 	 		String cardType = sc.next();
-	
+	 		card.setCardType(cardType);
+	 		
 	 		System.out.println("Enter Card Number: ");
 	 		String cardNumber = sc.next();
-	
+	 		card.setCardNumber(cardNumber);
+	 		
+	 		sc.nextLine();
+	 		
 	 		System.out.println("Enter Card Holder Name: ");
-	 		String cardHolderName = sc.next();
+	 		String cardHolderName = sc.nextLine();
+	 		card.setCardHolderName(cardHolderName);
 	
 	 		System.out.println("Enter CVV: ");
 	 		int cvv = sc.nextInt();
-	
+	 		card.setCvv(cvv);
+	 		
+	 		sc.nextLine();
+	 		
 	 		System.out.println("Enter Bank Name: ");
-	 		String bankName = sc.next();
+	 		String bankName = sc.nextLine();
+	 		card.setBankName(bankName);
 	 
 	 		System.out.println("Enter Expiry Date (yyyy-mm-dd): ");
 	 		String date = sc.next();
 	
 	 		Date expiryDate = Date.valueOf(date);
-	
-	 		registrationInterface.paymentByCard(studentId, invoiceId, cardType, cardNumber, cardHolderName, cvv, bankName, expiryDate);
+	 		card.setExpiryDate(expiryDate);
+	 		
+	 		card.setInvoiceId(invoiceId);
+	 		card.setStudentId(studentId);
+	 		
+	 		registrationInterface.paymentByCard(card);
+	 		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+	 		
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
@@ -464,32 +512,49 @@ public class CRSStudentMenu {
 		// TODO Auto-generated method stub
 		
 		try {
-			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
-	
+			
+			Cheque cheque = new Cheque();
+			
 	 		System.out.println("Enter Cheque Number: ");
 	 		int chequeNo = sc.nextInt();
-	
+	 		cheque.setChequeNo(chequeNo);
+	 		
+	 		sc.nextLine();
+	 		
 	 		System.out.println("Enter Bank Account Holder Name: ");
-	 		String bankAccountHolderName = sc.next();
-	
+	 		String bankAccountHolderName = sc.nextLine();
+	 		cheque.setBankAccountHolderName(bankAccountHolderName);
+	 		
 	 		System.out.println("Enter Bank Account Number: ");
 	 		String bankAccountNumber = sc.next();
+	 		cheque.setBankAccountNumber(bankAccountNumber);
 	
 	 		System.out.println("Enter IFSC: ");
 	 		String ifsc = sc.next();
+	 		cheque.setIfsc(ifsc);
+	 		
+	 		sc.nextLine();
 	
 	 		System.out.println("Enter Bank Name: ");
-	 		String bankName = sc.next();
-	
+	 		String bankName = sc.nextLine();
+	 		cheque.setBankName(bankName);
+	 		
 	 		System.out.println("Enter Bank Branch Name: ");
-	 		String bankBranchName = sc.next();
+	 		String bankBranchName = sc.nextLine();
+	 		cheque.setBankBranchName(bankBranchName);
 	
 	 		System.out.println("Enter Cheque Date (yyyy-mm-dd): ");
 	 		String date = sc.next();
 	
 	 		Date chequeDate = Date.valueOf(date);
-	
-	 		registrationInterface.paymentByCheque(studentId, invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate);
+	 		cheque.setChequeDate(chequeDate);
+	 		
+	 		cheque.setInvoiceId(invoiceId);
+	 		cheque.setStudentId(studentId);
+	 		
+	 		registrationInterface.paymentByCheque(cheque);
+	 		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+	 		
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
@@ -499,15 +564,24 @@ public class CRSStudentMenu {
 		// TODO Auto-generated method stub
 		
 		try {
-			registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
-	
+			NetBanking netBanking = new NetBanking();
+			
+			sc.nextLine();
+			
 	 		System.out.println("Enter Bank Account Holder Name: ");
-	 		String bankAccountHolderName = sc.next();
-	
+	 		String bankAccountHolderName = sc.nextLine();
+	 		netBanking.setBankAccountHolderName(bankAccountHolderName);
+	 		
 	 		System.out.println("Enter Bank Name: ");
-	 		String bankName = sc.next();
-	
-	 		registrationInterface.paymentByNetBanking(studentId, invoiceId, bankAccountHolderName, bankName);
+	 		String bankName = sc.nextLine();
+	 		netBanking.setBankName(bankName);
+	 		
+	 		netBanking.setInvoiceId(invoiceId);
+	 		netBanking.setStudentId(studentId);
+	 		
+	 		registrationInterface.paymentByNetBanking(netBanking);
+	 		registrationInterface.setPaymentStatus(studentId, invoiceId, fee);
+	 		
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}

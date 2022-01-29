@@ -3,7 +3,7 @@
  */
 package com.crs.flipkart.bean;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * @author devanshugarg
@@ -11,8 +11,8 @@ import java.util.Date;
  */
 public class Cheque extends Payment {
 	
-	private String bandAccountHolderName;
-	private int bandAccountNumber;
+	private String bankAccountHolderName;
+	private String bankAccountNumber;
 	private String ifsc;
 	private String bankName;
 	private String bankBranchName;
@@ -31,19 +31,19 @@ public class Cheque extends Payment {
 	 * @param invoiceId
 	 * @param status
 	 * @param amount
-	 * @param bandAccountHolderName
-	 * @param bandAccountNumber
+	 * @param bankAccountHolderName
+	 * @param bankAccountNumber
 	 * @param ifsc
 	 * @param bankName
 	 * @param bankBranchName
 	 * @param chequeNo
 	 * @param chequeDate
 	 */
-	public Cheque(int studentId, int invoiceId, boolean status, double amount, String bandAccountHolderName,
-			int bandAccountNumber, String ifsc, String bankName, String bankBranchName, int chequeNo, Date chequeDate) {
+	public Cheque(int studentId, int invoiceId, boolean status, double amount, String bankAccountHolderName,
+			String bankAccountNumber, String ifsc, String bankName, String bankBranchName, int chequeNo, Date chequeDate) {
 		super(studentId, invoiceId, status, amount);
-		this.bandAccountHolderName = bandAccountHolderName;
-		this.bandAccountNumber = bandAccountNumber;
+		this.bankAccountHolderName = bankAccountHolderName;
+		this.bankAccountNumber = bankAccountNumber;
 		this.ifsc = ifsc;
 		this.bankName = bankName;
 		this.bankBranchName = bankBranchName;
@@ -54,29 +54,29 @@ public class Cheque extends Payment {
 	/**
 	 * @return the bandAccountHolderName
 	 */
-	public String getBandAccountHolderName() {
-		return bandAccountHolderName;
+	public String getBankAccountHolderName() {
+		return bankAccountHolderName;
 	}
 
 	/**
 	 * @param bandAccountHolderName the bandAccountHolderName to set
 	 */
-	public void setBandAccountHolderName(String bandAccountHolderName) {
-		this.bandAccountHolderName = bandAccountHolderName;
+	public void setBankAccountHolderName(String bankAccountHolderName) {
+		this.bankAccountHolderName = bankAccountHolderName;
 	}
 
 	/**
 	 * @return the bandAccountNumber
 	 */
-	public int getBandAccountNumber() {
-		return bandAccountNumber;
+	public String getBankAccountNumber() {
+		return bankAccountNumber;
 	}
 
 	/**
 	 * @param bandAccountNumber the bandAccountNumber to set
 	 */
-	public void setBandAccountNumber(int bandAccountNumber) {
-		this.bandAccountNumber = bandAccountNumber;
+	public void setBankAccountNumber(String bankAccountNumber) {
+		this.bankAccountNumber = bankAccountNumber;
 	}
 
 	/**

@@ -2,20 +2,17 @@
  * 
  */
 package com.crs.flipkart.bean;
-import java.util.Date;
+import java.sql.Date;
 /**
  * @author devanshugarg
  *
  */
 
-enum CardType{
-	DEBIT, CREDIT;
-}
 
 public class CardPayment extends Payment {
 	
-	private CardType cardType;
-	private int cardNumber;
+	private String cardType;
+	private String cardNumber;
 	private String cardHolderName;
 	private Date expiryDate;
 	private int cvv;
@@ -40,7 +37,7 @@ public class CardPayment extends Payment {
 	 * @param cvv
 	 * @param bankName
 	 */
-	public CardPayment(int studentId, int invoiceId, boolean status, double amount, CardType cardType, int cardNumber,
+	public CardPayment(int studentId, int invoiceId, boolean status, double amount, String cardType, String cardNumber,
 			String cardHolderName, Date expiryDate, int cvv, String bankName) {
 		super(studentId, invoiceId, status, amount);
 		this.cardType = cardType;
@@ -54,28 +51,28 @@ public class CardPayment extends Payment {
 	/**
 	 * @return the cardType
 	 */
-	public CardType getCardType() {
+	public String getCardType() {
 		return cardType;
 	}
 
 	/**
 	 * @param cardType the cardType to set
 	 */
-	public void setCardType(CardType cardType) {
+	public void setCardType(String cardType) {
 		this.cardType = cardType;
 	}
 
 	/**
 	 * @return the cardNumber
 	 */
-	public int getCardNumber() {
+	public String getCardNumber() {
 		return cardNumber;
 	}
 
 	/**
 	 * @param cardNumber the cardNumber to set
 	 */
-	public void setCardNumber(int cardNumber) {
+	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 

@@ -7,8 +7,11 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import com.crs.flipkart.bean.CardPayment;
+import com.crs.flipkart.bean.Cheque;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
+import com.crs.flipkart.bean.NetBanking;
 import com.crs.flipkart.dao.RegistrationDaoInterface;
 import com.crs.flipkart.dao.RegistrationDaoOperation;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
@@ -61,6 +64,18 @@ public class RegistrationService implements RegistrationInterface {
  			throw new CourseNotFoundException(courseId);
  		}
  		return registrationDaoOperation.addCourse(studentId, courseId);
+	}
+	
+	@Override
+	public int totalRegisteredCourses(int studentId) throws SQLException {
+		
+		return registrationDaoOperation.totalRegisteredCourses(studentId);
+	}
+	
+	@Override
+	public boolean isSemesterRegistered(int studentId) throws SQLException {
+		
+		return registrationDaoOperation.isSemesterRegistered(studentId);
 	}
 	
 	@Override
@@ -121,23 +136,21 @@ public class RegistrationService implements RegistrationInterface {
 	}
 	
 	@Override
-	public void paymentByCard(int studentId, int invoiceId, String cardType, String cardNumber,
- 			String cardHolderName, int cvv, String bankName, Date expiryDate) throws SQLException {
+	public void paymentByCard(CardPayment card) throws SQLException {
 		
-		registrationDaoOperation.paymentByCard(studentId, invoiceId, cardType, cardNumber, cardHolderName, cvv, bankName, expiryDate);
+		registrationDaoOperation.paymentByCard(card);
 	}
 	
 	@Override
-	public void paymentByCheque(int studentId, int invoiceId, int chequeNo, String bankAccountHolderName,
- 			String bankAccountNumber, String ifsc, String bankName, String bankBranchName, Date chequeDate) throws SQLException {
+	public void paymentByCheque(Cheque cheque) throws SQLException {
 
-		registrationDaoOperation.paymentByCheque(studentId, invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate);
+		registrationDaoOperation.paymentByCheque(cheque);
  	}
 	
 	@Override
-	public void paymentByNetBanking(int studentId, int invoiceId, String bankAccountHolderName, String bankName) throws SQLException {
+	public void paymentByNetBanking(NetBanking netBanking) throws SQLException {
 
-		registrationDaoOperation.paymentByNetBanking(studentId, invoiceId, bankAccountHolderName, bankName);
+		registrationDaoOperation.paymentByNetBanking(netBanking);
  	}
 	
 	@Override

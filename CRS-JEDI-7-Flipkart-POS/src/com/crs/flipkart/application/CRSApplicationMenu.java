@@ -21,6 +21,9 @@ import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
+import com.crs.flipkart.exceptions.CourseLimitExceededException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.SeatNotAvailableException;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.exceptions.UserNotFoundException;
 import com.crs.flipkart.utils.Utils;
@@ -101,8 +104,12 @@ public class CRSApplicationMenu {
 	
 	/**
 	 * User Login
+	 * @throws CourseNotFoundException 
+	 * @throws SQLException 
+	 * @throws SeatNotAvailableException 
+	 * @throws CourseLimitExceededException 
 	 */
-	private static void userLogin() {
+	private static void userLogin() throws CourseLimitExceededException, SeatNotAvailableException, SQLException, CourseNotFoundException {
 		
 		try {
 			System.out.println("-----------------Login------------------");
@@ -221,13 +228,7 @@ public class CRSApplicationMenu {
 		
 			int studentId = studentService.register(student);
 			
-			try {
-				int notificationId = notificationService.sendRegistrationNotification(NotificationTypeConstant.REGISTRATION, studentId);
-				System.out.println("Notification Id: " + notificationId);
-				System.out.println("Keep it for future references.");
-			} catch (SQLException e) {
-				System.out.println("Error: " + e.getMessage());
-			}
+			
 			
 		} catch (StudentNotRegisteredException e) {
 			System.out.println("Error: " + e.getMessage());

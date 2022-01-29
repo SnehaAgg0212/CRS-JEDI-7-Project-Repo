@@ -45,7 +45,7 @@ public class SQLQueriesConstant {
  	public static final String ADD_COURSE_TO_PROFESSOR = "update Professor set courseId = ? where professorId = ?";
  	public static final String GET_AVAILABLE_COURSES = "select course.courseId, course.courseName, course.courseDescription, course.courseFee, course.courseSeats from course where courseId not in (select courseId from Professor)";
  	public static final String CHECK_SELECTED_COURSE = "select courseId from professor where professorId = ?";
- 	
+ 	public static final String CHECK_SEMESTER_REGISTRATION = "select semesterId from semesterRegistration where studentId = ?";
  	public static final String VIEW_AVAILABLE_COURSES = "select * from Course where courseSeats > 0 and courseId not in (select courseId from registeredCourse where studentId = ?)";
  	public static final String TOTAL_REGISTERED_COURSES = "select courseId from registeredCourse where studentId = ?";
  	public static final String AVAILABLE_SEATS = "select courseSeats from Course where courseId = ?";
