@@ -109,14 +109,16 @@ public class CRSAdminMenu {
 	 */
 	private static Vector<Student> viewPendingAdmissions() {
 		
-		System.out.println("---------------Viewing Pending Admissions-------------");
-		
 		Vector<Student> pendingStudents = adminServices.viewPendingAdmissions();
 		
  		if(pendingStudents.size() == 0) {
  			System.out.println("No student left for approving admission.");
  			return pendingStudents;
  		}
+		
+		System.out.println("---------------Viewing Pending Admissions-------------");
+		
+		
 
  		System.out.println(String.format("%20s %20s %20s", "StudentId", "Name", "GenderConstant"));
  		
@@ -131,13 +133,15 @@ public class CRSAdminMenu {
 	 */
 	private static void approveStudent() {
 		
-		System.out.println("---------------Student Approval Panel-------------");
-		
 		Vector<Student> pendingStudents = viewPendingAdmissions();
 		
  		if(pendingStudents.size() == 0) {
  			return;
  		}
+		
+		System.out.println("---------------Student Approval Panel-------------");
+		
+		
 
  		System.out.println("Enter the Student Id: ");
  		int studentId = sc.nextInt();
@@ -149,10 +153,10 @@ public class CRSAdminMenu {
 				int notificationId = notificationService.sendApprovalNotification(NotificationTypeConstant.APPROVAL, studentId);
 				System.out.println("Notification Id: " + notificationId);
 	 		} catch (SQLException e) {
-	 			System.out.println("Error: " + e.getMessage());
+	 			System.out.println("Error: " + e);
 	 		}
  		} catch (StudentNotFoundForApprovalException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			System.out.println("Error: " + e);
  		}
 	}
 	
@@ -204,9 +208,9 @@ public class CRSAdminMenu {
 	    try {
 	    	adminServices.addProfessor(professor);
 	    } catch (ProfessorNotAddedException e) {
-	    	System.out.println("Error: " + e.getMessage());
+	    	System.out.println("Error: " + e);
 	    } catch (UserIdAlreadyInUseException e) {
-	    	System.out.println("Error: " + e.getMessage());
+	    	System.out.println("Error: " + e);
 	    }
 	}
 	
@@ -215,10 +219,14 @@ public class CRSAdminMenu {
 	 */
 	private static void viewProfessor() {
 		
+		Vector<Professor> ProfessorList = adminServices.viewProfessor();
+		if(ProfessorList.size() == 0) {
+			System.out.println("No Professor has been added!");
+ 			return;
+		}
+		
 		System.out.println("---------------Professor Details Display Panel-------------");
 		System.out.println();
-	    
-	    Vector<Professor> ProfessorList = adminServices.viewProfessor();
 	    
 	    System.out.println(String.format("%-20s %-20s %-20s %-20s", "PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
 	    
@@ -235,7 +243,22 @@ public class CRSAdminMenu {
 	 */
 	private static void deleteProfessor() {
 		
+		Vector<Professor> ProfessorList = adminServices.viewProfessor();
+		if(ProfessorList.size() == 0) {
+			System.out.println("No Professor has been added!");
+ 			return;
+		}
+		
 		System.out.println("---------------Professor Removal Panel-------------");
+		
+		System.out.println();
+	    
+	    System.out.println(String.format("%-20s %-20s %-20s %-20s", "PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
+	    
+	    for(int i = 0; i < ProfessorList.size(); i++){
+	    	
+	    	System.out.println(String.format(" %-20s %-20s %-20s %-20s", ProfessorList.get(i).getProfessorId(), ProfessorList.get(i).getUserName(), ProfessorList.get(i).getDepartment(), ProfessorList.get(i).getDesignation()));
+	    }
 		
 	    System.out.println("Enter Professor ID: ");
 	    int professorId = sc.nextInt();
@@ -243,9 +266,9 @@ public class CRSAdminMenu {
 	    try {
 	    	adminServices.deleteProfessor(professorId);
 	    } catch (ProfessorNotDeletedException e) {
-	    	System.out.println("Error: " + e.getMessage());
+	    	System.out.println("Error: " + e);
 	    } catch (ProfessorNotFoundException e) {
-	    	System.out.println("Error: " + e.getMessage());
+	    	System.out.println("Error: " + e);
 	    }
 	}
 	
@@ -282,7 +305,7 @@ public class CRSAdminMenu {
 	    try {
 	    	adminServices.addCourse(course, viewCoursesInCatalog());
 	    } catch (CourseAlreadyExistsException e) {
-	    	System.out.println("Error: " + e.getMessage());
+	    	System.out.println("Error: " + e);
 	    }
 	}
 	
@@ -291,10 +314,16 @@ public class CRSAdminMenu {
 	 */
 	private static Vector<Course> viewCoursesInCatalog() {
 		
+		Vector<Course> CourseList = adminServices.viewCourse();
+		if(CourseList.size() == 0) {
+			System.out.println("No Courses has been added!");
+ 			return null;
+		}
+		
 		System.out.println("-------------Viewing Courses In Catalog-------------");
 		System.out.println();
 		
-		Vector<Course> CourseList = adminServices.viewCourse();
+		
 		
 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
 		
@@ -313,7 +342,22 @@ public class CRSAdminMenu {
 	 */
 	private static void deleteCourseFromCatalog() {
 		
+		Vector<Course> CourseList = adminServices.viewCourse();
+		if(CourseList.size() == 0) {
+			System.out.println("No Courses has been added!");
+ 			return;
+		}
+		
 		System.out.println("-------------Delete Course From Catalog-------------");
+		
+		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
+		
+		for(int i = 0; i < CourseList.size(); i++){
+    		
+			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", CourseList.get(i).getCourseId(), CourseList.get(i).getCourseName(), CourseList.get(i).getCourseDescription(), CourseList.get(i).getCourseFee(), CourseList.get(i).getCourseSeats()));
+		}
+		
+		System.out.println();
 		
 		System.out.println("Enter Course Code: ");
 	    int courseId = sc.nextInt();
@@ -321,9 +365,9 @@ public class CRSAdminMenu {
 	    try {
 	    	adminServices.deleteCourse(courseId, viewCoursesInCatalog());
 	    } catch (CourseNotDeletedException e) {
-	    	System.out.println("Error: " + e.getMessage());
+	    	System.out.println("Error: " + e);
 	    } catch (CourseNotFoundException e) {
-	    	System.out.println("Error: " + e.getMessage());
+	    	System.out.println("Error: " + e);
 	    }
 	}
 	
@@ -344,7 +388,7 @@ public class CRSAdminMenu {
 			adminServices.generateGradeCard(studentId, semester);
 			adminServices.setIsGenerateGrade(studentId);
 		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("Error: " + e);
 		}
 	}
 }

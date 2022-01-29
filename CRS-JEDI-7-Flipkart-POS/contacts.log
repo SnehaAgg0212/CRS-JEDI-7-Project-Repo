@@ -29,3 +29,46 @@
 14:44:39,709 ERROR StudentDaoOperation,main:138 - Error: No operations allowed after connection closed.
 14:44:39,709 ERROR StudentDaoOperation,main:162 - Error: No operations allowed after connection closed.
 14:49:23,092  INFO NotificationDaoOperation,main:76 - Payment is successful of Amount - Rs. 4080.0 through NET_BANKING.
+15:40:53,289  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+15:41:00,709  INFO AdminDaoOperation,main:350 - Total Number of Courses: 7
+15:41:22,834  INFO AdminDaoOperation,main:255 - 0 students have approval pending.
+15:41:29,073  INFO AdminDaoOperation,main:255 - 0 students have approval pending.
+15:44:55,862  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+15:44:58,010  INFO AdminDaoOperation,main:350 - Total Number of Courses: 7
+15:45:00,303  INFO AdminDaoOperation,main:255 - 0 students have approval pending.
+15:45:04,727  INFO AdminDaoOperation,main:255 - 0 students have approval pending.
+15:47:53,338  INFO AdminDaoOperation,main:350 - Total Number of Courses: 7
+15:50:24,656  INFO AdminDaoOperation,main:350 - Total Number of Courses: 7
+15:50:32,256  INFO AdminDaoOperation,main:350 - Total Number of Courses: 7
+15:50:32,259 ERROR AdminService,main:165 - Course with Course Code: 6 is not present in Catalog.
+15:51:39,938  INFO AdminDaoOperation,main:255 - 0 students have approval pending.
+15:51:54,531  INFO AdminDaoOperation,main:350 - Total Number of Courses: 7
+15:51:54,546  INFO AdminDaoOperation,main:314 - 1 course added.
+15:51:54,546  INFO AdminDaoOperation,main:318 - Course with Course Code 2 added.
+15:58:58,794  INFO AdminDaoOperation,main:350 - Total Number of Courses: 8
+15:59:04,819  INFO AdminDaoOperation,main:350 - Total Number of Courses: 8
+15:59:04,822 ERROR AdminService,main:165 - Course with Course Code: 108 is not present in Catalog.
+15:59:16,665  INFO AdminDaoOperation,main:350 - Total Number of Courses: 8
+15:59:21,011  INFO AdminDaoOperation,main:350 - Total Number of Courses: 8
+15:59:21,022  INFO AdminDaoOperation,main:373 - 1 course deleted.
+15:59:21,023  INFO AdminDaoOperation,main:377 - Course with Course Id 2 deleted.
+15:59:25,931  INFO AdminDaoOperation,main:350 - Total Number of Courses: 7
+16:02:26,594  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+16:02:33,540  INFO AdminDaoOperation,main:193 - 1 professor deleted.
+16:02:33,541  INFO AdminDaoOperation,main:197 - Professor with Professor Id 201 deleted.
+16:02:38,162  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 2
+16:02:40,262  INFO AdminDaoOperation,main:193 - 0 professor deleted.
+16:02:40,263  INFO AdminDaoOperation,main:195 - Professor with Professor Id 1001 does not exists.
+16:07:21,815  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 2
+16:07:23,403  INFO AdminDaoOperation,main:193 - 0 professor deleted.
+16:07:36,623  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 2
+16:08:12,808  INFO AdminDaoOperation,main:352 - Total Number of Courses: 7
+16:08:12,819  INFO AdminDaoOperation,main:316 - 1 course added.
+16:08:12,820  INFO AdminDaoOperation,main:320 - Course with Course Code 108 added.
+16:08:16,655  INFO AdminDaoOperation,main:352 - Total Number of Courses: 8
+16:08:29,954  INFO AdminDaoOperation,main:257 - 0 students have approval pending.
+16:09:30,688  INFO AdminDaoOperation,main:92 - 1 user added.
+16:09:30,688  INFO AdminDaoOperation,main:96 - User with User Id 661853465 added.
+16:09:30,692  INFO AdminDaoOperation,main:133 - 1 professor added.
+16:09:30,692  INFO AdminDaoOperation,main:138 - Professor with Professor Id 273353098 added.
+16:10:33,652  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3

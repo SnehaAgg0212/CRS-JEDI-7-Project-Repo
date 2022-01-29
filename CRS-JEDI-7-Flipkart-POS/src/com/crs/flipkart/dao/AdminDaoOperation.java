@@ -192,9 +192,11 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			int row = statement.executeUpdate();
 			logger.info(row + " professor deleted.");
 			if (row == 0) {
-				logger.info("Professor with Professor Id " + professorId + " does not exists.");
+				throw new ProfessorNotFoundException(professorId);
+				//logger.info("Professor with Professor Id " + professorId + " does not exists.");
 			} else {
-				logger.info("Professor with Professor Id " + professorId + " deleted.");
+				throw new ProfessorNotDeletedException(professorId);
+				//logger.info("Professor with Professor Id " + professorId + " deleted.");
 			}
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
