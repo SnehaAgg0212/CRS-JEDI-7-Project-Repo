@@ -6,6 +6,7 @@ import java.util.*;
 import com.crs.flipkart.bean.*;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
 import com.crs.flipkart.dao.ProfessorDaoOperation;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
 /**
  * @author devanshugarg
  *
@@ -133,13 +134,16 @@ public class ProfessorService implements ProfessorInterface {
 	 * @param courseSelectedId
 	 * @return
 	 * @throws SQLException 
+	 * @throws CourseNotFoundException 
 	 */
 	@Override
-	public boolean addCourse(int professorId, int courseSelectedId) throws SQLException {
+	public boolean addCourse(int professorId, int courseSelectedId) throws SQLException, CourseNotFoundException {
 
  		try {
  			if(!professorDaoOperation.checkSelectedCourse(professorId)) {
  				return false;
+ 			}else if(!professorDaoOperation.checkCourse(courseSelectedId)) {
+ 				throw new CourseNotFoundException(courseSelectedId);
  			}
  			return professorDaoOperation.addCourse(professorId, courseSelectedId);
  		} catch (SQLException e) {

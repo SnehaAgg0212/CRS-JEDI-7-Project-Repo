@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.EnrolledStudent;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
 
 public interface ProfessorInterface {
 
@@ -56,8 +57,9 @@ public interface ProfessorInterface {
 	 * @param courseSelectedId
 	 * @return
 	 * @throws SQLException 
+	 * @throws CourseNotFoundException 
 	 */
-	boolean addCourse(int professorId, int courseSelectedId) throws SQLException;
+	boolean addCourse(int professorId, int courseSelectedId) throws SQLException, CourseNotFoundException;
 
 	/**
 	 * 

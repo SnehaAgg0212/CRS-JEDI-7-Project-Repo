@@ -24,20 +24,16 @@ public class SQLQueriesConstant {
 	public static final String GET_PROFESSOR_ID = "select professorId from professor where userId = ?";
 	public static final String IS_APPROVED = "select isApproved from student where studentId = ?";
 	public static final String VIEW_COURSES_GRADE = "select courseId, gpa from gradecard where studentId = ? and semesterId = ?";
-	
 	public static final String ADD_STUDENT_QUERY = "insert into Student(userId, branchName, batch, studentId) values (?, ?, ?, ?)";
-	
 	public static final String GET_REGISTERED_COURSE_FEE = "select courseFee from course where courseId IN (select courseId from registeredcourse where studentId = ?)";
  	public static final String PAYMENT_STATUS = "select status from payment where studentId = ?";
-
  	public static final String ADD_PAYMENT = "insert into payment(invoiceId, studentId, amount, status) values(?, ?, ?, ?)";
  	public static final String PAYMENT_CARD = "insert into card(invoiceId, cardType, cardNumber, cardHolderName, cvv, bankName, expiryDate) values(?, ?, ?, ?, ?, ?, ?)";
  	public static final String PAYMENT_CHEQUE = "insert into cheque(invoiceId, chequeNo, bankAccountHolderName, bankAccountNumber, ifsc, bankName, bankBranchName, chequeDate) values(?, ?, ?, ?, ?, ?, ?, ?)";
  	public static final String PAYMENT_NETBANKING = "insert into netbanking(bankName, bankAccountHolderName, invoiceId) values(?, ?, ?)";
-
  	public static final String SET_GRADECARD_STATUS = "update Student set isGenerated = 1 where studentId = ?";
  	public static final String IS_GENERATED = "select isGenerated from student where studentId = ?";
- 	
+ 	public static final String CHECK_COURSE = "select courseId from course where courseId = ?";
  	public static final String GET_COURSES = "select professor.professorId, course.courseId, course.courseName, course.courseSeats from course INNER JOIN professor where course.courseId = professor.courseId and professorId = ?";
  	public static final String GET_ENROLLED_STUDENTS = "select professor.professorId as professorId, course.courseId as courseId, course.courseName as courseName, registeredcourse.studentId as studentId from course inner join registeredcourse on course.courseId = registeredcourse.courseId INNER JOIN professor on course.courseId = professor.courseId where professor.professorId = ? order by course.courseId";
  	public static final String ADD_GRADE = "update gradecard set gpa=? where courseId=? and studentId=? and semesterId = ?";
@@ -56,16 +52,12 @@ public class SQLQueriesConstant {
  	public static final String VIEW_REGISTERED_COURSES = "select * from Course inner join registeredCourse on Course.courseId = registeredCourse.courseId where registeredCourse.studentId = ?";
  	public static final String CHECK_STUDENT_AND_SEM = "select studentId from semesterRegistration where studentId = ? and semester = ?";
  	public static final String ADD_SEMESTER = "insert into semesterRegistration(semesterId, studentId, semester, date) values (?, ?, ?, curdate())";
-
  	public static final String UPDATE_PASSWORD = "update user set userPassword=? where userEmailId = ?";
  	public static final String VERIFY_CREDENTIALS = "select userPassword from user where userEmailId = ?";
  	public static final String GET_ROLE = "select userId, role from user where userEmailId = ?";
  	public static final String GET_USER_ID = "select userId from user where userEmailId = ?";
- 	
  	public static final String INSERT_NOTIFICATION = "insert into notification(studentId, notificationType, notificationId, referenceId, notificationContent) values(?, ?, ?, ?, ?);";
- 	
  	public static final String VIEW_PENDING_ADMISSION_QUERY = "select user.userId, user.userName, user.userPassword, user.role, user.gender, user.address, studentId from user inner join student where isApproved = 0 and student.userId = user.userId";
- 	
  	public static final String ADD_NOTIFICATION = "insert into notification(notificationId, studentId, notificationType, referenceId, notificationContent) values (?, ?, ?, ?, ?)";
  	public static final String IS_REGISTERED = "select courseId from registeredCourse where courseId = ? and studentId = ?";
 }

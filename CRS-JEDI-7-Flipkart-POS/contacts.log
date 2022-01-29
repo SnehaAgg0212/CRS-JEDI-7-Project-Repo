@@ -19,3 +19,13 @@
 14:37:56,261  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 0
 14:39:30,314  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 0
 14:40:44,345  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 1321411508
+14:42:17,457  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 1937293639
+14:42:29,954 ERROR UserDaoOperation,main:75 - Error: No operations allowed after connection closed.
+14:43:57,272  INFO AdminDaoOperation,main:255 - 1 students have approval pending.
+14:44:06,599  INFO AdminDaoOperation,main:255 - 1 students have approval pending.
+14:44:12,243  INFO AdminDaoOperation,main:219 - 1 student approved.
+14:44:12,244  INFO AdminDaoOperation,main:223 - Student with Student Id 1937293639 is approved.
+14:44:12,313  INFO NotificationDaoOperation,main:140 - Student with Student Id: 1937293639 is approved successfully.
+14:44:39,709 ERROR StudentDaoOperation,main:138 - Error: No operations allowed after connection closed.
+14:44:39,709 ERROR StudentDaoOperation,main:162 - Error: No operations allowed after connection closed.
+14:49:23,092  INFO NotificationDaoOperation,main:76 - Payment is successful of Amount - Rs. 4080.0 through NET_BANKING.

@@ -73,4 +73,12 @@ public interface ProfessorDaoInterface {
 	 */
 	int getProfessorId(int userId) throws SQLException;
 
+	/**
+	 * 
+	 * @param professorId
+	 * @return
+	 * @throws SQLException
+	 */
+	boolean checkCourse(int professorId) throws SQLException;
+
 }

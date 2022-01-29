@@ -134,6 +134,30 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 
  		return false;
  	}
+	
+	/**
+	 * 
+	 * @param professorId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean checkCourse(int courseId) throws SQLException {
+		Connection connection = DBUtils.getConnection();
+ 		try {
+ 			String sql = SQLQueriesConstant.CHECK_COURSE;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, courseId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			if(resultSet.next()) {
+ 				return true;
+ 			}
+ 		} catch(SQLException e) {
+ 			logger.error("Error: " + e.getMessage());
+ 		}
+
+ 		return false;
+ 	}
 
 	/**
 	 * 
