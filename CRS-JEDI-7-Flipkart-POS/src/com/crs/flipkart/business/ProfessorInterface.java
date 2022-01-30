@@ -18,7 +18,7 @@ public interface ProfessorInterface {
 	 * @return
 	 * @throws SQLException 
 	 */
-	boolean addGrade(int studentId, int courseCode, double gpa, int semesterId) throws SQLException;
+	boolean addGrade(int studentId, int courseCode, double gpa) throws SQLException;
 
 	/**
 	 * 

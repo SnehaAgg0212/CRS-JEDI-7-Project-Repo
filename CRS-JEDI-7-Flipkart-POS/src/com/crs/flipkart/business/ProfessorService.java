@@ -50,10 +50,10 @@ public class ProfessorService implements ProfessorInterface {
 	 * @throws SQLException 
 	 */
 	@Override
-	public boolean addGrade(int studentId, int courseCode, double gpa, int semesterId) throws SQLException {
+	public boolean addGrade(int studentId, int courseCode, double gpa) throws SQLException {
 		
 		try {
-			professorDaoOperation.addGrade(studentId, courseCode, gpa, semesterId);
+			professorDaoOperation.addGrade(studentId, courseCode, gpa);
 		} catch (SQLException e) {
 			throw e;
 		}

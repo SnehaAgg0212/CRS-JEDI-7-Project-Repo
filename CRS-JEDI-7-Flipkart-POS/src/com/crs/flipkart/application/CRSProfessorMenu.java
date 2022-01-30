@@ -139,7 +139,7 @@ public class CRSProfessorMenu {
 	private static void addGrade(int professorId) {
 		// TODO Auto-generated method stub
 		
-		int courseCode, studentId, semesterId;
+		int courseCode, studentId;
  		double grade;
 
  		try {
@@ -149,19 +149,21 @@ public class CRSProfessorMenu {
 			enrolledStudents.forEach ((obj) -> {
 				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
 			});
-			Vector<Course> coursesEnrolled = new Vector<Course>();
+			Vector<Course> coursesEnrolled = professorService.viewCourses(professorId);
+			Course course = coursesEnrolled.get(0);
+			courseCode = course.getCourseId();
 			coursesEnrolled	= professorService.viewCourses(professorId);
 			System.out.println("----------------Add Grade--------------");
 			System.out.printf("Enter Student Id: ");
 			studentId = sc.nextInt();
-			System.out.printf("Enter Course Code: ");
-			courseCode = sc.nextInt();
+			//System.out.printf("Enter Course Code: ");
+			//courseCode = sc.nextInt();
 			System.out.println("Enter Grade: ");
 			grade = sc.nextDouble();
-			System.out.println("Enter Semester Id: ");
-			semesterId = sc.nextInt();
+			//System.out.println("Enter Semester Id: ");
+			//semesterId = sc.nextInt();
 			if (ProfessorValidator.isValidStudent(enrolledStudents, studentId) && ProfessorValidator.isValidCourse(coursesEnrolled, courseCode)) {
-				professorService.addGrade(studentId, courseCode, grade, semesterId);
+				professorService.addGrade(studentId, courseCode, grade);
 				System.out.println("Grade added successfully for " + studentId);
 			} else {
 				System.out.println("Grade cannot be added for " + studentId);
