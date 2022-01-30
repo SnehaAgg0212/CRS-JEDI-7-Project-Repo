@@ -26,7 +26,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	private static volatile ProfessorDaoOperation instance = null;
 	private static Logger logger = Logger.getLogger(UserDaoOperation.class);
 	Connection connection = DBUtils.getConnection();
-	private PreparedStatement statement = null;
+	private PreparedStatement statement, semesterStatement = null;
 	
 	/**
 	 * Default Constructor
@@ -60,18 +60,28 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean addGrade(int studentId, int courseId, double gpa, int semesterId) throws SQLException {
+	public boolean addGrade(int studentId, int courseId, double gpa) throws SQLException {
 		// TODO Auto-generated method stub
 		Connection connection = DBUtils.getConnection();
 		statement = null;
+		int semesterId = 0;
 		
 		try {
+			
+			String CheckSemestersql = SQLQueriesConstant.CHECK_SEMESTER_REGISTRATION;
+			semesterStatement = connection.prepareStatement(CheckSemestersql);
+			semesterStatement.setInt(1, studentId);
+			ResultSet resultSet = semesterStatement.executeQuery();
+			while (resultSet.next()) {
+				semesterId = resultSet.getInt(1);
+			}
+			
 			String sql = SQLQueriesConstant.ADD_GRADE;
  			statement = connection.prepareStatement(sql);
- 			statement.setDouble(1, gpa);
- 			statement.setInt(2, courseId);
- 			statement.setInt(3, studentId);
- 			statement.setInt(4, semesterId);
+ 			statement.setInt(1, courseId);
+ 			statement.setInt(2, studentId);
+ 			statement.setInt(3, semesterId);
+ 			statement.setDouble(4, gpa);
  			int row = statement.executeUpdate();
  			if (row == 1) {
  				return true;

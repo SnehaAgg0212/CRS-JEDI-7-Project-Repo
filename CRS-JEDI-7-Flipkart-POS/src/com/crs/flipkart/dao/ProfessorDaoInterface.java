@@ -15,7 +15,7 @@ public interface ProfessorDaoInterface {
 	 * @param grade
 	 * @throws SQLException 
 	 */
-	boolean addGrade(int studentId, int courseId, double gpa, int semesterId) throws SQLException;
+	boolean addGrade(int studentId, int courseId, double gpa) throws SQLException;
 
 	/**
 	 * 
