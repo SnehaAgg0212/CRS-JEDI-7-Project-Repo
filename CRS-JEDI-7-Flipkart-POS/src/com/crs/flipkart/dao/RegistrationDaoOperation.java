@@ -621,7 +621,7 @@ public class RegistrationDaoOperation implements RegistrationDaoInterface {
 	
 	/**
 	 * 
-	 * @param courseCode
+	 * @param courseId
 	 * @param studentId
 	 * @return
 	 * @throws SQLException

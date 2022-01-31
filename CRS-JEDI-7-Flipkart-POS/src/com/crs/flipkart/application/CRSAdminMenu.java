@@ -27,7 +27,7 @@ import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 
 /**
- * @author LENOVO
+ * @author devanshugarg
  *
  */
 public class CRSAdminMenu {
