@@ -19,8 +19,11 @@ import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.constants.GenderConstant;
-import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
+import com.crs.flipkart.exceptions.CourseLimitExceededException;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorAlreadyRegisteredException;
+import com.crs.flipkart.exceptions.SeatNotAvailableException;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.exceptions.UserNotFoundException;
 import com.crs.flipkart.utils.Utils;
@@ -101,8 +104,13 @@ public class CRSApplicationMenu {
 	
 	/**
 	 * User Login
+	 * @throws CourseNotFoundException 
+	 * @throws SQLException 
+	 * @throws SeatNotAvailableException 
+	 * @throws CourseLimitExceededException 
+	 * @throws ProfessorAlreadyRegisteredException 
 	 */
-	private static void userLogin() {
+	private static void userLogin() throws CourseLimitExceededException, SeatNotAvailableException, SQLException, CourseNotFoundException, ProfessorAlreadyRegisteredException {
 		
 		try {
 			System.out.println("-----------------Login------------------");
@@ -172,7 +180,6 @@ public class CRSApplicationMenu {
 			System.out.println("---------------Student Registration-------------");
 			
 			int userId = Utils.generateId();
-	//		int studentId = Utils.generateId();
 			
 			String studentName, studentEmailId, studentPassword, studentPhoneNo, studentBranch, studentAddress;
 			int studentBatch, studentGender;
@@ -219,15 +226,7 @@ public class CRSApplicationMenu {
 			student.setUserId(userId);
 			student.setRole(RoleConstant.STUDENT);
 		
-			int studentId = studentService.register(student);
-			
-			try {
-				int notificationId = notificationService.sendRegistrationNotification(NotificationTypeConstant.REGISTRATION, studentId);
-				System.out.println("Notification Id: " + notificationId);
-				System.out.println("Keep it for future references.");
-			} catch (SQLException e) {
-				System.out.println("Error: " + e.getMessage());
-			}
+			studentService.register(student);
 			
 		} catch (StudentNotRegisteredException e) {
 			System.out.println("Error: " + e.getMessage());

@@ -12,6 +12,8 @@ import com.crs.flipkart.bean.EnrolledStudent;
 import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
+import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorAlreadyRegisteredException;
 import com.crs.flipkart.validator.ProfessorValidator;
 
 /**
@@ -30,8 +32,9 @@ public class CRSProfessorMenu {
 	
 	/**
 	 * Method to Create Main Menu
+	 * @throws ProfessorAlreadyRegisteredException 
 	 */
-	public static void createProfessorMenu(int professorId)
+	public static void createProfessorMenu(int professorId) throws ProfessorAlreadyRegisteredException
 	{
 		
 		while(CRSApplicationMenu.loggedin) {
@@ -80,8 +83,9 @@ public class CRSProfessorMenu {
 	/**
 	 * Choose Courses
 	 * @param professorId
+	 * @throws ProfessorAlreadyRegisteredException 
 	 */
-	private static void chooseCourses(int professorId) {
+	private static void chooseCourses(int professorId) throws ProfessorAlreadyRegisteredException {
 		// TODO Auto-generated method stub
 		
 		try {
@@ -95,12 +99,17 @@ public class CRSProfessorMenu {
 	 		System.out.println();
 	 		System.out.println("Enter the Course you want to teach: ");
 	 		int courseSelected = sc.nextInt();
-	
-	 		boolean status = professorService.addCourse(professorId, courseSelected);
-	 		if(status) {
-	 			System.out.println("CourseId " + courseSelected + " is registered for ProfessorId " + professorId + " successfully.");
-	 		} else {
-	 			System.out.println("Professor has already registered.");
+	 		try {
+	 			boolean status = professorService.addCourse(professorId, courseSelected);
+		 		if(status) {
+		 			System.out.println("CourseId " + courseSelected + " is registered for ProfessorId " + professorId + " successfully.");
+		 		} else {
+		 			throw new ProfessorAlreadyRegisteredException(professorId);
+		 		}
+	 		} catch(CourseNotFoundException e) {
+	 			System.out.println("Error : " + e);
+	 		} catch(ProfessorAlreadyRegisteredException e) {
+	 			System.out.println("Error : " + e);
 	 		}
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
@@ -135,29 +144,31 @@ public class CRSProfessorMenu {
 	private static void addGrade(int professorId) {
 		// TODO Auto-generated method stub
 		
-		int courseCode, studentId, semesterId;
+		int courseCode, studentId;
  		double grade;
 
  		try {
-			Vector<EnrolledStudent> enrolledStudents = new Vector<EnrolledStudent>();
-			enrolledStudents = professorService.viewEnrolledStudents(professorId);
+			Vector<EnrolledStudent> notGradedStudents = new Vector<EnrolledStudent>();
+			notGradedStudents = professorService.viewEnrolledStudents(professorId);
 			System.out.println(String.format("%20s %20s %20s","COURSE CODE", "COURSE NAME", "Student ID"));
-			enrolledStudents.forEach ((obj) -> {
+			notGradedStudents.forEach ((obj) -> {
 				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
 			});
-			Vector<Course> coursesEnrolled = new Vector<Course>();
+			Vector<Course> coursesEnrolled = professorService.viewCourses(professorId);
+			Course course = coursesEnrolled.get(0);
+			courseCode = course.getCourseId();
 			coursesEnrolled	= professorService.viewCourses(professorId);
 			System.out.println("----------------Add Grade--------------");
 			System.out.printf("Enter Student Id: ");
 			studentId = sc.nextInt();
-			System.out.printf("Enter Course Code: ");
-			courseCode = sc.nextInt();
+			//System.out.printf("Enter Course Code: ");
+			//courseCode = sc.nextInt();
 			System.out.println("Enter Grade: ");
 			grade = sc.nextDouble();
-			System.out.println("Enter Semester Id: ");
-			semesterId = sc.nextInt();
-			if (ProfessorValidator.isValidStudent(enrolledStudents, studentId) && ProfessorValidator.isValidCourse(coursesEnrolled, courseCode)) {
-				professorService.addGrade(studentId, courseCode, grade, semesterId);
+			//System.out.println("Enter Semester Id: ");
+			//semesterId = sc.nextInt();
+			if (ProfessorValidator.isValidStudent(notGradedStudents, studentId) && ProfessorValidator.isValidCourse(coursesEnrolled, courseCode)) {
+				professorService.addGrade(studentId, courseCode, grade);
 				System.out.println("Grade added successfully for " + studentId);
 			} else {
 				System.out.println("Grade cannot be added for " + studentId);
@@ -176,6 +187,10 @@ public class CRSProfessorMenu {
 		
 		try {
  			Vector<Course> coursesEnrolled = professorService.viewCourses(professorId);
+ 			if(coursesEnrolled.size() == 0) {
+ 				System.out.println("No Courses selected by Professor!!");
+ 				return;
+ 			}
  			System.out.println(String.format("%20s %20s %20s", "COURSE ID", "COURSE NAME", "No. of Students" ));
  			coursesEnrolled.forEach((obj) -> {
  				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), 10 - obj.getCourseSeats()));
