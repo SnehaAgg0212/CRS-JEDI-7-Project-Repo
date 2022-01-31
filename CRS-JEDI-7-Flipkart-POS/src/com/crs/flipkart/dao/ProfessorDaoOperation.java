@@ -200,6 +200,31 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
  		return enrolledStudents;
 	}
 	
+	
+	public Vector<EnrolledStudent> getNotGradedStudents(int professorId) throws SQLException {
+		// TODO Auto-generated method stub
+		Connection connection = DBUtils.getConnection();
+		statement = null;
+		Vector<EnrolledStudent> notGradedStudents = new Vector<>();
+		
+ 		try {
+ 			String sql = SQLQueriesConstant.GET_NOT_GRADED_STUDENTS;
+ 			statement = connection.prepareStatement(sql);
+ 			statement.setInt(1, professorId);
+ 			ResultSet resultSet = statement.executeQuery();
+ 			while(resultSet.next()) {
+ 				EnrolledStudent notGraded = new EnrolledStudent();
+ 				notGraded.setCourseId(resultSet.getInt("courseId"));
+ 				notGraded.setCourseName(resultSet.getString("courseName"));
+ 				notGraded.setStudentId(resultSet.getInt("studentId"));
+ 				notGradedStudents.add(notGraded);
+ 			}
+ 		} catch(SQLException e) {
+ 			logger.error("Couldn't find not yet graded Students: " + e.getMessage());
+ 		}
+ 		return notGradedStudents;
+	}
+	
 	/**
 	 * 
 	 * @return
