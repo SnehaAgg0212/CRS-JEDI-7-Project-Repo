@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.GenderConstant;
-import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.dao.RegistrationDaoInterface;
 import com.crs.flipkart.dao.RegistrationDaoOperation;

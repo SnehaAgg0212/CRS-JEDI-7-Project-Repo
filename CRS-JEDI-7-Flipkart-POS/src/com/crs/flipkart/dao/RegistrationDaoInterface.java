@@ -1,6 +1,5 @@
 package com.crs.flipkart.dao;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Vector;
 

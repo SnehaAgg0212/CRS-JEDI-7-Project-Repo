@@ -19,7 +19,6 @@ import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.constants.GenderConstant;
-import com.crs.flipkart.constants.NotificationTypeConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
@@ -179,7 +178,6 @@ public class CRSApplicationMenu {
 			System.out.println("---------------Student Registration-------------");
 			
 			int userId = Utils.generateId();
-	//		int studentId = Utils.generateId();
 			
 			String studentName, studentEmailId, studentPassword, studentPhoneNo, studentBranch, studentAddress;
 			int studentBatch, studentGender;
@@ -226,9 +224,7 @@ public class CRSApplicationMenu {
 			student.setUserId(userId);
 			student.setRole(RoleConstant.STUDENT);
 		
-			int studentId = studentService.register(student);
-			
-			
+			studentService.register(student);
 			
 		} catch (StudentNotRegisteredException e) {
 			System.out.println("Error: " + e.getMessage());

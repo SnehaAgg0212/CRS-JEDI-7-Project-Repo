@@ -122,9 +122,9 @@ public class CRSAdminMenu {
 
  		System.out.println(String.format("%20s %20s %20s", "StudentId", "Name", "GenderConstant"));
  		
- 		for(Student student : pendingStudents) {
+ 		pendingStudents.forEach((student) -> { 
  			System.out.println(String.format("%20s %20s %20s", student.getStudentId(), student.getUserName(), student.getGender()));
- 		}
+ 		});
  		return pendingStudents;
 	}
 
@@ -230,10 +230,9 @@ public class CRSAdminMenu {
 	    
 	    System.out.println(String.format("%-20s %-20s %-20s %-20s", "PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
 	    
-	    for(int i = 0; i < ProfessorList.size(); i++){
-	    	
-	    	System.out.println(String.format(" %-20s %-20s %-20s %-20s", ProfessorList.get(i).getProfessorId(), ProfessorList.get(i).getUserName(), ProfessorList.get(i).getDepartment(), ProfessorList.get(i).getDesignation()));
-	    }
+	    ProfessorList.forEach((professor) -> {
+	    	System.out.println(String.format(" %-20s %-20s %-20s %-20s", professor.getProfessorId(), professor.getUserName(), professor.getDepartment(), professor.getDesignation()));
+	    });
 	    
 	    System.out.println();
 	}
@@ -255,11 +254,10 @@ public class CRSAdminMenu {
 	    
 	    System.out.println(String.format("%-20s %-20s %-20s %-20s", "PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
 	    
-	    for(int i = 0; i < ProfessorList.size(); i++){
-	    	
-	    	System.out.println(String.format(" %-20s %-20s %-20s %-20s", ProfessorList.get(i).getProfessorId(), ProfessorList.get(i).getUserName(), ProfessorList.get(i).getDepartment(), ProfessorList.get(i).getDesignation()));
-	    }
-		
+	    ProfessorList.forEach((professor) -> {
+	    	System.out.println(String.format(" %-20s %-20s %-20s %-20s", professor.getProfessorId(), professor.getUserName(), professor.getDepartment(), professor.getDesignation()));
+	    });
+	    
 	    System.out.println("Enter Professor ID: ");
 	    int professorId = sc.nextInt();
 	    
@@ -327,10 +325,9 @@ public class CRSAdminMenu {
 		
 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
 		
-		for(int i = 0; i < CourseList.size(); i++){
-    		
-			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", CourseList.get(i).getCourseId(), CourseList.get(i).getCourseName(), CourseList.get(i).getCourseDescription(), CourseList.get(i).getCourseFee(), CourseList.get(i).getCourseSeats()));
-		}
+		CourseList.forEach((course) -> {
+			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+		});
 		
 		System.out.println();
 		
@@ -352,10 +349,9 @@ public class CRSAdminMenu {
 		
 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
 		
-		for(int i = 0; i < CourseList.size(); i++){
-    		
-			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", CourseList.get(i).getCourseId(), CourseList.get(i).getCourseName(), CourseList.get(i).getCourseDescription(), CourseList.get(i).getCourseFee(), CourseList.get(i).getCourseSeats()));
-		}
+		CourseList.forEach((course) -> {
+			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+		});
 		
 		System.out.println();
 		

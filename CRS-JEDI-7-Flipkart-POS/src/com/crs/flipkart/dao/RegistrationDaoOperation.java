@@ -7,8 +7,6 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
-import java.sql.Date;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
