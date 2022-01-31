@@ -27,6 +27,8 @@ public interface ProfessorInterface {
 	 * @throws SQLException 
 	 */
 	Vector<EnrolledStudent> viewEnrolledStudents(int professorId) throws SQLException;
+	
+	Vector<EnrolledStudent> getNotGradedStudents(int professorId) throws SQLException;
 
 	/**
 	 * 

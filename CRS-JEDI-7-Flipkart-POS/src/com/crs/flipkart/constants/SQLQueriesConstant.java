@@ -36,6 +36,11 @@ public class SQLQueriesConstant {
  	public static final String CHECK_COURSE = "select courseId from course where courseId = ?";
  	public static final String GET_COURSES = "select professor.professorId, course.courseId, course.courseName, course.courseSeats from course INNER JOIN professor where course.courseId = professor.courseId and professorId = ?";
  	public static final String GET_ENROLLED_STUDENTS = "select professor.professorId as professorId, course.courseId as courseId, course.courseName as courseName, registeredcourse.studentId as studentId from course inner join registeredcourse on course.courseId = registeredcourse.courseId INNER JOIN professor on course.courseId = professor.courseId where professor.professorId = ? order by course.courseId";
+ 	public static final String GET_NOT_GRADED_STUDENTS = "select professor.professorId as professorId, course.courseId as courseId, course.courseName as courseName, registeredcourse.studentId as studentId \n"
+ 			+ "from course \n"
+ 			+ "inner join registeredcourse on course.courseId = registeredcourse.courseId INNER JOIN professor on course.courseId = professor.courseId \n"
+ 			+ "where professor.professorId = ? and registeredcourse.studentId not in (SELECT studentId from gradecard)\n"
+ 			+ "order by course.courseId";
  	public static final String ADD_GRADE = "insert into gradecard (courseId,studentId, semesterId, gpa) values (?,?,?,?)";
  	public static final String GET_PROF_NAME = "SELECT professor.professorId, user.userName FROM user INNER JOIN professor WHERE professorId = ?";
  	public static final String ADD_COURSE_TO_PROFESSOR = "update Professor set courseId = ? where professorId = ?";

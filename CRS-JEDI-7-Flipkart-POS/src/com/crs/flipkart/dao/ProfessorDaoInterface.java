@@ -41,6 +41,8 @@ public interface ProfessorDaoInterface {
 	 * @throws SQLException 
 	 */
 	Vector<EnrolledStudent> getEnrolledStudents(int professorId) throws SQLException;
+	
+	Vector<EnrolledStudent> getNotGradedStudents(int professorId) throws SQLException;
 
 	/**
 	 * 

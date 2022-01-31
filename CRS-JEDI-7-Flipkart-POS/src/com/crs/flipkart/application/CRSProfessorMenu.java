@@ -13,6 +13,7 @@ import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorAlreadyRegisteredException;
 import com.crs.flipkart.validator.ProfessorValidator;
 
 /**
@@ -101,9 +102,12 @@ public class CRSProfessorMenu {
 		 		if(status) {
 		 			System.out.println("CourseId " + courseSelected + " is registered for ProfessorId " + professorId + " successfully.");
 		 		} else {
-		 			System.out.println("Professor has already registered.");
+		 			throw new ProfessorAlreadyRegisteredException(professorId);
 		 		}
-	 		}catch(CourseNotFoundException error) {
+	 		}catch(ProfessorAlreadyRegisteredException e) {
+	 			System.out.println("Error : " + e);
+	 		}
+	 		catch(CourseNotFoundException error) {
 	 			System.out.println("Error : " + error);
 	 		}
 		} catch (SQLException e) {
@@ -143,10 +147,10 @@ public class CRSProfessorMenu {
  		double grade;
 
  		try {
-			Vector<EnrolledStudent> enrolledStudents = new Vector<EnrolledStudent>();
-			enrolledStudents = professorService.viewEnrolledStudents(professorId);
+			Vector<EnrolledStudent> notGradedStudents = new Vector<EnrolledStudent>();
+			notGradedStudents = professorService.getNotGradedStudents(professorId);
 			System.out.println(String.format("%20s %20s %20s","COURSE CODE", "COURSE NAME", "Student ID"));
-			enrolledStudents.forEach ((obj) -> {
+			notGradedStudents.forEach ((obj) -> {
 				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
 			});
 			Vector<Course> coursesEnrolled = professorService.viewCourses(professorId);
@@ -162,7 +166,7 @@ public class CRSProfessorMenu {
 			grade = sc.nextDouble();
 			//System.out.println("Enter Semester Id: ");
 			//semesterId = sc.nextInt();
-			if (ProfessorValidator.isValidStudent(enrolledStudents, studentId) && ProfessorValidator.isValidCourse(coursesEnrolled, courseCode)) {
+			if (ProfessorValidator.isValidStudent(notGradedStudents, studentId) && ProfessorValidator.isValidCourse(coursesEnrolled, courseCode)) {
 				professorService.addGrade(studentId, courseCode, grade);
 				System.out.println("Grade added successfully for " + studentId);
 			} else {
