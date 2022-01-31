@@ -162,4 +162,23 @@ public class ProfessorService implements ProfessorInterface {
 	
 		return professorDaoOperation.getProfessorId(userId);
 	}
+	
+	/**
+	 * 
+	 * @param professorId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public Vector<EnrolledStudent> getNotGradedStudents(int professorId) throws SQLException {
+
+ 		Vector<EnrolledStudent> notGradedStudents = new Vector<>();
+
+ 		try {
+ 			notGradedStudents = professorDaoOperation.getNotGradedStudents(professorId);
+ 		} catch (SQLException e) {
+ 			throw e;
+ 		}
+ 		return notGradedStudents;
+ 	}
 }

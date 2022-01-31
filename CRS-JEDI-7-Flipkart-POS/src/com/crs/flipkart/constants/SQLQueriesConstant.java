@@ -9,9 +9,6 @@ package com.crs.flipkart.constants;
  */
 public class SQLQueriesConstant {
 
-	/**
-	 * AdminDaoQueries
-	 */
 	public static final String ADD_USER_QUERY = "insert into User(userId, userName, userEmailId, userPassword, role, phoneNo, gender, address) values (?, ?, ?, ?, ?, ?, ?, ?)";
 	public static final String ADD_PROFESSOR_QUERY = "insert into Professor(userId, professorId, department, designation) values (?, ?, ?, ?)";
 	public static final String VIEW_PROFESSOR_QUERY = "select professorId, userName, gender, department, designation from Professor P natural join User U where P.userId = U.userId";
@@ -60,4 +57,9 @@ public class SQLQueriesConstant {
  	public static final String VIEW_PENDING_ADMISSION_QUERY = "select user.userId, user.userName, user.userPassword, user.role, user.gender, user.address, studentId from user inner join student where isApproved = 0 and student.userId = user.userId";
  	public static final String ADD_NOTIFICATION = "insert into notification(notificationId, studentId, notificationType, referenceId, notificationContent) values (?, ?, ?, ?, ?)";
  	public static final String IS_REGISTERED = "select courseId from registeredCourse where courseId = ? and studentId = ?";
+ 	public static final String GET_NOT_GRADED_STUDENTS = "select professor.professorId as professorId, course.courseId as courseId, course.courseName as courseName, registeredcourse.studentId as studentId \n"
+  			+ "from course \n"
+  			+ "inner join registeredcourse on course.courseId = registeredcourse.courseId INNER JOIN professor on course.courseId = professor.courseId \n"
+  			+ "where professor.professorId = ? and registeredcourse.studentId not in (SELECT studentId from gradecard)\n"
+  			+ "order by course.courseId;";
 }

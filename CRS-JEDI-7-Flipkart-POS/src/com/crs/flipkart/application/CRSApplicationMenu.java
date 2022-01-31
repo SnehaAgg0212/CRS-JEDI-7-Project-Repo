@@ -22,6 +22,7 @@ import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.SeatNotAvailableException;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
 import com.crs.flipkart.exceptions.UserNotFoundException;
@@ -107,8 +108,9 @@ public class CRSApplicationMenu {
 	 * @throws SQLException 
 	 * @throws SeatNotAvailableException 
 	 * @throws CourseLimitExceededException 
+	 * @throws ProfessorAlreadyRegisteredException 
 	 */
-	private static void userLogin() throws CourseLimitExceededException, SeatNotAvailableException, SQLException, CourseNotFoundException {
+	private static void userLogin() throws CourseLimitExceededException, SeatNotAvailableException, SQLException, CourseNotFoundException, ProfessorAlreadyRegisteredException {
 		
 		try {
 			System.out.println("-----------------Login------------------");

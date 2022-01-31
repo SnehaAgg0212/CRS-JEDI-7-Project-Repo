@@ -81,4 +81,12 @@ public interface ProfessorDaoInterface {
 	 */
 	boolean checkCourse(int professorId) throws SQLException;
 
+	/**
+	 * 
+	 * @param professorId
+	 * @return
+	 * @throws SQLException
+	 */
+	Vector<EnrolledStudent> getNotGradedStudents(int professorId) throws SQLException;
+
 }

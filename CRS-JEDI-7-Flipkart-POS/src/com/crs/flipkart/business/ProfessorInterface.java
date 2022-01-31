@@ -69,4 +69,12 @@ public interface ProfessorInterface {
 	 */
 	int getProfessorId(int userId) throws SQLException;
 
+	/**
+	 * 
+	 * @param professorId
+	 * @return
+	 * @throws SQLException
+	 */
+	Vector<EnrolledStudent> getNotGradedStudents(int professorId) throws SQLException;
+
 }
