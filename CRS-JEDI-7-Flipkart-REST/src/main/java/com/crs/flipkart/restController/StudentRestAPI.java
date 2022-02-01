@@ -106,18 +106,18 @@ public class StudentRestAPI {
 	}
 	
 	@POST
-	@Path("/registerCourses/{course1}/{course2}/{course3}/{course4}/{course5}/{course6}/{studentId}")
+	@Path("/registerCourses")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registerCourses(
-			@PathParam("course1") int course1,
-			@PathParam("course2") int course2,
-			@PathParam("course3") int course3,
-			@PathParam("course4") int course4,
-			@PathParam("course5") int course5,
-			@PathParam("course6") int course6,
+			@QueryParam("course1") int course1,
+			@QueryParam("course2") int course2,
+			@QueryParam("course3") int course3,
+			@QueryParam("course4") int course4,
+			@QueryParam("course5") int course5,
+			@QueryParam("course6") int course6,
 			@NotNull
-			@PathParam("studentId") int studentId)	throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException{
+			@QueryParam("studentId") int studentId)	throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException{
 						
 		try
 		{
