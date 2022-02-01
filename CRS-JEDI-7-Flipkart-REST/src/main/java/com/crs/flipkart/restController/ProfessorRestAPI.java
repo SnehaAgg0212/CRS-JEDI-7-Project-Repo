@@ -110,7 +110,7 @@ public class ProfessorRestAPI {
 				professorService.addGrade(studentId, courseId, grade);
 				return Response.status(201).entity("Grade Added successfully for " + studentId).build();
 			} else {
-				return Response.status(500).entity("Grade cannot be added for " + studentId).build();
+				return Response.status(409).entity("Grade cannot be added for " + studentId).build();
 			}
 		} catch(Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();

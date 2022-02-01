@@ -101,8 +101,8 @@ public class StudentRestAPI {
 			return Response.status(500).entity("Error : " + se).build();
 		}
 		if(check)
-			return Response.status(200).entity("Semester Registration is already done for studentId : " + studentId).build();
-		return Response.status(200).entity("Semester Registration is not yet done for studentId : " + studentId).build();
+			return Response.status(201).entity("Semester Registration is already done for studentId : " + studentId).build();
+		return Response.status(201).entity("Semester Registration is not yet done for studentId : " + studentId).build();
 	}
 	
 	@POST
@@ -174,13 +174,13 @@ public class StudentRestAPI {
 		} catch(SQLException se) {
 			return Response.status(500).entity( "Error : " + se).build();
 		} catch (SeatNotAvailableException e) {
-			return Response.status(500).entity("Error : " + e).build();
+			return Response.status(409).entity("Error : " + e).build();
 		} catch (CourseLimitExceededException e) {
-			return Response.status(500).entity("Error : " + e).build();
+			return Response.status(409).entity("Error : " + e).build();
 		} catch (CourseNotFoundException e) {
-			return Response.status(500).entity("Error : " + e).build();
+			return Response.status(404).entity("Error : " + e).build();
 		} catch (CourseAlreadyRegisteredException e) {
-			return Response.status(500).entity("Error : " + e).build();
+			return Response.status(409).entity("Error : " + e).build();
 		}
 			return Response.status(201).entity( "You have Successfully added Course : " + courseId).build();
 		
@@ -206,7 +206,7 @@ public class StudentRestAPI {
 		} catch(SQLException se) {
 			return Response.status(500).entity( "Error : " + se).build();
 		} catch (CourseNotFoundException e) {
-			return Response.status(500).entity("Error : " + e).build();
+			return Response.status(404).entity("Error : " + e).build();
 		}
 			return Response.status(201).entity( "You have Successfully droped Course : " + courseId).build();
 		
