@@ -21,6 +21,8 @@ import javax.ws.rs.core.Response;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.business.RegistrationInterface;
 import com.crs.flipkart.business.RegistrationService;
+import com.crs.flipkart.business.StudentInterface;
+import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.SeatNotAvailableException;
@@ -34,7 +36,61 @@ import com.crs.flipkart.exceptions.SeatNotAvailableException;
 public class StudentController {
 	
 	RegistrationInterface registrationInterface = RegistrationService.getInstance();
+	StudentInterface studentInterface = StudentService.getInstance();
 	
+	
+	@POST
+	@Path("/semesterRegistration/{semester}/{studentId}")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response semesterRegistration(
+			@PathParam("semester")  int semester,
+			@PathParam("studentId")  int studentId
+			) {
+		boolean check = false;
+		try {
+			check = studentInterface.semesterRegistration(semester, studentId);
+		}catch(SQLException se) {
+			return Response.status(500).entity("Error : " + se).build();
+		}
+		if(check)
+			return Response.status(201).entity("Semester Registration done Sucessfully").build();
+		return Response.status(201).entity("Semester Registration is already done.").build();
+	}
+	
+	@GET
+	@Path("/totalRegisteredCourses/{studentId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response totalRegisteredCourses(
+			@PathParam("studentId") int studentId
+		) {
+		int totalcourses = 0;
+		try {
+			totalcourses = registrationInterface.totalRegisteredCourses(studentId);
+		}catch(SQLException se) {
+			se.printStackTrace();
+		}
+		
+		return Response.status(200).entity("Total Registered Course of StudentId : " + studentId + " is " + totalcourses + ".").build();
+	}
+	
+	@POST
+	@Path("/checkSemesterRegistration/{studentId}")
+	@Consumes("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response checkSemesterRegistration(
+			@PathParam("studentId")  int studentId
+			) {
+		boolean check = false;
+		try {
+			check = registrationInterface.isSemesterRegistered(studentId);
+		}catch(SQLException se) {
+			return Response.status(500).entity("Error : " + se).build();
+		}
+		if(check)
+			return Response.status(200).entity("Semester Registration is already done for studentId : " + studentId).build();
+		return Response.status(200).entity("Semester Registration is not yet done for studentId : " + studentId).build();
+	}
 	
 	@POST
 	@Path("/registerCourses/{course1}/{course2}/{course3}/{course4}/{course5}/{course6}/{studentId}")
