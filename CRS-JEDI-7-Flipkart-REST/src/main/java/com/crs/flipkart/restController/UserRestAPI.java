@@ -53,15 +53,22 @@ public class UserRestAPI {
 			@NotNull
 			@QueryParam("newPassword") String newPassword,
 			@NotNull
-			@QueryParam("confirmNewPassword") String confirmNewPassword) throws ValidationException {
+			@QueryParam("confirmNewPassword") String confirmNewPassword
+		) throws ValidationException {
 		
+		boolean check = false;
 		try {
-			userInterface.updatePassword(userEmailId,oldPassword,newPassword,confirmNewPassword);
-			return Response.status(201).entity("Password updated successfully! ").build();
+			check = userInterface.updatePassword(userEmailId,oldPassword,newPassword,confirmNewPassword);
+			if(check)
+				return Response.status(201).entity("Password updated successfully! ").build();
+			else {
+				return Response.status(200).entity("Error occurred, Password is not updated!").build();
+			}	
 		}
 		catch(Exception e) {
 			return Response.status(500).entity("Something went wrong, please try again!").build();
 		}		
+		
 	}
 	
 	/**

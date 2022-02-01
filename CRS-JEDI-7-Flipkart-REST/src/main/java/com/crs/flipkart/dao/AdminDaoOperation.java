@@ -184,20 +184,32 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException {
 		Connection connection = DBUtils.getConnection();
 		statement = null;
-		
+		//System.out.println(userId);
 		try {
-			String sql = SQLQueriesConstant.DELETE_PROFESSOR_QUERY;
+			String sql = SQLQueriesConstant.GET_USER_ID_FROM_PROFESSOR;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, professorId);
+			ResultSet result = statement.executeQuery();
+			int userId = 0;
+
+			while(result.next()) {
+				userId = result.getInt("userId");
+			}
+			
+			sql = SQLQueriesConstant.DELETE_PROFESSOR_QUERY;
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, professorId);
 			int row = statement.executeUpdate();
 			logger.info(row + " professor deleted.");
 			if (row == 0) {
 				throw new ProfessorNotFoundException(professorId);
-				//logger.info("Professor with Professor Id " + professorId + " does not exists.");
-			} else {
-				throw new ProfessorNotDeletedException(professorId);
-				//logger.info("Professor with Professor Id " + professorId + " deleted.");
+			}else {
+				sql = SQLQueriesConstant.DELETE_USER;
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, userId);
+				statement.executeUpdate();
 			}
+			
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}

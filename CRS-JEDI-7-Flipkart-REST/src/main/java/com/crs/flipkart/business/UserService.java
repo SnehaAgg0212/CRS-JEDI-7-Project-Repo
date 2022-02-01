@@ -44,18 +44,17 @@ public class UserService implements UserInterface {
 	UserDaoInterface userDaoOperation = UserDaoOperation.getInstance();
 	
 	@Override
-	public void updatePassword(String userEmailId, String oldPassword, String newPassword,String confirmNewPassword) throws UserNotFoundException {
-		
+	public boolean updatePassword(String userEmailId, String oldPassword, String newPassword,String confirmNewPassword) throws UserNotFoundException {
 		 if(!newPassword.equals(confirmNewPassword)) {
 			 logger.info(newPassword + " " + confirmNewPassword);
 			 logger.info("New password and Confirm New Password are different!!");
-			 return;
+			 return false;
 		 }
 		 
 		 try {
 			 if(!validateUser(userEmailId, oldPassword)) {
 				 logger.info("Either EmailId or Password is wrong, try again!!");
-				 return;
+				 return false;
 			 }
 		 } catch (UserNotFoundException e) {
 			 throw e;
@@ -63,8 +62,10 @@ public class UserService implements UserInterface {
 
 		 if(userDaoOperation.updatePassword(userEmailId, newPassword)) {
 			 logger.info("Password updated successfully!");
+			 return true;
 		 } else {
 			 logger.info("Something went wrong, please try again!");
+			 return false;
 		 }
 	}
 	

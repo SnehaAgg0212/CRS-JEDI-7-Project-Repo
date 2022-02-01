@@ -197,7 +197,7 @@ public class AdminRestAPI {
 	    } catch (ProfessorNotDeletedException e) {
 	    	return Response.status(409).entity(e.getMessage()).build();
 	    } catch (ProfessorNotFoundException e) {
-	    	return Response.status(409).entity(e.getMessage()).build();
+	    	return Response.status(404).entity(e.getMessage()).build();
 	    }
 	}
 	
