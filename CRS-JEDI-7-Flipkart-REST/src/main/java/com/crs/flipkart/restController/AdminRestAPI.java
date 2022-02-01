@@ -28,6 +28,7 @@ import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.NotificationInterface;
 import com.crs.flipkart.business.NotificationService;
 import com.crs.flipkart.constants.NotificationTypeConstant;
+import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
@@ -72,6 +73,7 @@ public class AdminRestAPI {
 	public Response addProfessor(@Valid Professor professor) throws ValidationException {
 		
 		try {
+			professor.setRole(RoleConstant.PROFESSOR);
 	    	adminServices.addProfessor(professor);
 	    	return Response.status(201).entity("Professor with Professor Id: " + professor.getProfessorId() + " added.").build();
 	    } catch (ProfessorNotAddedException e) {

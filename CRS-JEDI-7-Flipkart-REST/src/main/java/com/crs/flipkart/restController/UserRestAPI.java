@@ -26,6 +26,7 @@ import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
 import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
+import com.crs.flipkart.constants.RoleConstant;
 
 /**
  * @author shubham
@@ -153,6 +154,7 @@ public class UserRestAPI {
 		
 		try
 		{
+			student.setRole(RoleConstant.STUDENT);
 			studentInterface.register(student);
 		}
 		catch(Exception ex)
