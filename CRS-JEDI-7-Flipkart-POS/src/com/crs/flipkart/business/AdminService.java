@@ -111,11 +111,11 @@ public class AdminService implements AdminInterface {
 	}
 
 	@Override
-	public void generateGradeCard(int studentId, int semesterId)
+	public void generateGradeCard(int studentId)
 	{
 		Vector<GradeCard> grades = new Vector<>();
 		
-		grades = adminDaoOperation.generateGradeCard(studentId, semesterId);
+		grades = adminDaoOperation.generateGradeCard(studentId);
 		
 		if (grades.isEmpty()) {
 			logger.info("You haven't registered for any course.");

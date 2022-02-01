@@ -85,9 +85,7 @@ public class CRSStudentMenu {
 				viewRegisteredCourse(studentId);
 				break;
 			case 6:
-				System.out.println("Enter Semester Id: ");
-				int semesterId = sc.nextInt();
-				viewGradeCard(studentId, semesterId);
+				viewGradeCard(studentId);
 				break;
 			case 7:
 				makePayment(studentId);
@@ -341,8 +339,7 @@ public class CRSStudentMenu {
 	 * @param studentId
 	 * @param semesterId
 	 */
-	private static void viewGradeCard(int studentId, int semesterId) {
-		// TODO Auto-generated method stub
+	private static void viewGradeCard(int studentId) {
 		
 		try {
 			boolean isGenerated = registrationInterface.isGenerated(studentId);
@@ -354,7 +351,7 @@ public class CRSStudentMenu {
 			else {
 	
 				try {
-					Vector<GradeCard> grades = registrationInterface.viewGradeCard(studentId, semesterId);
+					Vector<GradeCard> grades = registrationInterface.viewGradeCard(studentId);
 		
 					if(grades.isEmpty()) {
 						System.out.println("You haven't registered for any course.");

@@ -55,15 +55,6 @@ public interface RegistrationDaoInterface {
 	/**
 	 * 
 	 * @param studentId
-	 * @param semesterId
-	 * @return
-	 * @throws SQLException 
-	 */
-	Vector<GradeCard> viewGradeCard(int studentId, int semesterId) throws SQLException;
-
-	/**
-	 * 
-	 * @param studentId
 	 * @param courseId
 	 * @return
 	 * @throws SQLException 
@@ -185,5 +176,14 @@ public interface RegistrationDaoInterface {
 	 * @throws SQLException
 	 */
 	void paymentByNetBanking(NetBanking netBanking) throws SQLException;
+
+	/**
+	 * 
+	 * @param studentId
+	 * @param semesterId
+	 * @return
+	 * @throws SQLException
+	 */
+	Vector<GradeCard> viewGradeCard(int studentId) throws SQLException;
 
 }

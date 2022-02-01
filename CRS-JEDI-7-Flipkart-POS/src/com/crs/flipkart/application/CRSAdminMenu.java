@@ -377,14 +377,7 @@ public class CRSAdminMenu {
 		System.out.println("Enter the Student Id: ");
 		int studentId = sc.nextInt();
 		
-		System.out.println("Enter the Semester Id: ");
-		int semester = sc.nextInt();
-		
-		try {
-			adminServices.generateGradeCard(studentId, semester);
-			adminServices.setIsGenerateGrade(studentId);
-		} catch (Exception e) {
-			System.out.println("Error: " + e);
-		}
+		adminServices.generateGradeCard(studentId);
+		adminServices.setIsGenerateGrade(studentId);
 	}
 }

@@ -79,14 +79,6 @@ public interface RegistrationInterface {
 
 	/**
 	 * @param studentId
-	 * @param semesterId
-	 * @return
-	 * @throws SQLException 
-	 */
-	Vector<GradeCard> viewGradeCard(int studentId, int semesterId) throws SQLException;
-
-	/**
-	 * @param studentId
 	 * @param invoiceId
 	 * @param amount
 	 * @throws SQLException 
@@ -140,5 +132,12 @@ public interface RegistrationInterface {
 	 * @throws SQLException 
 	 */
 	void paymentByNetBanking(NetBanking netBanking) throws SQLException;
+
+	/**
+	 * @param studentId
+	 * @return
+	 * @throws SQLException 
+	 */
+	Vector<GradeCard> viewGradeCard(int studentId) throws SQLException;
 
 }

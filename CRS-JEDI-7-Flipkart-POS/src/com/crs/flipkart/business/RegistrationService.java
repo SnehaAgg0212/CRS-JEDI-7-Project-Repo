@@ -104,9 +104,9 @@ public class RegistrationService implements RegistrationInterface {
 	}
 	
 	@Override
-	public Vector<GradeCard> viewGradeCard(int studentId, int semesterId) throws SQLException {
+	public Vector<GradeCard> viewGradeCard(int studentId) throws SQLException {
 		
-		return registrationDaoOperation.viewGradeCard(studentId, semesterId);
+		return registrationDaoOperation.viewGradeCard(studentId);
 	}
 	
 	@Override
