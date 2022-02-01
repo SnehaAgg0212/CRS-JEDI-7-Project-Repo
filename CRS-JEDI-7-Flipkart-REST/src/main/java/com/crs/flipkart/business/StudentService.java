@@ -58,9 +58,9 @@ public class StudentService implements StudentInterface {
 	public int register(Student student) throws StudentNotRegisteredException {
 
  		int studentId = Utils.generateId();
-
+ 		int userId = Utils.generateId();
  		student.setStudentId(studentId);
- 		
+ 		student.setUserId(userId);
  		try {
  			studentId = studentDaoOperation.addStudent(student);
  		} catch (StudentNotRegisteredException e) {
