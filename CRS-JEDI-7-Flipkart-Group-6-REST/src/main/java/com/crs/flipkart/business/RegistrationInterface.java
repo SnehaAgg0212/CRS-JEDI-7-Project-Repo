@@ -8,6 +8,7 @@ import com.crs.flipkart.bean.Cheque;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.NetBanking;
+import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.SeatNotAvailableException;
@@ -24,7 +25,7 @@ public interface RegistrationInterface {
 	 * @throws CourseLimitExceededException 
 	 * @throws CourseNotFoundException 
 	 */
-	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException;
+	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseAlreadyRegisteredException, CourseNotFoundException;
 
 	/**
 	 * @param courseId

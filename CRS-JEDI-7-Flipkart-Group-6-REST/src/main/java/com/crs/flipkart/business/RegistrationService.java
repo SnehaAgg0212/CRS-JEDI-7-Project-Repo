@@ -13,6 +13,7 @@ import com.crs.flipkart.bean.GradeCard;
 import com.crs.flipkart.bean.NetBanking;
 import com.crs.flipkart.dao.RegistrationDaoInterface;
 import com.crs.flipkart.dao.RegistrationDaoOperation;
+import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.SeatNotAvailableException;
@@ -51,17 +52,17 @@ public class RegistrationService implements RegistrationInterface {
 	RegistrationDaoInterface registrationDaoOperation = RegistrationDaoOperation.getInstance();
 
 	@Override
-	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException {
+	public boolean addCourse(int courseId,int studentId, Vector<Course> availableCourses) throws SQLException, CourseAlreadyRegisteredException, CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException {
 		
 		if(registrationDaoOperation.totalRegisteredCourses(studentId) >= 6) {
 			throw new CourseLimitExceededException(6);
 		} else if (registrationDaoOperation.isRegistered(courseId, studentId)) {
-			return false;
+			throw new CourseAlreadyRegisteredException(courseId);
  		} else if (!registrationDaoOperation.isSeatAvailable(courseId)) {
  			throw new SeatNotAvailableException(courseId);
  		} else if (!StudentValidator.isValidCourseCode(courseId, availableCourses)) {
  			throw new CourseNotFoundException(courseId);
- 		}
+ 		} 
  		return registrationDaoOperation.addCourse(studentId, courseId);
 	}
 	

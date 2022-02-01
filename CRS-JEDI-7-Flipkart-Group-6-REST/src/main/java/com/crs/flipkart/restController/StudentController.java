@@ -23,6 +23,7 @@ import com.crs.flipkart.business.RegistrationInterface;
 import com.crs.flipkart.business.RegistrationService;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
+import com.crs.flipkart.exceptions.CourseAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
 import com.crs.flipkart.exceptions.SeatNotAvailableException;
@@ -130,6 +131,8 @@ public class StudentController {
 			return Response.status(500).entity("Error : " + e).build();
 		} catch (CourseNotFoundException e) {
 			return Response.status(500).entity("Error : " + e).build();
+		} catch (CourseAlreadyRegisteredException e) {
+			return Response.status(500).entity("Error : " + e).build();
 		}
 					
 		
@@ -144,7 +147,7 @@ public class StudentController {
 	public Response addCourse(
 			@PathParam("courseId") int courseId,
 			@PathParam("studentId") int studentId
-		) throws CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException {
+		) throws CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException, CourseAlreadyRegisteredException {
 		
 		Vector<Course> availableCourses = null;
 		try {
@@ -160,6 +163,8 @@ public class StudentController {
 		} catch (CourseLimitExceededException e) {
 			return Response.status(500).entity("Error : " + e).build();
 		} catch (CourseNotFoundException e) {
+			return Response.status(500).entity("Error : " + e).build();
+		} catch (CourseAlreadyRegisteredException e) {
 			return Response.status(500).entity("Error : " + e).build();
 		}
 			return Response.status(201).entity( "You have Successfully added Course : " + courseId).build();
