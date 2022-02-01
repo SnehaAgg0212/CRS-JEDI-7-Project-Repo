@@ -19,6 +19,8 @@ import javax.ws.rs.core.Response;
 import org.hibernate.validator.constraints.Email;
 
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exceptions.ConfirmPasswordException;
+import com.crs.flipkart.exceptions.OldPasswordNotValidException;
 import com.crs.flipkart.exceptions.UserNotFoundException;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
@@ -41,6 +43,8 @@ public class UserRestAPI {
 	 * @param userId: email address of the user
 	 * @param newPassword: new password to be stored in db.
 	 * @return @return 201, if password is updated, else 500 in case of error
+	 * @throws OldPasswordNotValidException 
+	 * @throws UserNotFoundException 
 	 */
 	@PUT
 	@Path("/updatePassword")
@@ -54,20 +58,21 @@ public class UserRestAPI {
 			@QueryParam("newPassword") String newPassword,
 			@NotNull
 			@QueryParam("confirmNewPassword") String confirmNewPassword
-		) throws ValidationException {
+		) throws ValidationException, UserNotFoundException, OldPasswordNotValidException {
 		
-		boolean check = false;
 		try {
-			check = userInterface.updatePassword(userEmailId,oldPassword,newPassword,confirmNewPassword);
-			if(check)
-				return Response.status(201).entity("Password updated successfully! ").build();
-			else {
-				return Response.status(200).entity("Error occurred, Password is not updated!").build();
-			}	
+			userInterface.updatePassword(userEmailId,oldPassword,newPassword,confirmNewPassword);
+			return Response.status(201).entity("Password updated successfully! ").build();
 		}
-		catch(Exception e) {
-			return Response.status(500).entity("Something went wrong, please try again!").build();
-		}		
+		catch(ConfirmPasswordException e) {
+			return Response.status(409).entity("Error : " + e).build();
+		}
+		catch(OldPasswordNotValidException e) {
+			return Response.status(409).entity("Error : " + e).build();
+		}
+		catch(UserNotFoundException e) {
+			return Response.status(404).entity("Error : " + e).build();
+		}
 		
 	}
 	

@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 
 import com.crs.flipkart.dao.UserDaoInterface;
 import com.crs.flipkart.dao.UserDaoOperation;
+import com.crs.flipkart.exceptions.ConfirmPasswordException;
+import com.crs.flipkart.exceptions.OldPasswordNotValidException;
 import com.crs.flipkart.exceptions.UserNotFoundException;
 
 /**
@@ -44,18 +46,18 @@ public class UserService implements UserInterface {
 	UserDaoInterface userDaoOperation = UserDaoOperation.getInstance();
 	
 	@Override
-	public void updatePassword(String userEmailId, String oldPassword, String newPassword,String confirmNewPassword) throws UserNotFoundException {
+	public void updatePassword(String userEmailId, String oldPassword, String newPassword,String confirmNewPassword) throws UserNotFoundException, OldPasswordNotValidException, ConfirmPasswordException {
 		
 		 if(!newPassword.equals(confirmNewPassword)) {
 			 logger.info(newPassword + " " + confirmNewPassword);
 			 logger.info("New password and Confirm New Password are different!!");
-			 return;
+			 throw new ConfirmPasswordException();
 		 }
 		 
 		 try {
 			 if(!validateUser(userEmailId, oldPassword)) {
-				 logger.info("Either EmailId or Password is wrong, try again!!");
-				 return;
+				 logger.info("Either EmailId or oldPassword is wrong, try again!!");
+				 throw new OldPasswordNotValidException();
 			 }
 		 } catch (UserNotFoundException e) {
 			 throw e;

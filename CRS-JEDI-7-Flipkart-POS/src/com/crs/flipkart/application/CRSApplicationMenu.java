@@ -20,8 +20,10 @@ import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.constants.GenderConstant;
 import com.crs.flipkart.constants.RoleConstant;
+import com.crs.flipkart.exceptions.ConfirmPasswordException;
 import com.crs.flipkart.exceptions.CourseLimitExceededException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.OldPasswordNotValidException;
 import com.crs.flipkart.exceptions.ProfessorAlreadyRegisteredException;
 import com.crs.flipkart.exceptions.SeatNotAvailableException;
 import com.crs.flipkart.exceptions.StudentNotRegisteredException;
@@ -236,7 +238,7 @@ public class CRSApplicationMenu {
 	/**
 	 * Password Updation
 	 */
-	private static void updatePassword() {
+	private static void updatePassword() throws OldPasswordNotValidException, UserNotFoundException, ConfirmPasswordException {
 		
 		try {
 			
@@ -259,7 +261,6 @@ public class CRSApplicationMenu {
 			userService.updatePassword(userEmailId, oldPassword, newPassword, confirmNewPassword);
 			
 		} catch (Exception e) {
-			
 			System.out.println("Error: " + e.getMessage());
 		}
 	}
