@@ -18,11 +18,12 @@ import com.crs.flipkart.restController.ProfessorController;
 import com.crs.flipkart.restController.StudentController;
 import com.crs.flipkart.restController.UserController;
 
-
-/**
- * Hello world!
- *
+/*
+ * This is the App file which extends the application configuration class
+ * which contains both configuration and environment and using environment 
+ * we can register each controllers.
  */
+
 public class App extends Application<Configuration> {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
  

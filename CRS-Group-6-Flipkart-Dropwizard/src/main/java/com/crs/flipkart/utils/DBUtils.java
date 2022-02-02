@@ -15,6 +15,14 @@ import java.util.Properties;
  * @author devanshugarg
  *
  */
+
+/*
+ * This is the Database Utils file in which the connection is setup
+ * Here, we use the JDBC Drivers and pass the username and password
+ * Once the connection is setup we can perform the requests 
+ * with the database.
+ */
+
 public class DBUtils {
 
 	private static Connection connection = null;

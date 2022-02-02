@@ -7,6 +7,13 @@ package com.crs.flipkart.constants;
  * @author devanshugarg
  *
  */
+
+/*
+ * This is the SQL Query file where we have written all the required queries
+ * from different actors as Student, Admin and Professor where all the 
+ * operations are communicating with the mySql database.
+ */
+
 public class SQLQueriesConstant {
 
 	public static final String ADD_USER_QUERY = "insert into User(userId, userName, userEmailId, userPassword, role, phoneNo, gender, address) values (?, ?, ?, ?, ?, ?, ?, ?)";

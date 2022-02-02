@@ -16,7 +16,6 @@ import com.crs.flipkart.exceptions.SeatNotAvailableException;
 public interface RegistrationInterface {
 
 	/**
-	 * Add Course
 	 * @param courseId
 	 * @param studentId
 	 * @param availableCourses
@@ -29,7 +28,6 @@ public interface RegistrationInterface {
 	boolean addCourse(int courseId, int studentId, Vector<Course> availableCourses) throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseAlreadyRegisteredException, CourseNotFoundException;
 
 	/**
-	 * Drop Course
 	 * @param courseId
 	 * @param studentId
 	 * @param registeredCourseList
@@ -40,7 +38,6 @@ public interface RegistrationInterface {
 	boolean dropCourse(int courseId, int studentId, Vector<Course> registeredCourseList) throws SQLException, CourseNotFoundException;
 
 	/**
-	 * Get Registration Status
 	 * @param studentId
 	 * @return
 	 * @throws SQLException 
@@ -48,14 +45,12 @@ public interface RegistrationInterface {
 	boolean getRegistrationStatus(int studentId) throws SQLException;
 
 	/**
-	 * Set Registration Status
 	 * @param studentId
 	 * @throws SQLException 
 	 */
 	void setRegistrationStatus(int studentId) throws SQLException;
 
 	/**
-	 * View Registrated Courses
 	 * @param studentId
 	 * @return
 	 * @throws SQLException 
@@ -63,7 +58,6 @@ public interface RegistrationInterface {
 	Vector<Course> viewRegisteredCourses(int studentId) throws SQLException;
 
 	/**
-	 * View Course
 	 * @param studentId
 	 * @return
 	 * @throws SQLException 
@@ -71,7 +65,6 @@ public interface RegistrationInterface {
 	Vector<Course> viewCourses(int studentId) throws SQLException;
 
 	/**
-	 * Get Payment Status
 	 * @param studentId
 	 * @return
 	 * @throws SQLException 
@@ -79,7 +72,6 @@ public interface RegistrationInterface {
 	boolean getPaymentStatus(int studentId) throws SQLException;
 
 	/**
-	 * Calculate Fee
 	 * @param studentId
 	 * @return
 	 * @throws SQLException 
@@ -87,7 +79,6 @@ public interface RegistrationInterface {
 	double calculateFee(int studentId) throws SQLException;
 
 	/**
-	 * Set Payment Status
 	 * @param studentId
 	 * @param invoiceId
 	 * @param amount
@@ -96,31 +87,18 @@ public interface RegistrationInterface {
 	void setPaymentStatus(int studentId, int invoiceId, double amount) throws SQLException;
 
 	/**
-	 * Is Generated
 	 * @param studentId
 	 * @return
 	 * @throws SQLException 
 	 */
 	boolean isGenerated(int studentId) throws SQLException;
 
-	/**
-	 * Total Registered Courses
-	 * @param studentId
-	 * @return
-	 * @throws SQLException
-	 */
 	int totalRegisteredCourses(int studentId) throws SQLException;
 
-	/**
-	 * Is Semester Registered
-	 * @param studentId
-	 * @return
-	 * @throws SQLException
-	 */
 	boolean isSemesterRegistered(int studentId) throws SQLException;
 
 	/**
-	 * Payment by Card
+	 * 
 	 * @param studentId
 	 * @param invoiceId
 	 * @param cardType
@@ -134,7 +112,6 @@ public interface RegistrationInterface {
 	void paymentByCard(CardPayment card) throws SQLException;
 	
 	/**
-	 * Paymeny by Cheque
 	 * @param studentId
 	 * @param invoiceId
 	 * @param chequeNo
@@ -149,7 +126,6 @@ public interface RegistrationInterface {
 	void paymentByCheque(Cheque cheque) throws SQLException;
 	
 	/**
-	 * Payment by Net Banking
 	 * @param studentId
 	 * @param invoiceId
 	 * @param bankAccountHolderName
@@ -159,7 +135,6 @@ public interface RegistrationInterface {
 	void paymentByNetBanking(NetBanking netBanking) throws SQLException;
 
 	/**
-	 * View GradeCard
 	 * @param studentId
 	 * @return
 	 * @throws SQLException 

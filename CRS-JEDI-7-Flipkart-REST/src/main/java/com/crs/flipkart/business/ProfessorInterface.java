@@ -10,7 +10,7 @@ import com.crs.flipkart.exceptions.CourseNotFoundException;
 public interface ProfessorInterface {
 
 	/**
-	 * Add Grade
+	 * 
 	 * @param studentId
 	 * @param courseCode
 	 * @param gpa
@@ -21,7 +21,7 @@ public interface ProfessorInterface {
 	boolean addGrade(int studentId, int courseCode, double gpa) throws SQLException;
 
 	/**
-	 * View Enrolled Students
+	 * 
 	 * @param professorId
 	 * @return
 	 * @throws SQLException 
@@ -29,7 +29,7 @@ public interface ProfessorInterface {
 	Vector<EnrolledStudent> viewEnrolledStudents(int professorId) throws SQLException;
 
 	/**
-	 * View Course
+	 * 
 	 * @param professorId
 	 * @return
 	 * @throws SQLException 
@@ -37,14 +37,14 @@ public interface ProfessorInterface {
 	Vector<Course> viewCourses(int professorId) throws SQLException;
 
 	/**
-	 * View AvailableCourses
+	 * 
 	 * @return
 	 * @throws SQLException 
 	 */
 	Vector<Course> viewAvailableCourses() throws SQLException;
 
 	/**
-	 * Get Professor by Id
+	 * 
 	 * @param professorId
 	 * @return
 	 * @throws SQLException 
@@ -52,7 +52,7 @@ public interface ProfessorInterface {
 	String getProfessorById(int professorId) throws SQLException;
 
 	/**
-	 * Add Course
+	 * 
 	 * @param professorId
 	 * @param courseSelectedId
 	 * @return
@@ -62,7 +62,7 @@ public interface ProfessorInterface {
 	boolean addCourse(int professorId, int courseSelectedId) throws SQLException, CourseNotFoundException;
 
 	/**
-	 * Get Professor Id
+	 * 
 	 * @param userId
 	 * @return
 	 * @throws SQLException 
@@ -70,7 +70,7 @@ public interface ProfessorInterface {
 	int getProfessorId(int userId) throws SQLException;
 
 	/**
-	 * Get Not Graded Students
+	 * 
 	 * @param professorId
 	 * @return
 	 * @throws SQLException

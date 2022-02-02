@@ -16,6 +16,7 @@ public class Utils {
 		ADMIN, STUDENT, PROFESSOR
 	}
 	
+	//This is to generate the random id i.e. Unique Id
 	public static int generateId() {
 		
 		UUID idOne = UUID.randomUUID();

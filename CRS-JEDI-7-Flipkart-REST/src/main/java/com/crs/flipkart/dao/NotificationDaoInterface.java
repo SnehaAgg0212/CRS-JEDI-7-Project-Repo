@@ -7,7 +7,7 @@ import com.crs.flipkart.constants.NotificationTypeConstant;
 public interface NotificationDaoInterface {
 
 	/**
-	 * Send Registration Notification
+	 * 
 	 * @param type
 	 * @param studentId
 	 * @return
@@ -16,7 +16,7 @@ public interface NotificationDaoInterface {
 	int sendRegistrationNotification(NotificationTypeConstant type, int studentId) throws SQLException;
 
 	/**
-	 * Send Approval Notification
+	 * 
 	 * @param type
 	 * @param studentId
 	 * @return
@@ -25,7 +25,7 @@ public interface NotificationDaoInterface {
 	int sendApprovalNotification(NotificationTypeConstant type, int studentId) throws SQLException;
 
 	/**
-	 * Send Payment Notification
+	 * 
 	 * @param type
 	 * @param studentId
 	 * @param modeOfPayment

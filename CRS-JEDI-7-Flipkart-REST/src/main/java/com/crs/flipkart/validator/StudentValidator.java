@@ -15,7 +15,7 @@ import com.crs.flipkart.exceptions.CourseNotFoundException;
 public class StudentValidator {
 
 	/**
-	 * Is Registered
+	 * 
 	 * @param courseCode
 	 * @param studentId
 	 * @param registeredCourseList  
@@ -33,7 +33,7 @@ public class StudentValidator {
 	}
 	
 	/**
-	 * Is Valid Course Code
+	 * 
 	 * @param courseCode
 	 * @param availableCourseList
 	 * @return 

@@ -85,6 +85,7 @@ public class StudentController {
 	@Path("/totalRegisteredCourses/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response totalRegisteredCourses(
+			@NotNull
 			@PathParam("studentId") int studentId
 		) {
 		int totalcourses = 0;
@@ -106,6 +107,7 @@ public class StudentController {
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response checkSemesterRegistration(
+			@NotNull
 			@PathParam("studentId")  int studentId
 			) {
 		boolean check = false;
@@ -262,6 +264,7 @@ public class StudentController {
 	@Path("/viewAvailableCourses/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Vector<Course> viewAvailableCourses(
+			@NotNull
 			@PathParam("studentId") int studentId
 		) {
 		Vector<Course> availableCourses = null;
@@ -283,6 +286,7 @@ public class StudentController {
 	@Path("/viewRegisteredCourses/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Vector<Course> viewRegisteredCourses(
+			@NotNull
 			@PathParam("studentId") int studentId
 		) {
 		Vector<Course> registeredCourses = null;
