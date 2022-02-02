@@ -174,8 +174,6 @@ public class StudentController {
 			return Response.status(500).entity("Error : " + e).build();
 		} catch (CourseNotFoundException e) {
 			return Response.status(500).entity("Error : " + e).build();
-		} catch (CourseAlreadyRegisteredException e) {
-			return Response.status(500).entity("Error : " + e).build();
 		}		
 		return Response.status(201).entity( "Registration Successful").build();
 	}
@@ -215,8 +213,6 @@ public class StudentController {
 			return Response.status(409).entity("Error : " + e).build();
 		} catch (CourseNotFoundException e) {
 			return Response.status(404).entity("Error : " + e).build();
-		} catch (CourseAlreadyRegisteredException e) {
-			return Response.status(409).entity("Error : " + e).build();
 		}
 		return Response.status(201).entity( "You have Successfully added Course : " + courseId).build();
 		
