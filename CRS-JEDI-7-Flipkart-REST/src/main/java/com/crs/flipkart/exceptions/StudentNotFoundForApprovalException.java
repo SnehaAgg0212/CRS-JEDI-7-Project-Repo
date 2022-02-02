@@ -32,6 +32,6 @@ public class StudentNotFoundForApprovalException extends Exception {
 	 */
 	@Override
 	public String getMessage() {
-		return "Student with Student Id: " + studentId + " is not registered.";
+		return "Student with Student Id: " + studentId + " is already approved.";
 	}
 }

@@ -26,10 +26,12 @@ public interface UserInterface {
 	 * @param oldPassword
 	 * @param newPassword
 	 * @param confirmNewPassword
+	 * @return 
 	 * @throws UserNotFoundException 
+	 * @throws ConfirmPasswordException 
+	 * @throws OldPasswordNotValidException 
 	 */
 	void updatePassword(String userEmailId, String oldPassword, String newPassword, String confirmNewPassword) throws UserNotFoundException, OldPasswordNotValidException, ConfirmPasswordException;
- 
 
 	/**
 	 * 

@@ -184,7 +184,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException {
 		Connection connection = DBUtils.getConnection();
 		statement = null;
-		
+		//System.out.println(userId);
 		try {
 			String sql = SQLQueriesConstant.GET_USER_ID_FROM_PROFESSOR;
 			statement = connection.prepareStatement(sql);
@@ -209,6 +209,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				statement.setInt(1, userId);
 				statement.executeUpdate();
 			}
+			
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
