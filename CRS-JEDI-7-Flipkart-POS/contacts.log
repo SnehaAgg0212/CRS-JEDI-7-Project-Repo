@@ -126,3 +126,19 @@
 20:51:04,873  INFO AdminService,main:121 - You haven't registered for any course.
 20:51:04,874  INFO AdminDaoOperation,main:418 - Student with Student Id 101's GradeCard is generated.
 21:01:56,909  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10
+22:57:39,682  INFO AdminService,main:129 - Grade Card of StudentId 1637842604 is generated.
+22:57:40,082  INFO AdminDaoOperation,main:447 - Student with Student Id 1637842604's GradeCard cannot be generated.
+22:58:00,830  INFO AdminService,main:129 - Grade Card of StudentId 1863694801 is generated.
+22:58:00,831  INFO AdminDaoOperation,main:447 - Student with Student Id 1863694801's GradeCard cannot be generated.
+23:00:12,114  INFO AdminService,main:129 - Grade Card of StudentId 1863694801 is generated.
+23:00:12,117  INFO AdminDaoOperation,main:447 - Student with Student Id 1863694801 GradeCard is already generated.
+23:00:37,252  INFO AdminService,main:129 - Grade Card of StudentId 1637842604 is generated.
+23:00:37,263  INFO AdminDaoOperation,main:447 - Student with Student Id 1637842604 GradeCard is already generated.
+23:00:57,769  INFO AdminService,main:129 - Grade Card of StudentId 1637842604 is generated.
+23:00:57,778  INFO AdminDaoOperation,main:447 - Student with Student Id 1637842604 GradeCard is already generated.
+23:01:22,601  INFO AdminService,main:129 - Grade Card of StudentId 1637842604 is generated.
+23:01:22,606  INFO AdminDaoOperation,main:447 - Student with Student Id 1637842604 GradeCard is already generated.
+23:02:09,512  INFO AdminService,main:129 - Grade Card of StudentId 1637842604 is generated.
+23:02:09,514  INFO AdminDaoOperation,main:447 - Student with Student Id 1637842604 GradeCard is generated.
+23:02:21,270  INFO AdminService,main:129 - Grade Card of StudentId 1637842604 is generated.
+23:02:21,271  INFO AdminDaoOperation,main:447 - Student with Student Id 1637842604 GradeCard is generated.

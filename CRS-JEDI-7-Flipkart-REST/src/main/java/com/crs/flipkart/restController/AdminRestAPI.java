@@ -32,9 +32,11 @@ import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorHasNotGradedException;
 import com.crs.flipkart.exceptions.ProfessorNotAddedException;
 import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
 import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundException;
 import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 
@@ -221,7 +223,11 @@ public class AdminRestAPI {
 			adminServices.generateGradeCard(studentId);
 			adminServices.setIsGenerateGrade(studentId);
 			return Response.status(201).entity("Grade Card generated of Semester: " + 5 + " for Student with Student Id: " + studentId + ".").build();
-		} catch (Exception e) {
+		} catch(StudentNotFoundException e) {
+			return Response.status(404).entity(e.getMessage()).build();
+		}catch(ProfessorHasNotGradedException e) {
+			return Response.status(409).entity(e.getMessage()).build();
+		}catch (Exception e) {
 			return Response.status(409).entity(e.getMessage()).build();
 		}
 	}

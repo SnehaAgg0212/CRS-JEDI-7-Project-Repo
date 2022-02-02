@@ -17,9 +17,11 @@ import com.crs.flipkart.dao.AdminDaoOperation;
 import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorHasNotGradedException;
 import com.crs.flipkart.exceptions.ProfessorNotAddedException;
 import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
 import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundException;
 import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 import com.crs.flipkart.utils.Utils;
@@ -109,31 +111,27 @@ public class AdminService implements AdminInterface {
  			throw e;
  		}
 	}
-
+	
 	@Override
-	public void generateGradeCard(int studentId)
+	public void generateGradeCard(int studentId) throws StudentNotFoundException,ProfessorHasNotGradedException
 	{
-		Vector<GradeCard> grades = new Vector<>();
 		
-		grades = adminDaoOperation.generateGradeCard(studentId);
-		
-		if (grades.isEmpty()) {
-			logger.info("You haven't registered for any course.");
-			return;
-		}
-		
-		double overallgpa = 0.0;
-		
-		for(GradeCard course_grade : grades) {
+		try {
 			
-			logger.info("CourseId: " + course_grade.getCourseId() + " GPA: " + course_grade.getGpa());
+			Vector<GradeCard> grades = new Vector<>();
+			grades = adminDaoOperation.generateGradeCard(studentId);
 			
-			overallgpa += course_grade.getGpa();
+			if (grades.isEmpty()) {
+				logger.info("You haven't registered for any course.");
+				return;
+			}
+			
+			logger.info("Grade Card of StudentId " + studentId + " is generated.");	
+		} catch(StudentNotFoundException e){
+			throw e;
+		} catch(ProfessorHasNotGradedException e){
+			throw e;
 		}
-		
-		overallgpa /= (double)grades.size();
-		
-		logger.info("Overall GPA: " + overallgpa);
 
 	}
 
@@ -190,5 +188,18 @@ public class AdminService implements AdminInterface {
 		
  		return adminDaoOperation.viewPendingAdmissions();
  	}
-}
 
+//	@Override
+//	public void assignCourseToProfessor(int courseId, int professorId) {
+//
+//		for (Course element : CourseList) {
+//
+//			if(element != null && courseId == element.getCourseId()) {
+//
+//				element.setProfessorId(professorId);
+//				System.out.println("Course Assigned to Professor successfully.");
+//				break;
+//			}
+//		}
+//	}
+}

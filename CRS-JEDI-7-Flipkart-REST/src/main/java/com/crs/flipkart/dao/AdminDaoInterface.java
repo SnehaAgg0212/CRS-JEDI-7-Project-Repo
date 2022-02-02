@@ -10,9 +10,11 @@ import com.crs.flipkart.bean.User;
 import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorHasNotGradedException;
 import com.crs.flipkart.exceptions.ProfessorNotAddedException;
 import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
 import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundException;
 import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 import com.crs.flipkart.exceptions.UserNotAddedException;
@@ -93,8 +95,10 @@ public interface AdminDaoInterface {
 	 * 
 	 * @param studentId
 	 * @param semesterId
+	 * @throws StudentNotFoundException
+	 * @throws ProfessorHasNotGradedException
 	 * @return
 	 */
-	Vector<GradeCard> generateGradeCard(int studentId);
+	Vector<GradeCard> generateGradeCard(int studentId) throws StudentNotFoundException, ProfessorHasNotGradedException;
 
 }
