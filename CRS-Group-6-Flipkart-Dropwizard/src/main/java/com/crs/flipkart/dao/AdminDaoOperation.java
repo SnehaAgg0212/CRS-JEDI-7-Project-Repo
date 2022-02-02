@@ -408,7 +408,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
  		statement = null;
 
  		try {
- 			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS; // TODO: isGenerated field not present in any table
+ 			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS; 
  			statement = connection.prepareStatement(sql);
  			statement.setInt(1, studentId);
  			int row = statement.executeUpdate();
