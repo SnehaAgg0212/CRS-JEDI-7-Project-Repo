@@ -24,7 +24,7 @@ import com.crs.flipkart.restController.UserController;
  *
  */
 public class App extends Application<Configuration> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
  
     @Override
     public void initialize(Bootstrap<Configuration> b) {
@@ -32,10 +32,18 @@ public class App extends Application<Configuration> {
  
     @Override
     public void run(Configuration c, Environment e) throws Exception {
-        LOGGER.info("Registering REST resources");
+    	logger.info("Registering REST resources");
+    	
+    	//Student Controller register
         e.jersey().register(new StudentController());
+        
+        //Admin Controller register
         e.jersey().register(new AdminController());
+        
+        //User Controller register
         e.jersey().register(new UserController());
+        
+        //Professor Controller register
         e.jersey().register(new ProfessorController());
 
     }
