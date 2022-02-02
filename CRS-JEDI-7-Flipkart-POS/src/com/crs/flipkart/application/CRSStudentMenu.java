@@ -115,6 +115,8 @@ public class CRSStudentMenu {
  		boolean check = studentInterface.semesterRegistration(semester, studentId);
  		if(check) {
  			int totalCourses = registrationInterface.totalRegisteredCourses(studentId);
+ 			if(totalCourses == 0)
+ 				totalCourses = 1;
  			while(totalCourses < 7) {
  				
  				Vector<Course> courseList = viewAvailableCourse(studentId);

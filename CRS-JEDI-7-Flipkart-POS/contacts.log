@@ -1,0 +1,6 @@
+09:32:22,989  INFO AdminDaoOperation,main:272 - 3 students have approval pending.
+09:32:29,879  INFO AdminDaoOperation,main:272 - 3 students have approval pending.
+09:32:33,127  INFO AdminDaoOperation,main:232 - 1 student approved.
+09:32:33,128  INFO AdminDaoOperation,main:236 - Student with Student Id 1862947538 is approved.
+09:32:33,182  INFO NotificationDaoOperation,main:140 - Student with Student Id: 1862947538 is approved successfully.
+09:35:38,348  INFO NotificationDaoOperation,main:76 - Payment is successful of Amount - Rs. 3700.0 through NET_BANKING.
