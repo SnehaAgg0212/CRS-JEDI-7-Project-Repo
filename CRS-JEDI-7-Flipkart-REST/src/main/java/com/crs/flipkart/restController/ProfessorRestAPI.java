@@ -35,7 +35,7 @@ public class ProfessorRestAPI {
 	ProfessorInterface professorService = ProfessorService.getInstance();
 	
 	/**
-	 * 
+	 * View Enrolled Student
 	 * @param professorId
 	 * @return
 	 * @throws ValidationException
@@ -58,7 +58,7 @@ public class ProfessorRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Get Courses
 	 * @param professorId
 	 * @return
 	 * @throws ValidationException
@@ -81,7 +81,7 @@ public class ProfessorRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Add Grades
 	 * @param studentId
 	 * @param professorId
 	 * @param grade
@@ -118,7 +118,7 @@ public class ProfessorRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Choose Courses
 	 * @param professorId
 	 * @param courseSelected
 	 * @return

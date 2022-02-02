@@ -41,7 +41,6 @@ public class ProfessorService implements ProfessorInterface {
 	ProfessorDaoInterface professorDaoOperation = ProfessorDaoOperation.getInstance();
 	
 	/**
-	 * 
 	 * @param studentId
 	 * @param courseCode
 	 * @param gpa
@@ -61,7 +60,6 @@ public class ProfessorService implements ProfessorInterface {
 	}
 	
 	/**
-	 * 
 	 * @param professorId
 	 * @return
 	 * @throws SQLException 
@@ -80,7 +78,6 @@ public class ProfessorService implements ProfessorInterface {
 	}
 	
 	/**
-	 * 
 	 * @param professorId
 	 * @return
 	 * @throws SQLException 
@@ -99,7 +96,6 @@ public class ProfessorService implements ProfessorInterface {
 	}
 	
 	/**
-	 * 
 	 * @return
 	 * @throws SQLException 
 	 */
@@ -117,7 +113,6 @@ public class ProfessorService implements ProfessorInterface {
  	}
 	
 	/**
-	 * 
 	 * @param professorId
 	 * @return
 	 * @throws SQLException 
@@ -129,7 +124,6 @@ public class ProfessorService implements ProfessorInterface {
 	}
 	
 	/**
-	 * 
 	 * @param professorId
 	 * @param courseSelectedId
 	 * @return
@@ -152,7 +146,6 @@ public class ProfessorService implements ProfessorInterface {
  	}
 	
 	/**
-	 * 
 	 * @param userId
 	 * @return
 	 * @throws SQLException 
@@ -164,7 +157,6 @@ public class ProfessorService implements ProfessorInterface {
 	}
 	
 	/**
-	 * 
 	 * @param professorId
 	 * @return
 	 * @throws SQLException

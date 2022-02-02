@@ -7,6 +7,7 @@ import com.crs.flipkart.constants.NotificationTypeConstant;
 public interface NotificationInterface {
 
 	/**
+	 * Send Payment Notification
 	 * @param type
 	 * @param studentId
 	 * @param modeOfPayment
@@ -17,6 +18,7 @@ public interface NotificationInterface {
 	int sendPaymentNotification(NotificationTypeConstant type, int studentId, int modeOfPayment, double amount, int referenceId) throws SQLException;
 
 	/**
+	 * Send Approval Notification
 	 * @param type
 	 * @param studentId
 	 * @return
@@ -25,7 +27,7 @@ public interface NotificationInterface {
 	int sendApprovalNotification(NotificationTypeConstant type, int studentId) throws SQLException;
 
 	/**
-	 * 
+	 * Send Registration Notification
 	 * @param type
 	 * @param studentId
 	 * @return

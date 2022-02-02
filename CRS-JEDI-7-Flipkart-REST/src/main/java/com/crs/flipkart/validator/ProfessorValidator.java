@@ -15,7 +15,7 @@ import com.crs.flipkart.bean.EnrolledStudent;
 public class ProfessorValidator {
 
 	/**
-	 * 
+	 * Is Valid Student
 	 * @param students
 	 * @param studentId
 	 * @return
@@ -31,7 +31,7 @@ public class ProfessorValidator {
 	}
 	
 	/**
-	 * 
+	 * Is Valid Course
 	 * @param courses
 	 * @param courseId
 	 * @return

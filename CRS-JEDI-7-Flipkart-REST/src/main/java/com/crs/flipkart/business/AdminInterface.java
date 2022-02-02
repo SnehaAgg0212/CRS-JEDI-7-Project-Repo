@@ -21,16 +21,19 @@ import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 public interface AdminInterface {
 
 	/**
+	 * View Professor
 	 * @return
 	 */
 	Vector<Professor> viewProfessor();
 
 	/**
+	 * View Course
 	 * @return
 	 */
 	Vector<Course> viewCourse();
 
 	/**
+	 * Add Professor
 	 * @param professor
 	 * @throws UserIdAlreadyInUseException 
 	 * @throws ProfessorNotAddedException 
@@ -38,6 +41,7 @@ public interface AdminInterface {
 	void addProfessor(Professor professor) throws ProfessorNotAddedException, UserIdAlreadyInUseException;
 
 	/**
+	 * Delete Professor
 	 * @param professorId
 	 * @throws ProfessorNotDeletedException 
 	 * @throws ProfessorNotFoundException 
@@ -45,12 +49,13 @@ public interface AdminInterface {
 	void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException;
 
 	/**
+	 * Set Is Generate Grade
 	 * @param studentId
 	 */
 	void setIsGenerateGrade(int studentId);
 
 	/**
-	 * 
+	 * Approve Student Registration
 	 * @param studentId
 	 * @param pendingStudents
 	 * @throws StudentNotFoundForApprovalException 
@@ -58,13 +63,13 @@ public interface AdminInterface {
 	void approveStudentRegistration(int studentId, Vector<Student> pendingStudents) throws StudentNotFoundForApprovalException;
 
 	/**
-	 * 
+	 * View Pending Admissions
 	 * @return
 	 */
 	Vector<Student> viewPendingAdmissions();
 
 	/**
-	 * 
+	 * Add Course
 	 * @param course
 	 * @param courseList
 	 * @throws CourseAlreadyExistsException
@@ -72,7 +77,7 @@ public interface AdminInterface {
 	void addCourse(Course course, Vector<Course> courseList) throws CourseAlreadyExistsException;
 
 	/**
-	 * 
+	 * Delete Course
 	 * @param courseId
 	 * @param courseList
 	 * @throws CourseNotFoundException
@@ -81,6 +86,7 @@ public interface AdminInterface {
 	void deleteCourse(int courseId, Vector<Course> courseList) throws CourseNotFoundException, CourseNotDeletedException;
 	
 	/**
+	 * Generate Grade Card
 	 * @param studentId
 	 */
 	void generateGradeCard(int studentId);

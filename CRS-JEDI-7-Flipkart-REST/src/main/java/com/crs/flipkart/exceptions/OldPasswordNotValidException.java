@@ -2,6 +2,7 @@ package com.crs.flipkart.exceptions;
 
 @SuppressWarnings("serial")
 public class OldPasswordNotValidException extends Exception{
+	
 	private int userId;
 
 	/**
@@ -9,10 +10,6 @@ public class OldPasswordNotValidException extends Exception{
 	 */
 	public OldPasswordNotValidException(int userId) {
 		this.userId = userId;
-	}
-
-	public OldPasswordNotValidException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

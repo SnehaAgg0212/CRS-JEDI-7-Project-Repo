@@ -35,15 +35,15 @@ import com.crs.flipkart.constants.RoleConstant;
 
 @Path("/user")
 public class UserRestAPI {
-	StudentInterface studentInterface=StudentService.getInstance();
-	UserInterface userInterface =UserService.getInstance();
-	
+
+	StudentInterface studentInterface = StudentService.getInstance();
+	UserInterface userInterface = UserService.getInstance();
 	
 	/**
-	 * 
+	 * Update Password
 	 * @param userId: email address of the user
 	 * @param newPassword: new password to be stored in db.
-	 * @return @return 201, if password is updated, else 500 in case of error
+	 * @return 201, if password is updated, else 500 in case of error
 	 * @throws OldPasswordNotValidException 
 	 * @throws UserNotFoundException 
 	 */
@@ -78,12 +78,11 @@ public class UserRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Verify Credentials
 	 * @param userId
 	 * @param password
 	 * @return 
 	 */
-	
 	@POST
 	@Path("/login")
 	public Response verifyCredentials(
@@ -92,42 +91,33 @@ public class UserRestAPI {
 			@NotNull
 			@QueryParam("password") String password) throws ValidationException {
 		
-		try 
-		{
+		try {
 			boolean loggedin=userInterface.validateUser(userEmailId, password);
-				if(loggedin)
-				{
+				if(loggedin) {
 					String role=userInterface.getRoleOfUser(userEmailId);
-					switch(role)
-					{
+					switch(role) {
 					
 					case "STUDENT":
 						int userId = userInterface.getUserId(userEmailId);
 						int studentId=studentInterface.getStudentId(userId);
 						boolean isApproved=studentInterface.isApproved(studentId);
-						if(!isApproved)	
-						{
+						if(!isApproved)	{
 							return Response.status(200).entity("Login unsuccessful! Student "+userEmailId+" has not been approved by the administration!" ).build();
 						}
 						break;
-						
 					}
 					return Response.status(200).entity("Login successful").build();
-				}
-				else
-				{
+				} else {
 					return Response.status(500).entity("Invalid credentials!").build();
 				}
-		}
-		catch (UserNotFoundException e) 
-		{
+		} catch (UserNotFoundException e) {
 			return Response.status(500).entity(e.getMessage()).build();
 		}		
 		
-}
+	}
 	
 	/**
-	 * 
+	 * Get Role
 	 * @param userId
 	 * @return
 	 * @throws ValidationException
@@ -142,29 +132,21 @@ public class UserRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Register Student
 	 * @param student object
 	 * @return 201, if user is created, else 500 in case of error
 	 */
 	@POST
 	@Path("/studentRegistration")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response register(@Valid Student student)
-	{
+	public Response register(@Valid Student student) {
 		
-		try
-		{
+		try {
 			student.setRole(RoleConstant.STUDENT);
 			studentInterface.register(student);
-		}
-		catch(Exception ex)
-		{
+		} catch(Exception ex) {
 			return Response.status(500).entity("Something went wrong! Please try again.").build(); 
 		}
-		
-		
 		return Response.status(201).entity("Registration Successful for studentId : "+ student.getStudentId()).build(); 
 	}
-	
-	
 }

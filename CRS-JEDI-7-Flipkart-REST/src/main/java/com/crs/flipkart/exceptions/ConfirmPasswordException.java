@@ -9,6 +9,7 @@ package com.crs.flipkart.exceptions;
  */
 @SuppressWarnings("serial")
 public class ConfirmPasswordException extends Exception{
+	
 	private int userId;
 
 	/**
@@ -16,10 +17,6 @@ public class ConfirmPasswordException extends Exception{
 	 */
 	public ConfirmPasswordException(int userId) {
 		this.userId = userId;
-	}
-
-	public ConfirmPasswordException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

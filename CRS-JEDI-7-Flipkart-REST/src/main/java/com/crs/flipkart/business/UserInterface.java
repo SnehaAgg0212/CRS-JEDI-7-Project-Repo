@@ -7,12 +7,14 @@ import com.crs.flipkart.exceptions.UserNotFoundException;
 public interface UserInterface {
 
 	/**
+	 * Get Role of User
 	 * @param userId
 	 * @return
 	 */
 	String getRoleOfUser(String userEmailId);
 
 	/**
+	 * Validate User
 	 * @param emailId
 	 * @param password
 	 * @return
@@ -21,7 +23,7 @@ public interface UserInterface {
 	boolean validateUser(String emailId, String password) throws UserNotFoundException;
 
 	/**
-	 * 
+	 * Update Password
 	 * @param userEmailId
 	 * @param oldPassword
 	 * @param newPassword
@@ -34,7 +36,7 @@ public interface UserInterface {
 	void updatePassword(String userEmailId, String oldPassword, String newPassword, String confirmNewPassword) throws UserNotFoundException, OldPasswordNotValidException, ConfirmPasswordException;
 
 	/**
-	 * 
+	 * Get User Id
 	 * @param userEmailId
 	 * @return
 	 */

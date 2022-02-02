@@ -49,7 +49,7 @@ public class AdminRestAPI {
 	NotificationInterface notificationService = NotificationService.getInstance();
 	
 	/**
-	 * 
+	 * View Pending Admissions
 	 * @return
 	 */
 	@GET
@@ -61,7 +61,7 @@ public class AdminRestAPI {
 	}
 
 	/**
-	 * 
+	 * Add Professor
 	 * @param professor
 	 * @return
 	 * @throws ValidationException
@@ -84,7 +84,7 @@ public class AdminRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Approve Student
 	 * @param studentId
 	 * @return
 	 * @throws ValidationException
@@ -112,7 +112,7 @@ public class AdminRestAPI {
 	}
 	
 	/**
-	 * 
+	 * View Professor
 	 * @return
 	 */
 	@GET
@@ -124,7 +124,7 @@ public class AdminRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Add Course to Catalogue
 	 * @param course
 	 * @return
 	 * @throws ValidationException
@@ -145,7 +145,7 @@ public class AdminRestAPI {
 	}
 	
 	/**
-	 * 
+	 * View Courses in Catalogue
 	 * @return
 	 */
 	@GET
@@ -157,7 +157,7 @@ public class AdminRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Delete Course from Catalogue
 	 * @param courseId
 	 * @return
 	 * @throws ValidationException
@@ -181,7 +181,7 @@ public class AdminRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Delete Professor
 	 * @param professorId
 	 * @return
 	 * @throws ValidationException
@@ -204,7 +204,7 @@ public class AdminRestAPI {
 	}
 	
 	/**
-	 * 
+	 * Generate Grade Card
 	 * @param studentId
 	 * @param semester
 	 * @return

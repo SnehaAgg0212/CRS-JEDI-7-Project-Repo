@@ -38,7 +38,7 @@ import com.crs.flipkart.exceptions.SeatNotAvailableException;
 import com.crs.flipkart.utils.Utils;
 
 /**
- * @author LENOVO
+ * @author LENOVO, devanshugarg
  *
  */
 
@@ -51,7 +51,12 @@ public class StudentRestAPI {
  	double fee;
  	int invoiceId;
 	
-	
+	 /**
+	  * Semester Registration
+	  * @param semester
+	  * @param studentId
+	  * @return
+	  */
 	@POST
 	@Path("/semesterRegistration/{semester}/{studentId}")
 	@Consumes("application/json")
@@ -63,7 +68,7 @@ public class StudentRestAPI {
 		boolean check = false;
 		try {
 			check = studentInterface.semesterRegistration(semester, studentId);
-		}catch(SQLException se) {
+		} catch(SQLException se) {
 			return Response.status(500).entity("Error : " + se).build();
 		}
 		if(check)
@@ -71,6 +76,11 @@ public class StudentRestAPI {
 		return Response.status(201).entity("Semester Registration is already done.").build();
 	}
 	
+	/**
+	 * Total Registered Courses
+	 * @param studentId
+	 * @return
+	 */
 	@GET
 	@Path("/totalRegisteredCourses/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -80,13 +90,17 @@ public class StudentRestAPI {
 		int totalcourses = 0;
 		try {
 			totalcourses = registrationInterface.totalRegisteredCourses(studentId);
-		}catch(SQLException se) {
+		} catch(SQLException se) {
 			se.printStackTrace();
 		}
-		
 		return Response.status(200).entity("Total Registered Course of StudentId : " + studentId + " is " + totalcourses + ".").build();
 	}
 	
+	/**
+	 * Check Semester Registration
+	 * @param studentId
+	 * @return
+	 */
 	@POST
 	@Path("/checkSemesterRegistration/{studentId}")
 	@Consumes("application/json")
@@ -97,7 +111,7 @@ public class StudentRestAPI {
 		boolean check = false;
 		try {
 			check = registrationInterface.isSemesterRegistered(studentId);
-		}catch(SQLException se) {
+		} catch(SQLException se) {
 			return Response.status(500).entity("Error : " + se).build();
 		}
 		if(check)
@@ -105,6 +119,21 @@ public class StudentRestAPI {
 		return Response.status(201).entity("Semester Registration is not yet done for studentId : " + studentId).build();
 	}
 	
+	/**
+	 * Register Courses
+	 * @param course1
+	 * @param course2
+	 * @param course3
+	 * @param course4
+	 * @param course5
+	 * @param course6
+	 * @param studentId
+	 * @return
+	 * @throws SQLException
+	 * @throws CourseLimitExceededException
+	 * @throws SeatNotAvailableException
+	 * @throws CourseNotFoundException
+	 */
 	@POST
 	@Path("/registerCourses")
 	@Consumes("application/json")
@@ -119,8 +148,7 @@ public class StudentRestAPI {
 			@NotNull
 			@QueryParam("studentId") int studentId)	throws SQLException, CourseLimitExceededException, SeatNotAvailableException, CourseNotFoundException{
 						
-		try
-		{
+		try {
 			Vector<Course> availableCourseList = registrationInterface.viewCourses(studentId);
 			Vector<Integer> courseList = new Vector<Integer>();
 			
@@ -146,14 +174,20 @@ public class StudentRestAPI {
 			return Response.status(500).entity("Error : " + e).build();
 		} catch (CourseAlreadyRegisteredException e) {
 			return Response.status(500).entity("Error : " + e).build();
-		}
-					
-		
+		}		
 		return Response.status(201).entity( "Registration Successful").build();
-		
 	}
 	
-	
+	/**
+	 * Add Course
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 * @throws CourseLimitExceededException
+	 * @throws SeatNotAvailableException
+	 * @throws CourseNotFoundException
+	 * @throws CourseAlreadyRegisteredException
+	 */
 	@PUT
 	@Path("/addCourse/{courseId}/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -182,10 +216,17 @@ public class StudentRestAPI {
 		} catch (CourseAlreadyRegisteredException e) {
 			return Response.status(409).entity("Error : " + e).build();
 		}
-			return Response.status(201).entity( "You have Successfully added Course : " + courseId).build();
+		return Response.status(201).entity( "You have Successfully added Course : " + courseId).build();
 		
 	}
 	
+	/**
+	 * Drop Course 
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 * @throws CourseNotFoundException
+	 */
 	@DELETE
 	@Path("/dropCourse/{courseId}/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -208,11 +249,15 @@ public class StudentRestAPI {
 		} catch (CourseNotFoundException e) {
 			return Response.status(404).entity("Error : " + e).build();
 		}
-			return Response.status(201).entity( "You have Successfully droped Course : " + courseId).build();
+		return Response.status(201).entity( "You have Successfully droped Course : " + courseId).build();
 		
 	}
 	
-	
+	/**
+	 * View Available Courses
+	 * @param studentId
+	 * @return
+	 */
 	@GET
 	@Path("/viewAvailableCourses/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -222,14 +267,18 @@ public class StudentRestAPI {
 		Vector<Course> availableCourses = null;
 		try {
 			availableCourses = registrationInterface.viewCourses(studentId);
-		}catch(SQLException se) {
+		} catch(SQLException se) {
 			se.printStackTrace();
 		}
 		
 		return availableCourses;
 	}
 	
-	
+	/**
+	 * View Registered Courses
+	 * @param studentId
+	 * @return
+	 */
 	@GET
 	@Path("/viewRegisteredCourses/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -239,13 +288,12 @@ public class StudentRestAPI {
 		Vector<Course> registeredCourses = null;
 		try {
 			registeredCourses = registrationInterface.viewRegisteredCourses(studentId);
-		}catch(SQLException se) {
+		} catch(SQLException se) {
 			se.printStackTrace();
 		}
 		
 		return registeredCourses;
 	}
-	
 	
 	/**
 	 * Make Payment
@@ -272,7 +320,7 @@ public class StudentRestAPI {
 	 		boolean checkStatus = false;
 			try {
 				checkStatus = registrationInterface.isSemesterRegistered(studentId);
-			}catch(SQLException se){
+			} catch(SQLException se){
 	 			return Response.status(409).entity(se.getMessage()).build();
 			}
 			
@@ -280,11 +328,9 @@ public class StudentRestAPI {
 	
 	 		if(!checkStatus) {
 	 			return Response.status(409).entity("You have not registered yet.").build();
-	 		}
-	 		else if(ispaid) {
+	 		} else if(ispaid) {
 	 			return Response.status(409).entity("You have already paid the fees.").build();
-	 		}
-	 		else if(checkStatus && !ispaid) {
+	 		} else if(checkStatus && !ispaid) {
 	 			return Response.status(201).entity("You have to pay total Fees = " + fee).build();
 	 		}
 		} catch (SQLException e) {
@@ -293,7 +339,11 @@ public class StudentRestAPI {
 		return null;
 	}
 	
-	
+	/**
+	 * Payment by Card
+	 * @param card
+	 * @return
+	 */
 	@POST
 	@Path("/make_payment/card")
 	@Consumes("application/json")
@@ -312,7 +362,7 @@ public class StudentRestAPI {
 	 		boolean checkStatus = false;
 			try {
 				checkStatus = registrationInterface.isSemesterRegistered(card.getStudentId());
-			}catch(SQLException se){
+			} catch(SQLException se){
 	 			return Response.status(409).entity(se.getMessage()).build();
 			}
 			
@@ -320,8 +370,7 @@ public class StudentRestAPI {
 	
 	 		if(!checkStatus) {
 	 			return Response.status(409).entity("You have not registered yet.").build();
-	 		}
-	 		else if(ispaid) {
+	 		} else if(ispaid) {
 	 			return Response.status(409).entity("You have already paid the fees.").build();
 	 		}
 			invoiceId = Utils.generateId();
@@ -336,12 +385,16 @@ public class StudentRestAPI {
 			notificationId = notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, card.getStudentId(), selected_mode, fee, invoiceId);
 			return Response.status(201).entity("Your Payment is done Successfully! \nNotification Id: " + notificationId+"\n"+"Keep it safe for future references.").build();
 
-		}
-		catch(SQLException e) {
+		} catch(SQLException e) {
 			return Response.status(409).entity(e.getMessage()).build();
 		}
 	}
 
+	/**
+	 * Payment by Cheque
+	 * @param cheque
+	 * @return
+	 */
 	@POST
 	@Path("/make_payment/cheque")
 	@Consumes("application/json")
@@ -360,7 +413,7 @@ public class StudentRestAPI {
 	 		boolean checkStatus = false;
 			try {
 				checkStatus = registrationInterface.isSemesterRegistered(cheque.getStudentId());
-			}catch(SQLException se){
+			} catch(SQLException se){
 	 			return Response.status(409).entity(se.getMessage()).build();
 			}
 			
@@ -368,8 +421,7 @@ public class StudentRestAPI {
 	
 	 		if(!checkStatus) {
 	 			return Response.status(409).entity("You have not registered yet.").build();
-	 		}
-	 		else if(ispaid) {
+	 		} else if(ispaid) {
 	 			return Response.status(409).entity("You have already paid the fees.").build();
 	 		}
 			invoiceId = Utils.generateId();
@@ -384,12 +436,16 @@ public class StudentRestAPI {
 			notificationId = notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, cheque.getStudentId(), selected_mode, fee, invoiceId);
 			return Response.status(201).entity("Your Payment is done Successfully! \nNotification Id: " + notificationId+"\n"+"Keep it safe for future references.").build();
 
-		}
-		catch(SQLException e) {
+		} catch(SQLException e) {
 			return Response.status(409).entity(e.getMessage()).build();
 		}
 	}
 	
+	/**
+	 * Payment by NetBanking
+	 * @param netBanking
+	 * @return
+	 */
 	@POST
 	@Path("/make_payment/netbanking")
 	@Consumes("application/json")
@@ -408,7 +464,7 @@ public class StudentRestAPI {
 	 		boolean checkStatus = false;
 			try {
 				checkStatus = registrationInterface.isSemesterRegistered(netBanking.getStudentId());
-			}catch(SQLException se){
+			} catch(SQLException se){
 	 			return Response.status(409).entity(se.getMessage()).build();
 			}
 			
@@ -416,8 +472,7 @@ public class StudentRestAPI {
 	
 	 		if(!checkStatus) {
 	 			return Response.status(409).entity("You have not registered yet.").build();
-	 		}
-	 		else if(ispaid) {
+	 		} else if(ispaid) {
 	 			return Response.status(409).entity("You have already paid the fees.").build();
 	 		}
 			invoiceId = Utils.generateId();
@@ -432,8 +487,7 @@ public class StudentRestAPI {
 			notificationId = notificationInterface.sendPaymentNotification(NotificationTypeConstant.PAYMENT, netBanking.getStudentId(), selected_mode, fee, invoiceId);
 			return Response.status(201).entity("Your Payment is done Successfully! \nNotification Id: " + notificationId+"\n"+"Keep it safe for future references.").build();
 
-		}
-		catch(SQLException e) {
+		} catch(SQLException e) {
 			return Response.status(409).entity(e.getMessage()).build();
 		}
 	}
@@ -450,7 +504,6 @@ public class StudentRestAPI {
 			@NotNull
 			@PathParam("studentId") int studentId
 			) {
-		// TODO Auto-generated method stub
 		
 		Vector<String>response=new Vector<String>();
 		

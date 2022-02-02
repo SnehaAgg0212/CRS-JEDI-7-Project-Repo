@@ -94,7 +94,7 @@ public class UserService implements UserInterface {
 	}
 	
 	/**
-	 * 
+	 * Get User Id
 	 * @param userEmailId
 	 * @return
 	 */
