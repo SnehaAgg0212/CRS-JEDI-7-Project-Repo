@@ -165,6 +165,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				professor.setGender(GenderConstant.stringToGender(resultSet.getString(3)));
 				professor.setDepartment(resultSet.getString(4));
 				professor.setDesignation(resultSet.getString(5));
+				professor.setUserEmailId(resultSet.getString(6));
+				professor.setUserId(resultSet.getInt(7));
+				professor.setPhoneNo(resultSet.getString(8));
+				professor.setRole(RoleConstant.PROFESSOR);
+				professor.setAddress(resultSet.getString(10));
+				professor.setCourseId(resultSet.getInt(11));
+				professor.setUserPassword(resultSet.getString(12));
 				professorList.add(professor);
 			}
 			logger.info("Total Number of Professors in the Institute: " + professorList.size());

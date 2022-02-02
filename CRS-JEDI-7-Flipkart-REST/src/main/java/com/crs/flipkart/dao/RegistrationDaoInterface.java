@@ -51,7 +51,7 @@ public interface RegistrationDaoInterface {
 	 * @throws SQLException 
 	 */
 	boolean isGenerated(int studentId) throws SQLException;
-
+	
 	/**
 	 * 
 	 * @param studentId

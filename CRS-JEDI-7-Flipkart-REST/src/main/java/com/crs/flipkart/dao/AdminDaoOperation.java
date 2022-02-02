@@ -165,6 +165,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				professor.setGender(GenderConstant.stringToGender(resultSet.getString(3)));
 				professor.setDepartment(resultSet.getString(4));
 				professor.setDesignation(resultSet.getString(5));
+				professor.setUserEmailId(resultSet.getString(6));
+				professor.setUserId(resultSet.getInt(7));
+				professor.setPhoneNo(resultSet.getString(8));
+				professor.setRole(RoleConstant.PROFESSOR);
+				professor.setAddress(resultSet.getString(10));
+				professor.setCourseId(resultSet.getInt(11));
+				professor.setUserPassword(resultSet.getString(12));
 				professorList.add(professor);
 			}
 			logger.info("Total Number of Professors in the Institute: " + professorList.size());
@@ -184,7 +191,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException {
 		Connection connection = DBUtils.getConnection();
 		statement = null;
-		
+		//System.out.println(userId);
 		try {
 			String sql = SQLQueriesConstant.GET_USER_ID_FROM_PROFESSOR;
 			statement = connection.prepareStatement(sql);
@@ -209,6 +216,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				statement.setInt(1, userId);
 				statement.executeUpdate();
 			}
+			
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
@@ -362,8 +370,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
  				course.setCourseSeats(resultSet.getInt(5));
 				courseList.add(course);
 			}
-			int totalCourse = courseList.size()+1;
-			logger.info("Total Number of Courses: " + totalCourse);
+			logger.info("Total Number of Courses: " + courseList.size());
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
@@ -411,11 +418,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
  			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS; 
  			statement = connection.prepareStatement(sql);
  			statement.setInt(1, studentId);
- 			int row = statement.executeUpdate();
- 			if(row == 1)
- 				logger.info("Student with Student Id " + studentId +"'s GradeCard cannot be generated.");
- 			else
- 				logger.info("Student with Student Id " + studentId +"'s GradeCard is generated.");
+ 			statement.executeUpdate();
+ 			logger.info("Student with Student Id " + studentId +"'s GradeCard is generated.");
  		} catch (SQLException e) {
  			logger.error("Error: " + e.getMessage());
  		}
