@@ -21,9 +21,11 @@ import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorHasNotGradedException;
 import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 import com.crs.flipkart.exceptions.ProfessorNotAddedException;
 import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundException;
 import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
 import com.crs.flipkart.exceptions.UserNotAddedException;
 import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
@@ -165,6 +167,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				professor.setGender(GenderConstant.stringToGender(resultSet.getString(3)));
 				professor.setDepartment(resultSet.getString(4));
 				professor.setDesignation(resultSet.getString(5));
+				professor.setUserEmailId(resultSet.getString(6));
+				professor.setUserId(resultSet.getInt(7));
+				professor.setPhoneNo(resultSet.getString(8));
+				professor.setRole(RoleConstant.PROFESSOR);
+				professor.setAddress(resultSet.getString(10));
+				professor.setCourseId(resultSet.getInt(11));
+				professor.setUserPassword(resultSet.getString(12));
 				professorList.add(professor);
 			}
 			logger.info("Total Number of Professors in the Institute: " + professorList.size());
@@ -184,7 +193,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException {
 		Connection connection = DBUtils.getConnection();
 		statement = null;
-		//System.out.println(userId);
+		
 		try {
 			String sql = SQLQueriesConstant.GET_USER_ID_FROM_PROFESSOR;
 			statement = connection.prepareStatement(sql);
@@ -209,7 +218,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				statement.setInt(1, userId);
 				statement.executeUpdate();
 			}
-			
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
@@ -284,20 +292,41 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 * @return
 	 */
 	@Override
-	public Vector<GradeCard> generateGradeCard(int studentId) {
+	public Vector<GradeCard> generateGradeCard(int studentId) throws StudentNotFoundException,ProfessorHasNotGradedException {
 		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		Vector<GradeCard> grades = new Vector<>();
 		
 		try {
+			String sql = SQLQueriesConstant.FIND_STUDENT_QUERY;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, studentId);
+			ResultSet resultSet = statement.executeQuery();
+			
+			while(!resultSet.next()) {
+				throw new StudentNotFoundException(studentId);
+			}
+		}
+		catch(SQLException e) {
+			logger.error("Error: " + e.getMessage());
+		}
+		
+		
+		try {
 			String sql = SQLQueriesConstant.VIEW_COURSES_GRADE;
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, studentId);
 			ResultSet resultSet = statement.executeQuery();
+			
+			if(!resultSet.next())
+			{
+				throw new ProfessorHasNotGradedException(studentId);
+			}
 			while (resultSet.next()) {
 				GradeCard gradeCard = new GradeCard();
 				gradeCard.setCourseId(resultSet.getInt("courseId"));
+				gradeCard.setSemesterId(5);
 				gradeCard.setGpa(resultSet.getDouble("gpa"));
 				gradeCard.setStudentId(studentId);
 				grades.add(gradeCard);
@@ -305,6 +334,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
+		
 		return grades;
 	}
 	
@@ -363,7 +393,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
  				course.setCourseSeats(resultSet.getInt(5));
 				courseList.add(course);
 			}
-			logger.info("Total Number of Courses: " + courseList.size());
+			int totalCourse = courseList.size()+1;
+			logger.info("Total Number of Courses: " + totalCourse);
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
@@ -408,11 +439,12 @@ public class AdminDaoOperation implements AdminDaoInterface {
  		statement = null;
 
  		try {
- 			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS; // TODO: isGenerated field not present in any table
+ 			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS; 
  			statement = connection.prepareStatement(sql);
  			statement.setInt(1, studentId);
- 			statement.executeUpdate();
- 			logger.info("Student with Student Id " + studentId +"'s GradeCard is generated.");
+ 			int row = statement.executeUpdate();
+ 			logger.info("Student with Student Id " + studentId +" GradeCard is generated.");
+ 			
  		} catch (SQLException e) {
  			logger.error("Error: " + e.getMessage());
  		}

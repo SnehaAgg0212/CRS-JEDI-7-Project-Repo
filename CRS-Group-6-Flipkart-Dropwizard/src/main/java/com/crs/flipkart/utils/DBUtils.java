@@ -42,22 +42,15 @@ public class DBUtils {
 			}
 		} else {
 			try {
-				Properties properties = new Properties();
-				InputStream inputStream = DBUtils.class.getClassLoader().getResourceAsStream("./config.properties");
-				properties.load(inputStream);
-				String driver = properties.getProperty("driver");
-				String url = properties.getProperty("url");
-				String username = properties.getProperty("username");
-				String password = properties.getProperty("password");
+				String driver = "com.mysql.jdbc.Driver";
+				String url = "jdbc:mysql://localhost:3306/test";
+				String username = "root";
+				String password = "root";
 				Class.forName(driver);
 				connection = DriverManager.getConnection(url, username, password);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			return connection;

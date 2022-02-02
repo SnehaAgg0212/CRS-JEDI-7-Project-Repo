@@ -247,21 +247,21 @@ public class CRSApplicationMenu {
 			String userEmailId, oldPassword, newPassword, confirmNewPassword;
 			
 			System.out.println("Enter Email Id: ");
-			userEmailId = sc.nextLine();
+			userEmailId = sc.next();
 			
 			System.out.println("Enter Current Password: ");
-			oldPassword = sc.nextLine();
+			oldPassword = sc.next();
 			
 			System.out.println("Enter New Password: ");
-			newPassword = sc.nextLine();
+			newPassword = sc.next();
 			
 			System.out.println("Confirm New Password: ");
-			confirmNewPassword = sc.nextLine();
+			confirmNewPassword = sc.next();
 			
 			userService.updatePassword(userEmailId, oldPassword, newPassword, confirmNewPassword);
 			
 		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("Error: " + e);
 		}
 	}
 	
