@@ -150,23 +150,31 @@ public class CRSProfessorMenu {
  		try {
 			Vector<EnrolledStudent> notGradedStudents = new Vector<EnrolledStudent>();
 			notGradedStudents = professorService.viewEnrolledStudents(professorId);
+			if(notGradedStudents.size() == 0) {
+				System.out.println("Professor is not teaching any course!!");
+				System.out.println();
+				return;
+			}
+			System.out.println();
 			System.out.println(String.format("%20s %20s %20s","COURSE CODE", "COURSE NAME", "Student ID"));
+			System.out.println();
+			
 			notGradedStudents.forEach ((obj) -> {
 				System.out.println(String.format("%20s %20s %20s", obj.getCourseId(), obj.getCourseName(), obj.getStudentId()));
 			});
+			
 			Vector<Course> coursesEnrolled = professorService.viewCourses(professorId);
 			Course course = coursesEnrolled.get(0);
 			courseCode = course.getCourseId();
 			coursesEnrolled	= professorService.viewCourses(professorId);
-			System.out.println("----------------Add Grade--------------");
+			System.out.println("--------------------------------Add Grade------------------------------");
+			System.out.println();
 			System.out.printf("Enter Student Id: ");
 			studentId = sc.nextInt();
-			//System.out.printf("Enter Course Code: ");
-			//courseCode = sc.nextInt();
+			
 			System.out.println("Enter Grade: ");
 			grade = sc.nextDouble();
-			//System.out.println("Enter Semester Id: ");
-			//semesterId = sc.nextInt();
+			
 			if (ProfessorValidator.isValidStudent(notGradedStudents, studentId) && ProfessorValidator.isValidCourse(coursesEnrolled, courseCode)) {
 				professorService.addGrade(studentId, courseCode, grade);
 				System.out.println("Grade added successfully for " + studentId);
@@ -174,7 +182,7 @@ public class CRSProfessorMenu {
 				System.out.println("Grade cannot be added for " + studentId);
 			}
  		} catch (SQLException e) {
- 			System.out.println("Error: " + e.getMessage());
+ 			System.out.println("Error: " + e);
  		}
 	}
 

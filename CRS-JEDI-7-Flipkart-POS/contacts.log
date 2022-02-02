@@ -4,3 +4,125 @@
 09:32:33,128  INFO AdminDaoOperation,main:236 - Student with Student Id 1862947538 is approved.
 09:32:33,182  INFO NotificationDaoOperation,main:140 - Student with Student Id: 1862947538 is approved successfully.
 09:35:38,348  INFO NotificationDaoOperation,main:76 - Payment is successful of Amount - Rs. 3700.0 through NET_BANKING.
+19:34:38,093  INFO AdminDaoOperation,main:92 - 1 user added.
+19:34:38,094  INFO AdminDaoOperation,main:96 - User with User Id 847829739 added.
+19:34:38,097  INFO AdminDaoOperation,main:133 - 1 professor added.
+19:34:38,098  INFO AdminDaoOperation,main:138 - Professor with Professor Id 1391201595 added.
+19:34:42,719  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 4
+19:35:02,467  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 4
+19:35:34,069  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 4
+19:35:36,502  INFO AdminDaoOperation,main:203 - 1 professor deleted.
+19:35:41,231  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+19:36:24,160  INFO AdminDaoOperation,main:272 - 3 students have approval pending.
+19:38:08,364  INFO AdminDaoOperation,main:272 - 3 students have approval pending.
+19:38:14,788  INFO AdminDaoOperation,main:272 - 3 students have approval pending.
+19:38:19,263  INFO AdminDaoOperation,main:232 - 1 student approved.
+19:38:19,264  INFO AdminDaoOperation,main:236 - Student with Student Id 101 is approved.
+19:38:19,266  INFO NotificationDaoOperation,main:140 - Student with Student Id: 101 is approved successfully.
+19:38:21,505  INFO AdminDaoOperation,main:272 - 2 students have approval pending.
+19:41:10,465  INFO AdminDaoOperation,main:232 - 1 student approved.
+19:41:10,465  INFO AdminDaoOperation,main:236 - Student with Student Id 103 is approved.
+19:41:10,468  INFO NotificationDaoOperation,main:140 - Student with Student Id: 103 is approved successfully.
+19:41:13,389  INFO AdminDaoOperation,main:272 - 1 students have approval pending.
+19:41:21,064  INFO AdminDaoOperation,main:272 - 1 students have approval pending.
+19:41:22,180  INFO AdminDaoOperation,main:232 - 1 student approved.
+19:41:22,181  INFO AdminDaoOperation,main:236 - Student with Student Id 102 is approved.
+19:41:22,184  INFO NotificationDaoOperation,main:140 - Student with Student Id: 102 is approved successfully.
+19:41:23,920  INFO AdminDaoOperation,main:272 - 0 students have approval pending.
+19:41:28,075  INFO AdminDaoOperation,main:272 - 0 students have approval pending.
+19:41:33,627  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+19:41:36,249  INFO AdminDaoOperation,main:203 - 0 professor deleted.
+19:45:16,447  INFO AdminDaoOperation,main:365 - Total Number of Courses: 8
+19:45:16,466  INFO AdminDaoOperation,main:329 - 1 course added.
+19:45:16,466  INFO AdminDaoOperation,main:333 - Course with Course Code 112 added.
+19:47:59,171  INFO AdminDaoOperation,main:365 - Total Number of Courses: 9
+19:47:59,183  INFO AdminDaoOperation,main:329 - 1 course added.
+19:47:59,183  INFO AdminDaoOperation,main:333 - Course with Course Code 113 added.
+19:50:43,728  INFO AdminDaoOperation,main:365 - Total Number of Courses: 101
+19:50:43,732 ERROR AdminService,main:144 - Course with Course Code: 101 is already present in Catalog.
+19:51:39,602  INFO AdminDaoOperation,main:366 - Total Number of Courses: 11
+19:51:39,604 ERROR AdminService,main:144 - Course with Course Code: 101 is already present in Catalog.
+19:52:33,103  INFO AdminDaoOperation,main:366 - Total Number of Courses: 11
+19:53:11,995  INFO AdminDaoOperation,main:366 - Total Number of Courses: 11
+19:53:37,714  INFO AdminDaoOperation,main:366 - Total Number of Courses: 11
+19:53:47,292  INFO AdminDaoOperation,main:366 - Total Number of Courses: 11
+19:53:56,288  INFO AdminDaoOperation,main:366 - Total Number of Courses: 11
+19:53:56,397  INFO AdminDaoOperation,main:389 - 1 course deleted.
+19:53:56,397  INFO AdminDaoOperation,main:393 - Course with Course Id 113 deleted.
+19:53:58,650  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10
+19:54:34,725  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10
+19:54:38,165  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10
+19:54:39,957  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10
+19:54:39,963 ERROR AdminService,main:165 - Course with Course Code: 113 is not present in Catalog.
+19:54:48,673  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10
+19:55:21,378  INFO AdminService,main:129 - CourseId: 105 GPA: 8.5
+19:55:21,379  INFO AdminService,main:129 - CourseId: 102 GPA: 9.0
+19:55:21,379  INFO AdminService,main:129 - CourseId: 101 GPA: 7.0
+19:55:21,380  INFO AdminService,main:129 - CourseId: 104 GPA: 7.8
+19:55:21,380  INFO AdminService,main:129 - CourseId: 106 GPA: 8.2
+19:55:21,380  INFO AdminService,main:129 - CourseId: 107 GPA: 8.9
+19:55:21,381  INFO AdminService,main:136 - Overall GPA: 8.233333333333333
+19:55:21,382  INFO AdminDaoOperation,main:415 - Student with Student Id 1863694801's GradeCard is generated.
+19:56:02,612  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+19:56:46,436  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+19:57:13,305  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+19:57:18,178  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10
+19:57:30,723  INFO AdminDaoOperation,main:272 - 0 students have approval pending.
+19:57:44,604  INFO AdminService,main:121 - You haven't registered for any course.
+19:57:44,614  INFO AdminDaoOperation,main:415 - Student with Student Id 101's GradeCard is generated.
+19:58:50,058  INFO AdminService,main:121 - You haven't registered for any course.
+19:58:50,061  INFO AdminDaoOperation,main:417 - Student with Student Id 101's GradeCard is generated.
+19:59:08,882  INFO AdminService,main:121 - You haven't registered for any course.
+19:59:08,885  INFO AdminDaoOperation,main:416 - Student with Student Id 101's GradeCard cannot be generated.
+19:59:08,885  INFO AdminDaoOperation,main:417 - Student with Student Id 101's GradeCard is generated.
+20:00:54,368  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+20:00:56,229  INFO AdminDaoOperation,main:203 - 0 professor deleted.
+20:01:00,424  INFO AdminDaoOperation,main:272 - 0 students have approval pending.
+20:01:01,878  INFO AdminDaoOperation,main:272 - 0 students have approval pending.
+20:01:04,793  INFO AdminService,main:121 - You haven't registered for any course.
+20:01:04,796  INFO AdminDaoOperation,main:416 - Student with Student Id 101's GradeCard cannot be generated.
+20:01:11,829  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 3
+20:01:13,159  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10
+20:03:27,642  INFO NotificationDaoOperation,main:108 - Registration is successful for Student Id: 1637842604
+20:05:10,169  INFO UserService,main:59 - Either EmailId or oldPassword is wrong, try again!!
+20:05:22,451  INFO UserService,main:52 - jaina jain
+20:05:22,452  INFO UserService,main:53 - New password and Confirm New Password are different!!
+20:05:41,052  INFO UserService,main:67 - Password updated successfully!
+20:05:54,446  INFO UserService,main:67 - Password updated successfully!
+20:08:04,505  INFO AdminDaoOperation,main:272 - 1 students have approval pending.
+20:10:49,758  INFO AdminDaoOperation,main:272 - 1 students have approval pending.
+20:10:58,341  INFO AdminDaoOperation,main:272 - 1 students have approval pending.
+20:11:00,290  INFO AdminDaoOperation,main:232 - 1 student approved.
+20:11:00,292  INFO AdminDaoOperation,main:236 - Student with Student Id 1637842604 is approved.
+20:11:00,369  INFO NotificationDaoOperation,main:140 - Student with Student Id: 1637842604 is approved successfully.
+20:17:30,226  INFO NotificationDaoOperation,main:76 - Payment is successful of Amount - Rs. 4052.4 through CARD.
+20:18:34,097  INFO AdminService,main:121 - You haven't registered for any course.
+20:18:34,103  INFO AdminDaoOperation,main:416 - Student with Student Id 1637842604's GradeCard cannot be generated.
+20:30:55,143  INFO AdminDaoOperation,main:92 - 1 user added.
+20:30:55,145  INFO AdminDaoOperation,main:96 - User with User Id 1036971992 added.
+20:30:55,148  INFO AdminDaoOperation,main:133 - 1 professor added.
+20:30:55,149  INFO AdminDaoOperation,main:138 - Professor with Professor Id 1382964957 added.
+20:31:28,938  INFO AdminDaoOperation,main:92 - 1 user added.
+20:31:28,939  INFO AdminDaoOperation,main:96 - User with User Id 1473782265 added.
+20:31:28,942  INFO AdminDaoOperation,main:133 - 1 professor added.
+20:31:28,943  INFO AdminDaoOperation,main:138 - Professor with Professor Id 1002991083 added.
+20:32:01,735  INFO AdminDaoOperation,main:92 - 1 user added.
+20:32:01,736  INFO AdminDaoOperation,main:96 - User with User Id 1883662993 added.
+20:32:01,740  INFO AdminDaoOperation,main:133 - 1 professor added.
+20:32:01,740  INFO AdminDaoOperation,main:138 - Professor with Professor Id 1885242215 added.
+20:32:05,572  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 6
+20:32:37,202  INFO AdminDaoOperation,main:92 - 1 user added.
+20:32:37,202  INFO AdminDaoOperation,main:96 - User with User Id 591551970 added.
+20:32:37,206  INFO AdminDaoOperation,main:133 - 1 professor added.
+20:32:37,207  INFO AdminDaoOperation,main:138 - Professor with Professor Id 413314728 added.
+20:33:06,427  INFO AdminDaoOperation,main:92 - 1 user added.
+20:33:06,428  INFO AdminDaoOperation,main:96 - User with User Id 1703019300 added.
+20:33:06,431  INFO AdminDaoOperation,main:133 - 1 professor added.
+20:33:06,432  INFO AdminDaoOperation,main:138 - Professor with Professor Id 1690001767 added.
+20:33:08,392  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 8
+20:50:50,842  INFO AdminDaoOperation,main:170 - Total Number of Professors in the Institute: 8
+20:50:53,647  INFO AdminDaoOperation,main:272 - 0 students have approval pending.
+20:50:56,406  INFO AdminDaoOperation,main:272 - 0 students have approval pending.
+20:51:04,873  INFO AdminService,main:121 - You haven't registered for any course.
+20:51:04,874  INFO AdminDaoOperation,main:418 - Student with Student Id 101's GradeCard is generated.
+21:01:56,909  INFO AdminDaoOperation,main:366 - Total Number of Courses: 10

@@ -119,11 +119,11 @@ public class CRSAdminMenu {
 		System.out.println("---------------Viewing Pending Admissions-------------");
 		
 		
-
- 		System.out.println(String.format("%20s %20s %20s", "StudentId", "Name", "GenderConstant"));
- 		
+		System.out.println();
+ 		System.out.println(String.format("%20s %20s %20s %20s %20s %20s", "STUDENTID", "NAME", "GENDER", "BATCH", "BRANCH", "PHONENO"));
+ 		System.out.println();
  		pendingStudents.forEach((student) -> { 
- 			System.out.println(String.format("%20s %20s %20s", student.getStudentId(), student.getUserName(), student.getGender()));
+ 			System.out.println(String.format("%20s %20s %20s %20s %20s %20s", student.getStudentId(), student.getUserName(), student.getGender(), student.getBatch(), student.getBranchName(), student.getPhoneNo()));
  		});
  		return pendingStudents;
 	}
@@ -194,7 +194,7 @@ public class CRSAdminMenu {
 	    String department = sc.nextLine();
 	    professor.setDepartment(department);
 	    
-	    System.out.print("Enter Professor Gender: \t 1: Male \t 2.Female \t 3.Other");
+	    System.out.print("Enter Professor Gender: \t 1: Male \t 2.Female \t 3.Other : ");
 	    int gender = sc.nextInt();
 	    professor.setGender(GenderConstant.getName(gender));
 	    sc.nextLine();
@@ -228,10 +228,10 @@ public class CRSAdminMenu {
 		System.out.println("---------------Professor Details Display Panel-------------");
 		System.out.println();
 	    
-	    System.out.println(String.format("%-20s %-20s %-20s %-20s", "PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
-	    
+	    System.out.println(String.format("%-20s %-20s %-30s %-20s", "PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
+	    System.out.println();
 	    ProfessorList.forEach((professor) -> {
-	    	System.out.println(String.format(" %-20s %-20s %-20s %-20s", professor.getProfessorId(), professor.getUserName(), professor.getDepartment(), professor.getDesignation()));
+	    	System.out.println(String.format(" %-20s %-20s %-30s %-20s", professor.getProfessorId(), professor.getUserName(), professor.getDepartment(), professor.getDesignation()));
 	    });
 	    
 	    System.out.println();
@@ -252,10 +252,10 @@ public class CRSAdminMenu {
 		
 		System.out.println();
 	    
-	    System.out.println(String.format("%-20s %-20s %-20s %-20s", "PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
-	    
+	    System.out.println(String.format("%-20s %-20s %-30s %-20s", "PROFESSOR ID", "PROFESSOR NAME", "PROFESSOR DEPARTMENT", "PROFESSOR DESIGNATION"));
+	    System.out.println();
 	    ProfessorList.forEach((professor) -> {
-	    	System.out.println(String.format(" %-20s %-20s %-20s %-20s", professor.getProfessorId(), professor.getUserName(), professor.getDepartment(), professor.getDesignation()));
+	    	System.out.println(String.format(" %-20s %-20s %-30s %-20s", professor.getProfessorId(), professor.getUserName(), professor.getDepartment(), professor.getDesignation()));
 	    });
 	    
 	    System.out.println("Enter Professor ID: ");
@@ -288,8 +288,10 @@ public class CRSAdminMenu {
 	    String courseName = sc.next();
 	    course.setCourseName(courseName);
 	    
+	    sc.nextLine();
+	    
 	    System.out.println("Enter Course Description: ");
-	    String courseDesc = sc.next();
+	    String courseDesc = sc.nextLine();
 	    course.setCourseDescription(courseDesc);
 	    
 	    System.out.println("Enter Course Fees: ");
@@ -300,8 +302,9 @@ public class CRSAdminMenu {
 	    int noOfSeats = sc.nextInt();
 	    course.setCourseSeats(noOfSeats);
 	    
+	    Vector<Course> allCourse = adminServices.viewCourse();
 	    try {
-	    	adminServices.addCourse(course, viewCoursesInCatalog());
+	    	adminServices.addCourse(course, allCourse);
 	    } catch (CourseAlreadyExistsException e) {
 	    	System.out.println("Error: " + e);
 	    }
@@ -323,10 +326,10 @@ public class CRSAdminMenu {
 		
 		
 		
-		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
-		
+		System.out.println(String.format("%-20s %-20s %-45s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
+		System.out.println();
 		CourseList.forEach((course) -> {
-			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+			System.out.println(String.format("%-20s %-20s %-45s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
 		});
 		
 		System.out.println();
@@ -346,11 +349,11 @@ public class CRSAdminMenu {
 		}
 		
 		System.out.println("-------------Delete Course From Catalog-------------");
-		
-		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
-		
+		System.out.println();
+		System.out.println(String.format("%-20s %-20s %-45s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES" , "COURSE SEATS"));
+		System.out.println();
 		CourseList.forEach((course) -> {
-			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+			System.out.println(String.format("%-20s %-20s %-45s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
 		});
 		
 		System.out.println();
@@ -373,7 +376,7 @@ public class CRSAdminMenu {
 	private static void generateGradeCard() {
 		
 		System.out.println("-------------Grade Card Generation-------------");
-		
+		System.out.println();
 		System.out.println("Enter the Student Id: ");
 		int studentId = sc.nextInt();
 		

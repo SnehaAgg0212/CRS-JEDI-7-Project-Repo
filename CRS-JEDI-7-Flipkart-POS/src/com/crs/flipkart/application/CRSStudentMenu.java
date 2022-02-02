@@ -149,8 +149,10 @@ public class CRSStudentMenu {
 
  			System.out.println();
  			System.out.println("Registration Successful");
+ 			System.out.println();
  		}else {
  			System.out.println("You have already registered for this Semester");
+ 			System.out.println();
  		}
 }
 
@@ -200,6 +202,7 @@ public class CRSStudentMenu {
 		 		}
 		}else {
 			System.out.println("Semester Registration is still Pending!!");
+			System.out.println();
 		}
 	}
 
@@ -238,6 +241,7 @@ public class CRSStudentMenu {
 	 		}
 		}else {
 			System.out.println("Semester Registration is still Pending!!");
+			System.out.println();
 		}
 
 		
@@ -273,11 +277,11 @@ public class CRSStudentMenu {
 	 			return null;
 	 		}
 
-	 		System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
+	 		System.out.println(String.format("%-20s %-20s %-45s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES", "SEATS"));
 	 		System.out.println();
 	 		
 	 		availableCourses.forEach((course) -> {
-	 			System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
+	 			System.out.println(String.format("%-20s %-20s %-45s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee(), course.getCourseSeats()));
 	 		});
 	 		
 	 		System.out.println();
@@ -285,6 +289,7 @@ public class CRSStudentMenu {
 			return availableCourses;
 		}else {
 			System.out.println("Semester Registration is still Pending!!");
+			System.out.println();
 		}
 		
 		return availableCourses;
@@ -318,11 +323,11 @@ public class CRSStudentMenu {
 	 			return null;
 	 		}
 
-	 		System.out.println(String.format("%-20s %-20s %-20s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES"));
+	 		System.out.println(String.format("%-20s %-20s %-45s %-20s", "COURSE ID", "COURSE NAME", "COURSE DESCRIPTION", "COURSE FEES"));
 	 		System.out.println();
 	 		
 	 		registeredCourses.forEach((course) -> {
-	 			System.out.println(String.format("%-20s %-20s %-20s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee()));
+	 			System.out.println(String.format("%-20s %-20s %-45s %-20s", course.getCourseId(), course.getCourseName(), course.getCourseDescription(), course.getCourseFee()));
 	 		});
 	 		
 	 		
@@ -331,6 +336,7 @@ public class CRSStudentMenu {
 	 		return registeredCourses;
 		}else {
 			System.out.println("Semester Registration is still Pending!!");
+			System.out.println();
 		}
 		
 		return registeredCourses;

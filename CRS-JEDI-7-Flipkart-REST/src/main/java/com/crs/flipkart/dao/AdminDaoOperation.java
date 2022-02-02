@@ -184,7 +184,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public void deleteProfessor(int professorId) throws ProfessorNotFoundException, ProfessorNotDeletedException {
 		Connection connection = DBUtils.getConnection();
 		statement = null;
-		//System.out.println(userId);
+		
 		try {
 			String sql = SQLQueriesConstant.GET_USER_ID_FROM_PROFESSOR;
 			statement = connection.prepareStatement(sql);
@@ -209,7 +209,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				statement.setInt(1, userId);
 				statement.executeUpdate();
 			}
-			
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
@@ -363,7 +362,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
  				course.setCourseSeats(resultSet.getInt(5));
 				courseList.add(course);
 			}
-			logger.info("Total Number of Courses: " + courseList.size());
+			int totalCourse = courseList.size()+1;
+			logger.info("Total Number of Courses: " + totalCourse);
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
@@ -411,8 +411,11 @@ public class AdminDaoOperation implements AdminDaoInterface {
  			String sql = SQLQueriesConstant.SET_GRADECARD_STATUS; // TODO: isGenerated field not present in any table
  			statement = connection.prepareStatement(sql);
  			statement.setInt(1, studentId);
- 			statement.executeUpdate();
- 			logger.info("Student with Student Id " + studentId +"'s GradeCard is generated.");
+ 			int row = statement.executeUpdate();
+ 			if(row == 1)
+ 				logger.info("Student with Student Id " + studentId +"'s GradeCard cannot be generated.");
+ 			else
+ 				logger.info("Student with Student Id " + studentId +"'s GradeCard is generated.");
  		} catch (SQLException e) {
  			logger.error("Error: " + e.getMessage());
  		}
