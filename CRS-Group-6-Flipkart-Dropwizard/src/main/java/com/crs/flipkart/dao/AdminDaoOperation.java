@@ -21,9 +21,11 @@ import com.crs.flipkart.constants.SQLQueriesConstant;
 import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorHasNotGradedException;
 import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 import com.crs.flipkart.exceptions.ProfessorNotAddedException;
 import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundException;
 import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
 import com.crs.flipkart.exceptions.UserNotAddedException;
 import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
@@ -290,20 +292,41 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	 * @return
 	 */
 	@Override
-	public Vector<GradeCard> generateGradeCard(int studentId) {
+	public Vector<GradeCard> generateGradeCard(int studentId) throws StudentNotFoundException,ProfessorHasNotGradedException {
 		Connection connection = DBUtils.getConnection();
 		statement = null;
 		
 		Vector<GradeCard> grades = new Vector<>();
 		
 		try {
+			String sql = SQLQueriesConstant.FIND_STUDENT_QUERY;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, studentId);
+			ResultSet resultSet = statement.executeQuery();
+			
+			while(!resultSet.next()) {
+				throw new StudentNotFoundException(studentId);
+			}
+		}
+		catch(SQLException e) {
+			logger.error("Error: " + e.getMessage());
+		}
+		
+		
+		try {
 			String sql = SQLQueriesConstant.VIEW_COURSES_GRADE;
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, studentId);
 			ResultSet resultSet = statement.executeQuery();
+			
+			if(!resultSet.next())
+			{
+				throw new ProfessorHasNotGradedException(studentId);
+			}
 			while (resultSet.next()) {
 				GradeCard gradeCard = new GradeCard();
 				gradeCard.setCourseId(resultSet.getInt("courseId"));
+				gradeCard.setSemesterId(5);
 				gradeCard.setGpa(resultSet.getDouble("gpa"));
 				gradeCard.setStudentId(studentId);
 				grades.add(gradeCard);
@@ -311,6 +334,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		} catch (SQLException e) {
 			logger.error("Error: " + e.getMessage());
 		}
+		
 		return grades;
 	}
 	
@@ -419,10 +443,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
  			statement = connection.prepareStatement(sql);
  			statement.setInt(1, studentId);
  			int row = statement.executeUpdate();
- 			if(row == 1)
- 				logger.info("Student with Student Id " + studentId +"'s GradeCard cannot be generated.");
- 			else
- 				logger.info("Student with Student Id " + studentId +"'s GradeCard is generated.");
+ 			logger.info("Student with Student Id " + studentId +" GradeCard is generated.");
+ 			
  		} catch (SQLException e) {
  			logger.error("Error: " + e.getMessage());
  		}

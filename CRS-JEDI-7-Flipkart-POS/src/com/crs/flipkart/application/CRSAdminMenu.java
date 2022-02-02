@@ -20,9 +20,11 @@ import com.crs.flipkart.constants.RoleConstant;
 import com.crs.flipkart.exceptions.CourseAlreadyExistsException;
 import com.crs.flipkart.exceptions.CourseNotDeletedException;
 import com.crs.flipkart.exceptions.CourseNotFoundException;
+import com.crs.flipkart.exceptions.ProfessorHasNotGradedException;
 import com.crs.flipkart.exceptions.ProfessorNotAddedException;
 import com.crs.flipkart.exceptions.ProfessorNotDeletedException;
 import com.crs.flipkart.exceptions.ProfessorNotFoundException;
+import com.crs.flipkart.exceptions.StudentNotFoundException;
 import com.crs.flipkart.exceptions.StudentNotFoundForApprovalException;
 import com.crs.flipkart.exceptions.UserIdAlreadyInUseException;
 
@@ -372,6 +374,8 @@ public class CRSAdminMenu {
 	
 	/**
 	 * Generate Grade Card
+	 * @throws ProfessorHasNotGradedException 
+	 * @throws StudentNotFoundException 
 	 */
 	private static void generateGradeCard() {
 		
@@ -379,8 +383,15 @@ public class CRSAdminMenu {
 		System.out.println();
 		System.out.println("Enter the Student Id: ");
 		int studentId = sc.nextInt();
-		
-		adminServices.generateGradeCard(studentId);
-		adminServices.setIsGenerateGrade(studentId);
+		try {
+			adminServices.generateGradeCard(studentId);
+			adminServices.setIsGenerateGrade(studentId);
+		}catch(StudentNotFoundException e) {
+			System.out.println("Error : " + e);
+		}catch(ProfessorHasNotGradedException e) {
+			System.out.println("Error : " + e);
+		}catch(Exception e) {
+			System.out.println("Error : " + e);
+		}
 	}
 }
